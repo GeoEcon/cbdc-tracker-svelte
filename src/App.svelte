@@ -1,8 +1,13 @@
 <script>
+  import Component from './Component.svelte';
 </script>
 
-<main>
-</main>
+<div class="app-wrapper">
+  <Component />
+</div>
 
 <style>
+  .app-wrapper {
+    
+  }
 </style>
