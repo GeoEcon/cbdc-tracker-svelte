@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { css } from './actions/css';
-  import * as styles from './utils/styles';
+  import styles from './utils/styles';
   import { loadTrackerData, loadMapData } from './utils/load';
   import { rawData, mapData } from './stores/data';
   
@@ -38,5 +38,33 @@
     font-family: var(--font02);
     opacity: 1;
     box-sizing: border-box;
+  }
+
+  .component-wrapper {
+    font-size: 12px;
+  }
+
+  @media (min-width: 600px) {
+    .component-wrapper {
+      font-size: 15px;
+    }
+  }
+
+  @media (min-width: 980px) {
+    .component-wrapper {
+      font-size: 16px;
+    }
+  }
+
+  @media (min-width: 1260px) {
+    .component-wrapper {
+      font-size: 18px;
+    }
+  }
+  
+  @media (min-width: 1950px) {
+    .component-wrapper {
+      font-size: 20px;
+    }
   }
 </style>
