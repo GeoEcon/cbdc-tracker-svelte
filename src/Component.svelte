@@ -1,17 +1,17 @@
 <script>
   import { onMount } from 'svelte';
-  import { loadTrackerData } from './utils/load';
-  import { rawData } from './stores/data';
-  import { initFilters, statusFilter } from './stores/filter';
+  import { loadTrackerData, loadMapData } from './utils/load';
+  import { rawData, mapData } from './stores/data';
 
-  export let dataPath = 'data/tracker.csv';
+  export let trackerDataPath = 'data/tracker.csv';
+  export let mapDataPath = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json';
 
   onMount(async () => {
     // load initial data
-    rawData.set(await loadTrackerData(dataPath));
+    rawData.set(await loadTrackerData(trackerDataPath));
 
-    // initialize filters
-    initFilters($rawData);
+    // load map data
+    mapData.set(await loadMapData(mapDataPath));
   });
 </script>
 
