@@ -3,7 +3,7 @@
   import { css } from './actions/css';
   import styles from './utils/styles';
   import { loadTrackerData, loadMapData } from './utils/load';
-  import { isMobile } from './stores/device';
+  import { isVertical } from './stores/device';
   import { rawData } from './stores/data';
   import { rawData as mapData } from './stores/map';
   
@@ -25,7 +25,7 @@
     mapData.set(await loadMapData(mapDataPath));
   });
 
-  $: isMobile.set(width < 600);
+  $: isVertical.set(width < 600);
 </script>
 
 <div

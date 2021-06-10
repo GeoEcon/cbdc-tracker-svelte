@@ -1,23 +1,26 @@
 <script>
+  import { mapWidth, mapHeight, projectedData } from '../../stores/map';
+
   import Canvas from '../Canvas.svelte';
   import Country from './Country.svelte';
-
-  export let countries = [];
-
-  let width = 0;
-  let height = 0;
 </script>
 
 <div
   class="map"
-  bind:clientWidth={width}
-  bind:clientHeight={height}
+  bind:clientWidth={$mapWidth}
+  bind:clientHeight={$mapHeight}
 >
   <Canvas
-    width={width}
-    height={height}
+    width={$mapWidth}
+    height={$mapHeight}
   >
-    <Country />
+    {#each $projectedData as projection, i}
+      {#each projection as country (`${i}_${country.id}`)}
+        <Country
+          country={country}
+        />
+      {/each}
+    {/each}
   </Canvas>
 </div>
 

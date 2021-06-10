@@ -5,7 +5,7 @@
 
   export let width = 0;
   export let height = 0;
-  export let center = true;
+  export let center = false;
   export let contextName = 'canvas';
 
   const dispatch = createEventDispatcher();
