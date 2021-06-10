@@ -41,6 +41,7 @@
   }
 
   .component-wrapper {
+    width: 100%;
     font-size: 12px;
   }
 
