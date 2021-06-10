@@ -1,12 +1,16 @@
-import { csv, json } from "d3";
+import { csv, json } from 'd3';
 import { feature } from 'topojson-client';
 import { initFilters } from '../stores/filter';
 
-const splitValue = (value) => value.split(',').map(d => d.trim()).filter(d => d);
+const splitValue = (value) =>
+  value
+    .split(',')
+    .map((d) => d.trim())
+    .filter((d) => d);
 
 export const loadTrackerData = async (dataPath) => {
   // load and format the data
-  const data = await csv(dataPath, d => {
+  const data = await csv(dataPath, (d) => {
     return {
       owner: d.Owner,
       name: d.Name,
@@ -22,12 +26,14 @@ export const loadTrackerData = async (dataPath) => {
       corporate_partnership: splitValue(d['Corporate partnership']),
       crossborder_partnerships: splitValue(d['Cross-border partnerships']),
       sources: d.Sources,
-      notes: d.Notes
+      notes: d.Notes,
     };
   });
-  
+
   // filter for valid entries
-  const filteredData = data.filter(d => !d.current_status.includes('No development yet'));
+  const filteredData = data.filter(
+    (d) => !d.current_status.includes('No development yet')
+  );
 
   // initialize the filters
   initFilters(filteredData);

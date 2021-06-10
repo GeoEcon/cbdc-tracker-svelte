@@ -4,32 +4,56 @@ function createMultiFilter() {
   const { subscribe, set, update } = writable([]);
 
   const init = (data, col) => {
-    const values = [...new Set(data.map(d => d[col]).flat())];
-    set(values.map((value) => {
-      return {
-        id: value,
-        name: value,
-        selected: true
-      };
-    }));
+    const values = [...new Set(data.map((d) => d[col]).flat())];
+    set(
+      values.map((value) => {
+        return {
+          id: value,
+          name: value,
+          selected: true,
+        };
+      })
+    );
   };
 
-  const unselect = (id) => update((f) => f.map((d) => ({...d, selected: [id].flat().includes(d.id) ? false : d.selected})));
+  const unselect = (id) =>
+    update((f) =>
+      f.map((d) => ({
+        ...d,
+        selected: [id].flat().includes(d.id) ? false : d.selected,
+      }))
+    );
 
-  const unselectAll = () => update((f) => f.map((d) => ({...d, selected: false})));
+  const unselectAll = () =>
+    update((f) => f.map((d) => ({ ...d, selected: false })));
 
-  const select = (id) => update((f) => f.map((d) => ({...d, selected: [id].flat().includes(d.id) ? true : d.selected})));
+  const select = (id) =>
+    update((f) =>
+      f.map((d) => ({
+        ...d,
+        selected: [id].flat().includes(d.id) ? true : d.selected,
+      }))
+    );
 
   const selectOne = (id) => {
     unselectAll();
     select(id);
   };
 
-  const selectAll = () => update((f) => f.map((d) => ({...d, selected: true})));
-  
+  const selectAll = () =>
+    update((f) => f.map((d) => ({ ...d, selected: true })));
+
   const applyBoolArray = (arr) => {
     const tmpArr = [...arr].reverse();
-    update((f) => f.reverse().map((d, i) => ({...d, selected: tmpArr[i] !== undefined ? tmpArr[i] : false})).reverse());
+    update((f) =>
+      f
+        .reverse()
+        .map((d, i) => ({
+          ...d,
+          selected: tmpArr[i] !== undefined ? tmpArr[i] : false,
+        }))
+        .reverse()
+    );
   };
 
   return {
@@ -41,9 +65,9 @@ function createMultiFilter() {
     selectAll,
     unselect,
     unselectAll,
-    applyBoolArray
+    applyBoolArray,
   };
-};
+}
 
 export const statusFilter = createMultiFilter();
 export const technologyFilter = createMultiFilter();

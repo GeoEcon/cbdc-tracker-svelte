@@ -10,5 +10,5 @@ export default {
   secYellow: '#FFC02E',
   tertMintGreen: '#2FBEA3',
   tertGreen: '#6F9A1A',
-  tertBlue: '#234C6A'
+  tertBlue: '#234C6A',
 };
