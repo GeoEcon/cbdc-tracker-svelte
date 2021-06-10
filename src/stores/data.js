@@ -48,5 +48,3 @@ export const data = derived(
     });
   }
 );
-
-export const mapData = writable([]);

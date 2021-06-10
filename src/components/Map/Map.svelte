@@ -1,5 +1,8 @@
 <script>
   import Canvas from '../Canvas.svelte';
+  import Country from './Country.svelte';
+
+  export let countries = [];
 
   let width = 0;
   let height = 0;
@@ -13,8 +16,8 @@
   <Canvas
     width={width}
     height={height}
-    contextName="map"
   >
+    <Country />
   </Canvas>
 </div>
 

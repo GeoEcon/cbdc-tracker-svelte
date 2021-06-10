@@ -3,7 +3,9 @@
   import { css } from './actions/css';
   import styles from './utils/styles';
   import { loadTrackerData, loadMapData } from './utils/load';
-  import { rawData, mapData } from './stores/data';
+  import { isMobile } from './stores/device';
+  import { rawData } from './stores/data';
+  import { rawData as mapData } from './stores/map';
   
 
   import FilterBar from './components/FilterBar/FilterBar.svelte';
@@ -13,6 +15,8 @@
   export let trackerDataPath = 'data/tracker.csv';
   export let mapDataPath = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json';
 
+  let width;
+
   onMount(async () => {
     // load initial data
     rawData.set(await loadTrackerData(trackerDataPath));
@@ -20,10 +24,13 @@
     // load map data
     mapData.set(await loadMapData(mapDataPath));
   });
+
+  $: isMobile.set(width < 600);
 </script>
 
 <div
   class="component-wrapper"
+  bind:clientWidth={width}
   use:css={styles}
 >
   <FilterBar />
