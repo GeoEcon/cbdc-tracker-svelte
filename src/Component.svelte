@@ -5,7 +5,6 @@
   import { loadTrackerData, loadMapData } from './utils/load';
   import { isVertical } from './stores/device';
   import { rawData } from './stores/data';
-  import { rawData as mapData } from './stores/map';
   
 
   import FilterBar from './components/FilterBar/FilterBar.svelte';
@@ -20,9 +19,6 @@
   onMount(async () => {
     // load initial data
     rawData.set(await loadTrackerData(trackerDataPath));
-
-    // load map data
-    mapData.set(await loadMapData(mapDataPath));
   });
 
   $: isVertical.set(width < 600);

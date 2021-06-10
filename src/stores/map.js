@@ -1,6 +1,7 @@
 import { writable, derived } from 'svelte/store';
-import { geoOrthographic, geoEqualEarth, geoPath } from 'd3';
+import { zoomIdentity, geoOrthographic, geoEqualEarth, geoPath } from 'd3';
 
+import rawData from '../inputs/country-shapes';
 import { isVertical } from './device';
 
 const sphere = { type: 'Sphere' };
@@ -8,7 +9,7 @@ const sphere = { type: 'Sphere' };
 export const mapWidth = writable(0);
 export const mapHeight = writable(0);
 
-export const rawData = writable([]);
+export const mapTransform = writable(zoomIdentity);
 
 export const projections = derived(
   [mapWidth, mapHeight, isVertical],
@@ -37,9 +38,9 @@ export const paths = derived(projections, ($projections) => {
   return $projections.map((projection) => geoPath(projection, null));
 });
 
-export const projectedData = derived([rawData, paths], ([$rawData, $paths]) => {
+export const projectedData = derived(paths, $paths => {
   return $paths.map((path) => {
-    return $rawData.map((d, i) => {
+    return rawData.map((d, i) => {
       return {
         id: i,
         name: d.properties.name,

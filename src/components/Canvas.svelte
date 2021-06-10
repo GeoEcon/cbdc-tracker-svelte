@@ -82,3 +82,10 @@
   on:click={(e) => handleMouseMoveClick(e, 'click')}
 />
 <slot />
+
+<style>
+  canvas {
+    position: var(--position);
+    z-index: var(--z-index);
+  }
+</style>
