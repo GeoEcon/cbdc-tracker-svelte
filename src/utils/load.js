@@ -22,7 +22,7 @@ export const loadTrackerData = async (dataPath) => {
       technology: splitValue(d['Underlying technology: corda or Ethereum']),
       architecture: splitValue(d['Architecture: direct CBDC or hybrid']),
       infrastructure: splitValue(d['Infrastructure: DLT or conventional']),
-      access: splitValue(d['\nAccess: token or account']),
+      access: splitValue(d['Access: token or account']),
       corporate_partnership: splitValue(d['Corporate partnership']),
       crossborder_partnerships: splitValue(d['Cross-border partnerships']),
       sources: d.Sources,

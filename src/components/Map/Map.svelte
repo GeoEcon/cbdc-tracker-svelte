@@ -3,6 +3,8 @@
   import { zoom as d3zoom, select } from 'd3';
 
   import { mapWidth, mapHeight, mapTransform, projectedData } from '../../stores/map';
+  import { data } from '../../stores/data';
+  import styles from '../../utils/styles';
 
   import Canvas from '../Canvas.svelte';
   import Country from './Country.svelte';
@@ -28,7 +30,6 @@
   <Canvas
     width={$mapWidth}
     height={$mapHeight}
-    transform={$mapTransform}
     --position="absolute"
     --z-index="0"
   >
@@ -36,6 +37,9 @@
       {#each projection as country (`${i}_${country.id}`)}
         <Country
           country={country}
+          colors={$data.find(d => d.name === country.name)?.current_status.map(d => d.color)}
+          strokeColor={styles.gray}
+          fallbackFillColor={styles.lightgray}
           transform={$mapTransform}
         />
       {/each}

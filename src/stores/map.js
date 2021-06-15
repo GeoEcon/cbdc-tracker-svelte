@@ -43,7 +43,7 @@ export const projectedData = derived(paths, $paths => {
     return rawData.map((d, i) => {
       return {
         id: i,
-        name: d.properties.name,
+        name: d.properties.geounit,
         path: path(d),
         centroid: path.centroid(d),
       };

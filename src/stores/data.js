@@ -9,6 +9,7 @@ import {
   crossborderPartnershipsFilter,
 } from './filter';
 import { hasOverlap } from '../utils/logic';
+import { statusColorScale } from '../utils/scales';
 
 export const rawData = writable([]);
 
@@ -34,6 +35,8 @@ export const data = derived(
     return $rawData.map((d) => {
       return {
         ...d,
+        current_status: d.current_status.map(cs => ({name: cs, color: statusColorScale[cs]})),
+        new_status: d.new_status.map(cs => ({name: cs, color: statusColorScale[cs]})),
         show:
           hasOverlap(d.current_status, $statusFilter) &&
           hasOverlap(d.technology, $technologyFilter) &&

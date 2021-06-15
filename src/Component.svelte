@@ -12,7 +12,6 @@
   import Alluvial from './components/Alluvial/Alluvial.svelte';
 
   export let trackerDataPath = 'data/tracker.csv';
-  export let mapDataPath = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json';
 
   let width;
 
