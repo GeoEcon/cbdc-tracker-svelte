@@ -17,6 +17,7 @@
 
     ctx.fillStyle = colors ? colors[0] : fallbackFillColor;
     ctx.strokeStyle = strokeColor;
+    ctx.lineWidth = 1 / (transform.k || 1);
 
     const { path } = country;
     const p = new Path2D(path);
