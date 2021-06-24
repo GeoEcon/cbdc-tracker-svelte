@@ -1,5 +1,5 @@
 <script>
-  import { onMount, onDestroy, setContext, createEventDispatcher } from 'svelte';
+  import { onMount, onDestroy, setContext } from 'svelte';
 
   import { scaleCanvas } from '../utils/canvas';
 
@@ -8,28 +8,12 @@
   export let center = false;
   export let contextName = 'canvas';
 
-  const dispatch = createEventDispatcher();
   const drawFunctions = [];
 
   let canvas;
   let ctx;
   let pendingInvalidation = false;
   let frameId;
-
-  function handleMouseMoveClick(e, type) {
-    const { layerX: x, layerY: y } = e;
-    if (center) {
-      dispatch(type, {
-        x: x - width / 2,
-        y: y - height / 2
-      });
-    } else {
-      dispatch(type, {
-        x,
-        y
-      });
-    }
-  }
 
   function update() {
     if (!ctx) return;
@@ -78,8 +62,6 @@
 
 <canvas
   bind:this={canvas}
-  on:mousemove={(e) => handleMouseMoveClick(e, 'mousemove')}
-  on:click={(e) => handleMouseMoveClick(e, 'click')}
 />
 <slot />
 

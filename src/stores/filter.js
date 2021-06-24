@@ -77,7 +77,7 @@ export const corporatePartnershipFilter = createMultiFilter();
 export const crossborderPartnershipsFilter = createMultiFilter();
 
 export const initFilters = (data) => {
-  statusFilter.init(data, 'current_status');
+  statusFilter.init(data, 'new_status');
   technologyFilter.init(data, 'technology');
   infrastructureFilter.init(data, 'infrastructure');
   accessFilter.init(data, 'access');

@@ -1,24 +1,14 @@
 <script>
-  import { onMount } from 'svelte';
   import { css } from './actions/css';
   import styles from './utils/styles';
-  import { loadTrackerData, loadMapData } from './utils/load';
   import { isVertical } from './stores/device';
-  import { rawData } from './stores/data';
   
 
   import FilterBar from './components/FilterBar/FilterBar.svelte';
   import Map from './components/Map/Map.svelte';
-  import Alluvial from './components/Alluvial/Alluvial.svelte';
-
-  export let trackerDataPath = 'data/tracker.csv';
+  import StatusBar from './components/StatusBar/StatusBar.svelte';
 
   let width;
-
-  onMount(async () => {
-    // load initial data
-    rawData.set(await loadTrackerData(trackerDataPath));
-  });
 
   $: isVertical.set(width < 600);
 </script>
@@ -30,7 +20,7 @@
 >
   <FilterBar />
   <Map />
-  <Alluvial />
+  <StatusBar />
 </div>
 
 <style>

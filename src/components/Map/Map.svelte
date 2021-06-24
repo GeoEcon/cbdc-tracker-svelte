@@ -37,7 +37,7 @@
       {#each projection as country (`${i}_${country.id}`)}
         <Country
           country={country}
-          colors={$data.find(d => d.name === country.name)?.current_status.map(d => d.color)}
+          color={$data.find(d => d.name === country.name)?.categories.new_status.color}
           strokeColor={styles.gray}
           fallbackFillColor={styles.lightgray}
           transform={$mapTransform}
@@ -48,9 +48,9 @@
   <svg
     width={$mapWidth}
     height={$mapHeight}
+    viewBox="0 0 {$mapWidth} {$mapHeight}"
     bind:this={zoomCatcher}
   >
-
   </svg>
 </div>
 
@@ -58,8 +58,14 @@
   .map {
     position: relative;
     width: 100%;
-    height: 70vh;
+    height: 200vw;
     overflow: hidden;
+  }
+  
+  @media (min-width: 600px) {
+    .map {
+      height: 50vw;
+    }
   }
 
   svg {

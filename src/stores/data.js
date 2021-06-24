@@ -1,5 +1,6 @@
-import { writable, derived } from 'svelte/store';
+import { readable, derived } from 'svelte/store';
 
+import { loadTrackerData } from '../utils/load';
 import {
   statusFilter,
   technologyFilter,
@@ -11,7 +12,11 @@ import {
 import { hasOverlap } from '../utils/logic';
 import { statusColorScale } from '../utils/scales';
 
-export const rawData = writable([]);
+const trackerDataPath = 'data/tracker.csv';
+
+export const rawData = readable([], async (set) => {
+  set(await loadTrackerData(trackerDataPath));
+});
 
 export const data = derived(
   [
@@ -35,19 +40,27 @@ export const data = derived(
     return $rawData.map((d) => {
       return {
         ...d,
-        current_status: d.current_status.map(cs => ({name: cs, color: statusColorScale[cs]})),
-        new_status: d.new_status.map(cs => ({name: cs, color: statusColorScale[cs]})),
+        categories: {
+          ...d.categories,
+          new_status: {
+            name: d.categories.new_status,
+            color: statusColorScale[d.categories.new_status],
+          },
+        },
         show:
-          hasOverlap(d.current_status, $statusFilter) &&
-          hasOverlap(d.technology, $technologyFilter) &&
-          hasOverlap(d.infrastructure, $infrastructureFilter) &&
-          hasOverlap(d.access, $accessFilter) &&
-          hasOverlap(d.corporate_partnership, $corporatePartnershipFilter) &&
+          hasOverlap([d.categories.new_status], $statusFilter) &&
+          hasOverlap(d.categories.technology, $technologyFilter) &&
+          hasOverlap(d.categories.infrastructure, $infrastructureFilter) &&
+          hasOverlap(d.categories.access, $accessFilter) &&
           hasOverlap(
-            d.crossborder_partnerships,
+            d.categories.corporate_partnership,
+            $corporatePartnershipFilter
+          ) &&
+          hasOverlap(
+            d.categories.crossborder_partnerships,
             $crossborderPartnershipsFilter
           ),
       };
     });
   }
-);
+, []);

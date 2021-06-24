@@ -3,7 +3,7 @@
   import { zoomIdentity } from 'd3';
 
   export let country = {};
-  export let colors = ['#FFFFFF'];
+  export let color = '#FFFFFF';
   export let strokeColor = '#000000';
   export let fallbackFillColor = '#FFFFFF';
   export let transform = zoomIdentity;
@@ -15,7 +15,7 @@
     ctx.translate(transform.x, transform.y);
     ctx.scale(transform.k, transform.k);
 
-    ctx.fillStyle = colors ? colors[0] : fallbackFillColor;
+    ctx.fillStyle = color ? color : fallbackFillColor;
     ctx.strokeStyle = strokeColor;
     ctx.lineWidth = 1 / (transform.k || 1);
 

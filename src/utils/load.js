@@ -14,17 +14,19 @@ export const loadTrackerData = async (dataPath) => {
     return {
       owner: d.Owner,
       name: d.Name,
-      current_status: splitValue(d['Current Status']),
-      new_status: splitValue(d['New Status']),
       overview: d.Overview,
-      key_developments: splitValue(d['Key Developments']),
-      use_case: splitValue(d['Use case']),
-      technology: splitValue(d['Underlying technology: corda or Ethereum']),
-      architecture: splitValue(d['Architecture: direct CBDC or hybrid']),
-      infrastructure: splitValue(d['Infrastructure: DLT or conventional']),
-      access: splitValue(d['Access: token or account']),
-      corporate_partnership: splitValue(d['Corporate partnership']),
-      crossborder_partnerships: splitValue(d['Cross-border partnerships']),
+      key_developments: d['Key Developments'],
+      categories: {
+        // current_status: splitValue(d['Current Status']),
+        new_status: d['New Status'],
+        use_case: splitValue(d['Use case']),
+        technology: splitValue(d['Underlying technology: corda or Ethereum']),
+        architecture: splitValue(d['Architecture: direct CBDC or hybrid']),
+        infrastructure: splitValue(d['Infrastructure: DLT or conventional']),
+        access: splitValue(d['Access: token or account']),
+        corporate_partnership: splitValue(d['Corporate partnership']),
+        crossborder_partnerships: splitValue(d['Cross-border partnerships']),
+      },
       sources: d.Sources,
       notes: d.Notes,
     };
@@ -32,7 +34,7 @@ export const loadTrackerData = async (dataPath) => {
 
   // filter for valid entries
   const filteredData = data.filter(
-    (d) => !d.current_status.includes('No development yet')
+    (d) => d.categories.new_status.length > 0 && !d.categories.new_status.includes('No development yet')
   );
 
   // initialize the filters

@@ -18,16 +18,17 @@ export const projections = derived(
       return [
         geoOrthographic()
           .fitSize([$mapWidth, $mapWidth], sphere)
-          .rotate([-75, -20]),
+          .rotate([-75, -10]),
         geoOrthographic()
           .fitSize([$mapWidth, $mapWidth], sphere)
           .translate([$mapWidth / 2, $mapHeight * 0.7])
-          .rotate([70, -20]),
+          .rotate([70, -10]),
       ];
     } else {
       return [
         geoEqualEarth()
           .fitSize([$mapWidth, $mapHeight], sphere)
+          .translate([$mapWidth / 2, $mapHeight * 0.55])
           .rotate([-6, 0]),
       ];
     }
