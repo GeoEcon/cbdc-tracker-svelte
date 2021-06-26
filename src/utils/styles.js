@@ -13,5 +13,7 @@ export default {
   tertBlue: '#234C6A',
 
   gray: '#DBDBDB',
-  lightgray: '#F7F7F7'
+  lightgray: '#F7F7F7',
+
+  background: '#FFFFFF'
 };

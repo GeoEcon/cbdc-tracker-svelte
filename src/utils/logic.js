@@ -4,3 +4,5 @@ export const hasOverlap = (arr, filter) => {
     .map((d) => d.id)
     .some((item) => arr.includes(item));
 };
+
+export const isDefined = (value) => value !== undefined && value !== null;

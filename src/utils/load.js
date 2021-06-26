@@ -44,7 +44,13 @@ export const loadTrackerData = async (dataPath) => {
 };
 
 export const loadMapData = async (dataPath) => {
-  const world = await json(dataPath);
-  const { features } = feature(world, world.objects.countries);
-  return features;
+  const { features } = await json(dataPath);
+  return features.map(f => {
+    return {
+      ...f,
+      properties: {
+        ADMIN: f.properties.ADMIN
+      }
+    };
+  });
 };

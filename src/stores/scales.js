@@ -6,16 +6,18 @@ import { mapWidth } from './map';
 
 const MAXSTATUSBARWIDTH = 1000;
 
-export const statusBarScale = derived([data, mapWidth], ([$data, $mapWidth]) => {
-  let start = 0;
-  let end = $mapWidth;
-  if ($mapWidth > MAXSTATUSBARWIDTH) {
-    start = ($mapWidth - MAXSTATUSBARWIDTH) / 2;
-    end = start + MAXSTATUSBARWIDTH;
-  }
-  console.log({start, end, $mapWidth})
+export const statusBarScale = derived(
+  [data, mapWidth],
+  ([$data, $mapWidth]) => {
+    let start = 0;
+    let end = $mapWidth;
+    if ($mapWidth > MAXSTATUSBARWIDTH) {
+      start = ($mapWidth - MAXSTATUSBARWIDTH) / 2;
+      end = start + MAXSTATUSBARWIDTH;
+    }
 
-  return scaleLinear()
-    .domain([0, $data.length])
-    .range([start, end]);
-});
+    return scaleLinear()
+      .domain([0, $data.length - 1])
+      .range([start, end]);
+  }
+);

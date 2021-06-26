@@ -4,10 +4,14 @@
 
   import { mapWidth, mapHeight, mapTransform, projectedData } from '../../stores/map';
   import { data } from '../../stores/data';
+  import { statusBarScale } from '../../stores/scales';
+  import { orderedStatusRollup } from '../../stores/statusbar';
   import styles from '../../utils/styles';
 
   import Canvas from '../Canvas.svelte';
   import Country from './Country.svelte';
+  import StatusLines from './StatusLines.svelte';
+import { transform } from 'lodash-es';
 
   export let zoomExtent = [1, 10];
 
@@ -51,6 +55,13 @@
     viewBox="0 0 {$mapWidth} {$mapHeight}"
     bind:this={zoomCatcher}
   >
+    <StatusLines
+      data={$data}
+      projectedData={$projectedData}
+      orderedStatusRollup={$orderedStatusRollup}
+      statusBarScale={$statusBarScale}
+      mapHeight={$mapHeight}
+    />
   </svg>
 </div>
 

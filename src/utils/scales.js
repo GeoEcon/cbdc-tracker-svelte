@@ -4,36 +4,39 @@ const statusColors = [
   '#AAC8FC',
   '#F1B2EE',
   '#FFB3B5',
-  '#DAC584'
+  '#DAC584',
 ];
 
 export const statusLevels = [
   {
     id: 0,
-    name: 'Research'
+    name: 'Research',
   },
   {
     id: 1,
-    name: 'Development'
+    name: 'Development',
   },
   {
     id: 2,
-    name: 'Pilot'
+    name: 'Pilot',
   },
   {
     id: 3,
-    name: 'Launched'
+    name: 'Launched',
   },
   {
     id: 4,
-    name: 'Cancelled'
+    name: 'Cancelled',
   },
   {
     id: 5,
-    name: 'Inactive'
+    name: 'Inactive',
   },
 ];
 
 export const statusColorScale = (function () {
-  return statusLevels.reduce((acc, cur, i) => ({...acc, [cur.name]: statusColors[i]}), {});
+  return statusLevels.reduce(
+    (acc, cur, i) => ({ ...acc, [cur.name]: statusColors[i] }),
+    {}
+  );
 })();

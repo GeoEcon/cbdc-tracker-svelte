@@ -1,8 +1,13 @@
 import { writable, derived } from 'svelte/store';
 import { zoomIdentity, geoOrthographic, geoEqualEarth, geoPath } from 'd3';
+import { feature } from 'topojson-client';
 
-import rawData from '../inputs/country-shapes';
 import { isVertical } from './device';
+
+import world from '../inputs/countries-topo.json';
+import specialFeatures from '../inputs/countries-special.json';
+
+const { features } = feature(world, world.objects.countries);
 
 const sphere = { type: 'Sphere' };
 
@@ -36,18 +41,20 @@ export const projections = derived(
 );
 
 export const paths = derived(projections, ($projections) => {
-  return $projections.map((projection) => geoPath(projection, null));
+  return $projections.map((projection) => geoPath(projection));
 });
 
-export const projectedData = derived(paths, $paths => {
+export const projectedData = derived(paths, ($paths) => {
   return $paths.map((path) => {
-    return rawData.map((d, i) => {
-      return {
-        id: i,
-        name: d.properties.geounit,
-        path: path(d),
-        centroid: path.centroid(d),
-      };
-    });
+    return [...features, ...specialFeatures]
+      .filter((d) => !['Antarctica'].includes(d.properties.name))
+      .map((d, i) => {
+        return {
+          id: i,
+          name: d.properties.name,
+          path: path(d),
+          centroid: path.centroid(d),
+        };
+      });
   });
 });

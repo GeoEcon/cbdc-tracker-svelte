@@ -37,7 +37,9 @@ export const data = derived(
     $corporatePartnershipFilter,
     $crossborderPartnershipsFilter,
   ]) => {
-    return $rawData.map((d) => {
+    return $rawData
+    .filter(d => !['Euro Area'].includes(d.name))
+    .map((d) => {
       return {
         ...d,
         categories: {
