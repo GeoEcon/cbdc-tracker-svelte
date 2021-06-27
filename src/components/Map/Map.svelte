@@ -47,10 +47,17 @@
           color={$data.find(d => d.name === country.name)?.categories.new_status.color}
           strokeColor={styles.gray}
           fallbackFillColor={styles.lightgray}
-          transform={{x: 0, y: 0, k: 1}}
         />
       {/each}
     {/each}
+    <StatusLines
+        data={$data}
+        projectedData={$projectedData}
+        orderedStatusRollup={$orderedStatusRollup}
+        statusBarScale={$statusBarScale}
+        mapWidth={$mapWidth}
+        mapHeight={$mapHeight}
+      />
   </Canvas>
   <svg
     width={$mapWidth}
@@ -58,13 +65,7 @@
     viewBox="0 0 {$mapWidth} {$mapHeight}"
     bind:this={zoomCatcherElem}
   >
-      <StatusLines
-        data={$data}
-        projectedData={$projectedData}
-        orderedStatusRollup={$orderedStatusRollup}
-        statusBarScale={$statusBarScale}
-        mapHeight={$mapHeight}
-      />
+      
   </svg>
 </div>
 
