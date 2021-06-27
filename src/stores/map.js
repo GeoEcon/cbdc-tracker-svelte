@@ -1,15 +1,23 @@
-import { writable, derived } from 'svelte/store';
+import { readable, writable, derived } from 'svelte/store';
 import { zoomIdentity, geoOrthographic, geoEqualEarth, geoPath } from 'd3';
 import { feature } from 'topojson-client';
 
 import { isVertical } from './device';
-
-import world from '../inputs/countries-topo.json';
-import specialFeatures from '../inputs/countries-special.json';
-
-const { features } = feature(world, world.objects.countries);
+import { loadJson } from '../utils/load';
 
 const sphere = { type: 'Sphere' };
+
+const worldDataPath = 'data/countries-topo.json';
+const specialDataPath = 'data/countries-special.json';
+
+const features = readable([], async set => {
+  const world = await loadJson(worldDataPath);
+  const { features: worldFeatures } = feature(world, world.objects.countries);
+
+  const specialFeatures = await loadJson(specialDataPath);
+
+  set([...worldFeatures, ...specialFeatures]);
+});
 
 let initialTransform = [];
 
@@ -21,7 +29,6 @@ export const mapTransform = writable(zoomIdentity);
 export const projections = derived(
   [mapWidth, mapHeight, isVertical],
   ([$mapWidth, $mapHeight, $isVertical]) => {
-    console.log('init projections')
     let projections = [];
     if ($isVertical) {
       projections = [
@@ -68,9 +75,9 @@ export const paths = derived(transformedProjections, ($transformedProjections) =
   });
 });
 
-export const projectedData = derived(paths, ($paths) => {
+export const projectedData = derived([features, paths], ([$features, $paths]) => {
   return $paths.map((path) => {
-    return [...features, ...specialFeatures]
+    return $features
       .filter((d) => !['Antarctica'].includes(d.properties.name))
       .map((d, i) => {
         return {

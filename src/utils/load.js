@@ -43,14 +43,6 @@ export const loadTrackerData = async (dataPath) => {
   return filteredData;
 };
 
-export const loadMapData = async (dataPath) => {
-  const { features } = await json(dataPath);
-  return features.map(f => {
-    return {
-      ...f,
-      properties: {
-        ADMIN: f.properties.ADMIN
-      }
-    };
-  });
+export const loadJson = async (dataPath) => {
+  return await json(dataPath);
 };
