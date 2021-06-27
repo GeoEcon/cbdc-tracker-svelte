@@ -1,6 +1,6 @@
 <script>
   import { onMount } from 'svelte';
-  import { zoom as d3zoom, select } from 'd3';
+  import { zoom as d3zoom, zoomIdentity, select } from 'd3';
 
   import { mapWidth, mapHeight, mapTransform, projectedData } from '../../stores/map';
   import { data } from '../../stores/data';
@@ -11,7 +11,6 @@
   import Canvas from '../Canvas.svelte';
   import Country from './Country.svelte';
   import StatusLines from './StatusLines.svelte';
-import { transform } from 'lodash-es';
 
   export let zoomExtent = [1, 10];
 
@@ -19,11 +18,14 @@ import { transform } from 'lodash-es';
     .scaleExtent(zoomExtent)
     .on('zoom', ({ transform }) => mapTransform.set(transform));
 
-  let zoomCatcher;
+  let zoomCatcherElem, zoomCatcher;
   
   onMount(() => {
-    select(zoomCatcher).call(zoom);
+    zoomCatcher = select(zoomCatcherElem);
+    zoomCatcher.call(zoom);
   });
+
+  $: if(zoomCatcher) zoomCatcher.call(zoom.transform, zoomIdentity.translate($mapWidth / 2, $mapHeight / 2));
 </script>
 
 <div
@@ -34,6 +36,7 @@ import { transform } from 'lodash-es';
   <Canvas
     width={$mapWidth}
     height={$mapHeight}
+    center={false}
     --position="absolute"
     --z-index="0"
   >
@@ -44,7 +47,7 @@ import { transform } from 'lodash-es';
           color={$data.find(d => d.name === country.name)?.categories.new_status.color}
           strokeColor={styles.gray}
           fallbackFillColor={styles.lightgray}
-          transform={$mapTransform}
+          transform={{x: 0, y: 0, k: 1}}
         />
       {/each}
     {/each}
@@ -53,15 +56,15 @@ import { transform } from 'lodash-es';
     width={$mapWidth}
     height={$mapHeight}
     viewBox="0 0 {$mapWidth} {$mapHeight}"
-    bind:this={zoomCatcher}
+    bind:this={zoomCatcherElem}
   >
-    <StatusLines
-      data={$data}
-      projectedData={$projectedData}
-      orderedStatusRollup={$orderedStatusRollup}
-      statusBarScale={$statusBarScale}
-      mapHeight={$mapHeight}
-    />
+      <StatusLines
+        data={$data}
+        projectedData={$projectedData}
+        orderedStatusRollup={$orderedStatusRollup}
+        statusBarScale={$statusBarScale}
+        mapHeight={$mapHeight}
+      />
   </svg>
 </div>
 

@@ -11,6 +11,8 @@ const { features } = feature(world, world.objects.countries);
 
 const sphere = { type: 'Sphere' };
 
+let initialTransform = [];
+
 export const mapWidth = writable(0);
 export const mapHeight = writable(0);
 
@@ -19,29 +21,51 @@ export const mapTransform = writable(zoomIdentity);
 export const projections = derived(
   [mapWidth, mapHeight, isVertical],
   ([$mapWidth, $mapHeight, $isVertical]) => {
+    console.log('init projections')
+    let projections = [];
     if ($isVertical) {
-      return [
+      projections = [
         geoOrthographic()
           .fitSize([$mapWidth, $mapWidth], sphere)
+          .translate([0, -$mapHeight * 0.25])
           .rotate([-75, -10]),
         geoOrthographic()
           .fitSize([$mapWidth, $mapWidth], sphere)
-          .translate([$mapWidth / 2, $mapHeight * 0.7])
+          .translate([0, $mapHeight * 0.25])
           .rotate([70, -10]),
       ];
     } else {
-      return [
+      projections = [
         geoEqualEarth()
           .fitSize([$mapWidth, $mapHeight], sphere)
-          .translate([$mapWidth / 2, $mapHeight * 0.55])
-          .rotate([-6, 0]),
+          .translate([0, 0])
+          .rotate([-6, 0])
       ];
     }
+    initialTransform = projections.map(projection => {
+      const [ tx, ty ] = projection.translate();
+      return {
+        ts: projection.scale(),
+        tx,
+        ty
+      };
+    });
+    return projections;
   }
 );
 
-export const paths = derived(projections, ($projections) => {
-  return $projections.map((projection) => geoPath(projection));
+const transformedProjections = derived([projections, mapTransform], ([$projections, $mapTransform]) => {
+  return $projections.map((projection, i) => {
+    return projection
+      .scale(initialTransform[i].ts * $mapTransform.k)
+      .translate([$mapTransform.x, $mapTransform.y]);
+  });
+});
+
+export const paths = derived(transformedProjections, ($transformedProjections) => {
+  return $transformedProjections.map((projection) => {
+    return geoPath(projection);
+  });
 });
 
 export const projectedData = derived(paths, ($paths) => {
