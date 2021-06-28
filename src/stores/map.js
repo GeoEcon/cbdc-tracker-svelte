@@ -3,16 +3,17 @@ import { zoomIdentity, geoOrthographic, geoEqualEarth, geoPath } from 'd3';
 import { feature } from 'topojson-client';
 
 import { isVertical } from './device';
-import { loadJson } from '../utils/load';
+import { loadJson, loadNaturalEarth } from '../utils/load';
 
 const sphere = { type: 'Sphere' };
 
-const worldDataPath = 'data/countries-topo.json';
+const worldDataPath = 'data/countries-topo.json'; // https://raw.githubusercontent.com/deldersveld/topojson/master/world-countries.json
+// const naturalEarthDataPath = 'data/countries-110.json';
 const specialDataPath = 'data/countries-special.json';
 
 const features = readable([], async set => {
   const world = await loadJson(worldDataPath);
-  const { features: worldFeatures } = feature(world, world.objects.countries);
+  const { features: worldFeatures } = feature(world, world.objects.countries1);
 
   const specialFeatures = await loadJson(specialDataPath);
 

@@ -46,3 +46,15 @@ export const loadTrackerData = async (dataPath) => {
 export const loadJson = async (dataPath) => {
   return await json(dataPath);
 };
+
+export const loadNaturalEarth = async (dataPath) => {
+  const { features } = await json(dataPath);
+  return features.map(d => {
+    return {
+      ...d,
+      properties: {
+        name: d.properties.ADMIN
+      }
+    };
+  });
+};

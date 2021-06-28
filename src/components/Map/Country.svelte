@@ -10,6 +10,8 @@
   const { register, deregister, invalidate } = getContext(contextName);
 
   function draw(ctx) {
+    ctx.globalAlpha = 1.0;
+    
     ctx.fillStyle = color ? color : fallbackFillColor;
     ctx.strokeStyle = strokeColor;
     ctx.lineWidth = 1;

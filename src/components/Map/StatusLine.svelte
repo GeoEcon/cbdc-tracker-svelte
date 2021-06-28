@@ -14,6 +14,8 @@
   const { register, deregister, invalidate } = getContext(contextName);
 
   function draw(ctx) {
+    ctx.globalAlpha = 0.3;
+
     ctx.strokeStyle = backgroundColor;
     ctx.lineWidth = 6;
 
