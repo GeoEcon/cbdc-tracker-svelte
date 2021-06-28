@@ -1,10 +1,24 @@
 import { writable } from 'svelte/store';
+import { areAllSelected } from '../utils/logic';
+
+import { statusLevels } from '../utils/scales';
 
 function createMultiFilter() {
   const { subscribe, set, update } = writable([]);
 
-  const init = (data, col) => {
-    const values = [...new Set(data.map((d) => d[col]).flat())];
+  const init = (data, col = null) => {
+    let values = data;
+    if (col !== null) {
+      values = [
+        ...new Set(
+          data
+            .map((d) => {
+              return col.split('.').reduce((acc, cur) => acc[cur], d);
+            })
+            .flat()
+        ),
+      ];
+    }
     set(
       values.map((value) => {
         return {
@@ -43,6 +57,21 @@ function createMultiFilter() {
   const selectAll = () =>
     update((f) => f.map((d) => ({ ...d, selected: true })));
 
+  const click = (id) =>
+    update((f) => {
+      if (areAllSelected(f)) {
+        return f.map((d) => ({
+          ...d,
+          selected: [id].flat().includes(d.id),
+        }));
+      } else {
+        return f.map((d) => ({
+          ...d,
+          selected: [id].flat().includes(d.id) ? !d.selected : d.selected,
+        }));
+      }
+    });
+
   const applyBoolArray = (arr) => {
     const tmpArr = [...arr].reverse();
     update((f) =>
@@ -65,6 +94,7 @@ function createMultiFilter() {
     selectAll,
     unselect,
     unselectAll,
+    click,
     applyBoolArray,
   };
 }
@@ -77,10 +107,13 @@ export const corporatePartnershipFilter = createMultiFilter();
 export const crossborderPartnershipsFilter = createMultiFilter();
 
 export const initFilters = (data) => {
-  statusFilter.init(data, 'new_status');
-  technologyFilter.init(data, 'technology');
-  infrastructureFilter.init(data, 'infrastructure');
-  accessFilter.init(data, 'access');
-  corporatePartnershipFilter.init(data, 'corporate_partnership');
-  crossborderPartnershipsFilter.init(data, 'crossborder_partnerships');
+  statusFilter.init(statusLevels.map((d) => d.name));
+  technologyFilter.init(data, 'categories.technology');
+  infrastructureFilter.init(data, 'categories.infrastructure');
+  accessFilter.init(data, 'categories.access');
+  corporatePartnershipFilter.init(data, 'categories.corporate_partnership');
+  crossborderPartnershipsFilter.init(
+    data,
+    'categories.crossborder_partnerships'
+  );
 };

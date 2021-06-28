@@ -12,5 +12,7 @@
 </div>
 
 <style>
-
+  .filter-bar {
+    display: grid;
+  }
 </style>
