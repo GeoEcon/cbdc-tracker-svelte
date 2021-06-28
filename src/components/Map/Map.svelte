@@ -1,11 +1,12 @@
 <script>
   import { onMount } from 'svelte';
-  import { zoom as d3zoom, zoomIdentity, select } from 'd3';
+  import { zoom as d3zoom, select } from 'd3';
 
-  import { mapWidth, mapHeight, mapTransform, projectedData } from '../../stores/map';
+  import { mapWidth, mapHeight, initialTransform, mapTransform, projectedData } from '../../stores/map';
   import { data } from '../../stores/data';
   import { statusBarScale } from '../../stores/scales';
   import { orderedStatusRollup } from '../../stores/statusbar';
+  import { isVertical } from '../../stores/device';
   import styles from '../../utils/styles';
 
   import Canvas from '../Canvas.svelte';
@@ -25,7 +26,7 @@
     zoomCatcher.call(zoom);
   });
 
-  $: if(zoomCatcher) zoomCatcher.call(zoom.transform, zoomIdentity.translate($mapWidth / 2, $mapHeight / 2));
+  $: if(zoomCatcher) zoomCatcher.call(zoom.transform, $initialTransform);
 </script>
 
 <div
@@ -51,13 +52,13 @@
       {/each}
     {/each}
     <StatusLines
-        data={$data}
-        projectedData={$projectedData}
-        orderedStatusRollup={$orderedStatusRollup}
-        statusBarScale={$statusBarScale}
-        mapWidth={$mapWidth}
-        mapHeight={$mapHeight}
-      />
+      data={$data}
+      projectedData={$projectedData}
+      orderedStatusRollup={$orderedStatusRollup}
+      statusBarScale={$statusBarScale}
+      mapWidth={$mapWidth}
+      mapHeight={$mapHeight}
+    />
   </Canvas>
   <svg
     width={$mapWidth}
@@ -73,7 +74,7 @@
   .map {
     position: relative;
     width: 100%;
-    height: 200vw;
+    height: 180vw;
     overflow: hidden;
   }
   

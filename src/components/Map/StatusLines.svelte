@@ -41,14 +41,13 @@ import Country from './Country.svelte';
 </script>
 
 
-{#each countries as country (country.id)}
-  {#if (country.lineVisible)}
-    <StatusLine
-      x1={country.centroid[0]}
-      y1={country.centroid[1]}
-      x2={statusBarScale(country.orderId)}
-      y2={mapHeight}
-      color={country.categories[category].color}
-    />
-  {/if}
+{#each countries as country (country.orderId)}
+  <StatusLine
+    x1={country.centroid[0]}
+    y1={country.centroid[1]}
+    x2={statusBarScale(country.orderId)}
+    y2={mapHeight}
+    color={country.categories[category].color}
+    opacity={country.lineVisible ? 0.3 : 0}
+  />
 {/each}
