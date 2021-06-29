@@ -6,12 +6,14 @@
   import { data } from '../../stores/data';
   import { dataCountries } from '../../stores/datacountries';
   import { statusBarScale } from '../../stores/scales';
+  import { colorCategory } from '../../stores/selection';
   import styles from '../../utils/styles';
 
   import Canvas from '../Canvas.svelte';
   import Country from './Country.svelte';
   import StatusLine from './StatusLine.svelte';
   import Centroid from './Centroid.svelte';
+import { every } from 'lodash-es';
 
   export let zoomExtent = [1, 10];
 
@@ -20,7 +22,6 @@
     .on('zoom', ({ transform }) => mapTransform.set(transform));
 
   let zoomCatcherElem, zoomCatcher;
-  let colorCategory = 'new_status';
   
   onMount(() => {
     zoomCatcher = select(zoomCatcherElem);
@@ -46,23 +47,25 @@
       {#each projection as country (`${i}_${country.id}`)}
         <Country
           path={country.path}
-          color={$data.find(d => d.name === country.name)?.categories[colorCategory].color}
+          color={$data.find(d => d.name === country.name)?.categories[$colorCategory].color}
           strokeColor={styles.gray}
           fallbackFillColor={styles.lightgray}
           fillOpacity={$data.find(d => d.name === country.name)?.show ? 1.0 : 0.2}
         />
       {/each}
     {/each}
-    {#each $dataCountries as country (country.orderId)}
-      <StatusLine
-        x1={country.centroid[0]}
-        y1={country.centroid[1]}
-        x2={$statusBarScale(country.orderId)}
-        y2={$mapHeight}
-        color={country.categories[colorCategory].color}
-        opacity={country.lineVisible ? 0.3 : 0}
-      />
-    {/each}
+    <!-- {#if (!$data.every(d => d.show))}
+      {#each $dataCountries as country (country.orderId)}
+        <StatusLine
+          x1={country.centroid[0]}
+          y1={country.centroid[1]}
+          x2={$statusBarScale(country.orderId)}
+          y2={$mapHeight}
+          color={country.categories[$colorCategory].color}
+          opacity={country.lineVisible ? 0.3 : 0}
+        />
+      {/each}
+    {/if} -->
   </Canvas>
   <svg
     width={$mapWidth}
@@ -73,7 +76,8 @@
     {#each $dataCountries as country (country.orderId)}
       <Centroid
         dataCountry={country}
-        color={country.categories[colorCategory].color}
+        color={country.categories[$colorCategory].color}
+        opacity={country.show ? 1 : 0.3}
       />
     {/each}
   </svg>

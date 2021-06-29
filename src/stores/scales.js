@@ -4,7 +4,7 @@ import { scaleLinear } from 'd3';
 import { data } from './data';
 import { mapWidth } from './map';
 
-const MAXSTATUSBARWIDTH = 1000;
+const MAXSTATUSBARWIDTH = Math.Inf;
 
 export const statusBarScale = derived(
   [data, mapWidth],

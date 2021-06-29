@@ -20,7 +20,7 @@
 >
   <FilterBar />
   <Map />
-  <StatusBar />
+  <!-- <StatusBar /> -->
 </div>
 
 <style>

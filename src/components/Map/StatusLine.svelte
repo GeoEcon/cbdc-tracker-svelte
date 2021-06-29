@@ -23,7 +23,7 @@
     ctx.globalAlpha = $tOpacity;
 
     ctx.strokeStyle = backgroundColor;
-    ctx.lineWidth = 6;
+    ctx.lineWidth = 5;
 
     const pBackground = new Path2D(statusLinePath(x1, y1, x2, y2));
     ctx.beginPath();

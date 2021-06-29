@@ -4,12 +4,13 @@ import { rollups } from 'd3';
 import { statusColorScale, statusLevels } from '../utils/scales';
 import { data } from './data';
 import { statusBarScale } from './scales';
+import { colorCategory } from './selection';
 
-export const statusRollup = derived(data, ($data) => {
+export const statusRollup = derived([data, colorCategory], ([$data, $colorCategory]) => {
   return rollups(
     $data,
     (v) => v.length,
-    (d) => d.categories.new_status.name
+    (d) => d.categories[$colorCategory].name
   ).map((d) => {
     return {
       name: d[0],
