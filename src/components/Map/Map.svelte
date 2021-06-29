@@ -72,7 +72,8 @@
   >
     {#each $dataCountries as country (country.orderId)}
       <Centroid
-        dataCountries={dataCountries}
+        dataCountry={country}
+        color={country.categories[colorCategory].color}
       />
     {/each}
   </svg>
