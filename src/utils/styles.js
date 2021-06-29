@@ -12,6 +12,7 @@ export default {
   tertGreen: '#6F9A1A',
   tertBlue: '#234C6A',
 
+  darkgray: '#7D7D7D',
   gray: '#DBDBDB',
   lightgray: '#F7F7F7',
 

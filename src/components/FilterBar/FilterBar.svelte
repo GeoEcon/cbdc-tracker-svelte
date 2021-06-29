@@ -1,7 +1,7 @@
 <script>
-  import { filter } from 'lodash-es';
-import {
+  import {
     statusFilter,
+    countryFilter,
     useCaseFilter,
     technologyFilter,
     architectureFilter,
@@ -14,6 +14,10 @@ import {
       {
         filter: statusFilter,
         label: 'Status'
+      },
+      {
+        filter: countryFilter,
+        label: 'Country'
       },
       {
         filter: useCaseFilter,
@@ -52,11 +56,23 @@ import {
     display: grid;
     width: 100%;
     padding: 1rem;
-    grid-template-columns: repeat(12, 1fr);
+    grid-template-columns: repeat(1, 1fr);
     column-gap: 0.3rem;
     row-gap: 0.3rem;
     align-items: stretch;
     justify-items: stretch;
     justify-content: end;
+  }
+
+  @media (min-width: 600px) {
+    .filter-bar {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  @media (min-width: 980px) {
+    .filter-bar {
+      grid-template-columns: repeat(7, 1fr);
+    }
   }
 </style>

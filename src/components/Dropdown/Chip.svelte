@@ -35,11 +35,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 100%;
+    padding: 0.2rem 0.3rem;
+    font-size: 0.9rem;
+    background-color: var(--background);
+    border: none;
+    border-radius: 5px;
     user-select: none;
   }
 
   button.chip-icon {
-    height: 100%;
     font-size: 1.5rem;
     background-color: transparent;
     border: none;
@@ -47,9 +52,12 @@
     cursor: pointer;
   }
 
+  button.chip-icon:hover {
+    font-weight: bold;
+  }
+
   button.chip-icon span {
     display: inline-block;
-    height: 100%;
     padding: 0 0.2rem;
     line-height: 100%;
     transform: rotate(45deg);

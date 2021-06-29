@@ -1,4 +1,6 @@
 import { writable } from 'svelte/store';
+import { sortBy } from 'lodash-es';
+
 import { areAllSelected, areAllUnselected } from '../utils/logic';
 
 import { statusLevels } from '../utils/scales';
@@ -18,6 +20,7 @@ function createMultiFilter() {
             .flat()
         ),
       ];
+      values = sortBy(values, d => d.toLowerCase());
     }
     set(
       values.map((value) => {
@@ -105,6 +108,7 @@ function createMultiFilter() {
 }
 
 export const statusFilter = createMultiFilter();
+export const countryFilter = createMultiFilter();
 export const useCaseFilter = createMultiFilter();
 export const technologyFilter = createMultiFilter();
 export const architectureFilter = createMultiFilter();
@@ -115,6 +119,7 @@ export const crossborderPartnershipsFilter = createMultiFilter();
 
 export const initFilters = (data) => {
   statusFilter.init(statusLevels.map((d) => d.name));
+  countryFilter.init(data, 'name');
   useCaseFilter.init(data, 'categories.use_case');
   technologyFilter.init(data, 'categories.technology');
   architectureFilter.init(data, 'categories.architecture');
