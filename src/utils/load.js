@@ -1,5 +1,4 @@
 import { csv, json } from 'd3';
-import { feature } from 'topojson-client';
 import { initFilters } from '../stores/filter';
 
 const splitValue = (value) =>
@@ -7,6 +6,11 @@ const splitValue = (value) =>
     .split(',')
     .map((d) => d.trim())
     .map((d) => d === '' ? 'n/a' : d);
+
+const curate = (value) => {
+  if (!value) return 'n/a';
+  return value;
+};
 
 export const loadTrackerData = async (dataPath) => {
   // load and format the data
@@ -17,14 +21,14 @@ export const loadTrackerData = async (dataPath) => {
       overview: d.Overview,
       key_developments: d['Key Developments'],
       categories: {
-        new_status: d['New Status'],
-        use_case: splitValue(d['Use case']),
-        technology: splitValue(d['Underlying technology: corda or Ethereum']),
-        architecture: splitValue(d['Architecture: direct CBDC or hybrid']),
-        infrastructure: splitValue(d['Infrastructure: DLT or conventional']),
-        access: splitValue(d['Access: token or account']),
-        corporate_partnership: splitValue(d['Corporate partnership']),
-        crossborder_partnerships: splitValue(d['Cross-border partnerships']),
+        new_status: curate(d['New Status']),
+        use_case: curate(d['Use case']),
+        technology: curate(d['Underlying technology: corda or Ethereum']),
+        architecture: curate(d['Architecture: direct CBDC or hybrid']),
+        infrastructure: curate(d['Infrastructure: DLT or conventional']),
+        access: curate(d['Access: token or account']),
+        corporate_partnership: curate(d['Corporate partnership']),
+        crossborder_partnerships: curate(d['Cross-border partnerships']),
       },
       sources: d.Sources,
       notes: d.Notes,
@@ -32,9 +36,16 @@ export const loadTrackerData = async (dataPath) => {
   });
 
   // filter for valid entries
-  const filteredData = data.filter(
-    (d) => d.categories.new_status.length > 0 && !d.categories.new_status.includes('No development yet')
-  );
+  const filteredData = data
+    .filter(
+      (d) => d.categories.new_status !== 'n/a'
+    )
+    .filter(
+      (d) => d.categories.new_status !== 'No development yet'
+    )
+    .filter(
+      (d) => !['Euro Area'].includes(d.name)
+    );
 
   // initialize the filters
   initFilters(filteredData);

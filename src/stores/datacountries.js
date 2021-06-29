@@ -3,7 +3,7 @@ import { sortBy } from 'lodash-es';
 
 import { data } from './data';
 import { projectedData, mapWidth, mapHeight } from './map';
-import { orderedStatusRollup } from './statusbar';
+import { statusLevels } from '../utils/status';
 import { colorCategory } from './selection';
 import { isDefined } from '../utils/logic';
 
@@ -11,33 +11,30 @@ export const dataCountries = derived(
   [
     data,
     projectedData,
-    orderedStatusRollup,
     mapWidth,
     mapHeight,
     colorCategory
   ], ([
     $data,
     $projectedData,
-    $orderedStatusRollup,
     $mapWidth,
     $mapHeight,
     $colorCategory
   ]) => {
-  const availableCountries = $data.map(d => d.name);
-
+  const availableCountries = $data.map(d => d.name.name);
   return sortBy($projectedData
     .flat()
     .filter(d => isDefined(d.path))
     .filter(d => availableCountries.includes(d.name))
     .map(d => {
-      const datum = $data.find(dd => dd.name === d.name);
+      const datum = $data.find(dd => dd.name.name === d.name);
       return {
         ...d,
         ...datum
       };
     }),
     [
-      d => $orderedStatusRollup.map(dd => dd.name).indexOf(d.categories[$colorCategory].name),
+      d => statusLevels.map(dd => dd.name).indexOf(d.categories[$colorCategory].name),
       d => d.centroid[0],
       d => -d.centroid[1]
     ])

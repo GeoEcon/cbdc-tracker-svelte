@@ -7,46 +7,61 @@
     architectureFilter,
     infrastructureFilter,
     accessFilter } from '../../stores/filter';
+  import {
+    statusRollup,
+    useCaseRollup,
+    technologyRollup,
+    architectureRollup,
+    infrastructureRollup,
+    accessRollup } from '../../stores/aggregation';
 
-    import Dropdown from '../Dropdown/Dropdown.svelte';
+  import Dropdown from '../Dropdown/Dropdown.svelte';
 
-    $: dropdowns = [
-      {
-        filter: statusFilter,
-        label: 'Status'
-      },
-      {
-        filter: countryFilter,
-        label: 'Country'
-      },
-      {
-        filter: useCaseFilter,
-        label: 'Use case'
-      },
-      {
-        filter: technologyFilter,
-        label: 'Technology'
-      },
-      {
-        filter: architectureFilter,
-        label: 'Architecture'
-      },
-      {
-        filter: infrastructureFilter,
-        label: 'Infrastructure'
-      },
-      {
-        filter: accessFilter,
-        label: 'Access'
-      }
-    ].map((d, i) => ({...d, id: i}));
+  $: dropdowns = [
+    {
+      filter: statusFilter,
+      label: 'Status',
+      rollup: $statusRollup
+    },
+    {
+      filter: useCaseFilter,
+      label: 'Use case',
+      rollup: $useCaseRollup
+    },
+    {
+      filter: technologyFilter,
+      label: 'Technology',
+      rollup: $technologyRollup
+    },
+    {
+      filter: architectureFilter,
+      label: 'Architecture',
+      rollup: $architectureRollup
+    },
+    {
+      filter: infrastructureFilter,
+      label: 'Infrastructure',
+      rollup: $infrastructureRollup
+    },
+    {
+      filter: accessFilter,
+      label: 'Access',
+      rollup: $accessRollup
+    },
+    {
+      filter: countryFilter,
+      label: 'Country',
+      rollup: [] //$countryRollup
+    }
+  ].map((d, i) => ({...d, id: i}));
 </script>
 
 <div class="filter-bar">
-  {#each dropdowns as { id, filter, label } (id)}
+  {#each dropdowns as { id, filter, label, rollup } (id)}
     <Dropdown
       filter={filter}
       label={label}
+      rollup={rollup}
     />
   {/each}
 </div>

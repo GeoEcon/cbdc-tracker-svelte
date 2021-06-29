@@ -1,4 +1,4 @@
-const statusColors = [
+export const statusColors = [
   '#95D69A',
   '#61D8D6',
   '#AAC8FC',
@@ -33,10 +33,3 @@ export const statusLevels = [
     name: 'Inactive',
   },
 ];
-
-export const statusColorScale = (function () {
-  return statusLevels.reduce(
-    (acc, cur, i) => ({ ...acc, [cur.name]: statusColors[i] }),
-    {}
-  );
-})();

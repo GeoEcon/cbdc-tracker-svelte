@@ -6,7 +6,6 @@
 
   import FilterBar from './components/FilterBar/FilterBar.svelte';
   import Map from './components/Map/Map.svelte';
-  import StatusBar from './components/StatusBar/StatusBar.svelte';
 
   let width;
 
@@ -20,7 +19,6 @@
 >
   <FilterBar />
   <Map />
-  <!-- <StatusBar /> -->
 </div>
 
 <style>

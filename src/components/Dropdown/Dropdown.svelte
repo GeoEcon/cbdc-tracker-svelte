@@ -7,6 +7,7 @@
 
   export let filter;
   export let label = '';
+  export let rollup = [];
 
   let searchValue = '';
   let hoveredSuggestion = null;
@@ -104,7 +105,15 @@
         </li>
       {/each}
     </ul>
-    
+  </div>
+  <div class="bar-chart">
+    {#each rollup as { name, percent, color } (name)}
+      <span
+        class="bar"
+        style="width: {percent}%; background-color: {color};"
+      >
+      </span>
+    {/each}
   </div>
   {#if (showSuggestions)}
     <div class="suggestions">
@@ -212,6 +221,19 @@
   ul.chips li {
     height: calc(0.65 * var(--inputHeight));
     margin: 0.2rem;
+  }
+
+  .bar-chart {
+    display: flex;
+    width: 100%;
+    height: calc(0.2 * var(--inputHeight));
+    background-color: var(--background);
+  }
+
+  .bar {
+    display: inline-block;
+    height: 100%;
+    transition: width 0.2s;
   }
 
   .suggestions {

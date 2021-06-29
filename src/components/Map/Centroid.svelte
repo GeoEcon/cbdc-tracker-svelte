@@ -3,7 +3,7 @@
 
   export let dataCountry = {};
   export let color = '#000000';
-  export let radius = 12;
+  export let radius = 14;
   export let opacity = 1.0;
 </script>
 

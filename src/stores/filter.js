@@ -3,7 +3,7 @@ import { sortBy } from 'lodash-es';
 
 import { areAllSelected, areAllUnselected } from '../utils/logic';
 
-import { statusLevels } from '../utils/scales';
+import { statusLevels } from '../utils/status';
 
 function createMultiFilter() {
   const { subscribe, set, update } = writable([]);
