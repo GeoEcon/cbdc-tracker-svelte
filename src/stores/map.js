@@ -1,5 +1,5 @@
 import { readable, writable, derived } from 'svelte/store';
-import { zoomIdentity, geoOrthographic, geoEqualEarth, geoPath } from 'd3';
+import { zoomIdentity, geoEqualEarth, geoPath } from 'd3';
 import { feature } from 'topojson-client';
 
 import { isVertical } from './device';

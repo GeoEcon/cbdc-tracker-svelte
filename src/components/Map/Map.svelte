@@ -4,13 +4,14 @@
 
   import { mapWidth, mapHeight, initialTransform, mapTransform, projectedData } from '../../stores/map';
   import { data } from '../../stores/data';
+  import { dataCountries } from '../../stores/datacountries';
   import { statusBarScale } from '../../stores/scales';
-  import { orderedStatusRollup } from '../../stores/statusbar';
   import styles from '../../utils/styles';
 
   import Canvas from '../Canvas.svelte';
   import Country from './Country.svelte';
-  import StatusLines from './StatusLines.svelte';
+  import StatusLine from './StatusLine.svelte';
+  import Centroid from './Centroid.svelte';
 
   export let zoomExtent = [1, 10];
 
@@ -19,6 +20,7 @@
     .on('zoom', ({ transform }) => mapTransform.set(transform));
 
   let zoomCatcherElem, zoomCatcher;
+  let colorCategory = 'new_status';
   
   onMount(() => {
     zoomCatcher = select(zoomCatcherElem);
@@ -44,21 +46,23 @@
       {#each projection as country (`${i}_${country.id}`)}
         <Country
           path={country.path}
-          color={$data.find(d => d.name === country.name)?.categories.new_status.color}
+          color={$data.find(d => d.name === country.name)?.categories[colorCategory].color}
           strokeColor={styles.gray}
           fallbackFillColor={styles.lightgray}
           fillOpacity={$data.find(d => d.name === country.name)?.show ? 1.0 : 0.2}
         />
       {/each}
     {/each}
-    <StatusLines
-      data={$data}
-      projectedData={$projectedData}
-      orderedStatusRollup={$orderedStatusRollup}
-      statusBarScale={$statusBarScale}
-      mapWidth={$mapWidth}
-      mapHeight={$mapHeight}
-    />
+    {#each $dataCountries as country (country.orderId)}
+      <StatusLine
+        x1={country.centroid[0]}
+        y1={country.centroid[1]}
+        x2={$statusBarScale(country.orderId)}
+        y2={$mapHeight}
+        color={country.categories[colorCategory].color}
+        opacity={country.lineVisible ? 0.3 : 0}
+      />
+    {/each}
   </Canvas>
   <svg
     width={$mapWidth}
@@ -66,7 +70,11 @@
     viewBox="0 0 {$mapWidth} {$mapHeight}"
     bind:this={zoomCatcherElem}
   >
-      
+    {#each $dataCountries as country (country.orderId)}
+      <Centroid
+        dataCountries={dataCountries}
+      />
+    {/each}
   </svg>
 </div>
 
