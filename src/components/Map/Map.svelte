@@ -6,7 +6,6 @@
   import { data } from '../../stores/data';
   import { statusBarScale } from '../../stores/scales';
   import { orderedStatusRollup } from '../../stores/statusbar';
-  import { isVertical } from '../../stores/device';
   import styles from '../../utils/styles';
 
   import Canvas from '../Canvas.svelte';
@@ -44,10 +43,11 @@
     {#each $projectedData as projection, i}
       {#each projection as country (`${i}_${country.id}`)}
         <Country
-          country={country}
+          path={country.path}
           color={$data.find(d => d.name === country.name)?.categories.new_status.color}
           strokeColor={styles.gray}
           fallbackFillColor={styles.lightgray}
+          fillOpacity={$data.find(d => d.name === country.name)?.show ? 1.0 : 0.2}
         />
       {/each}
     {/each}

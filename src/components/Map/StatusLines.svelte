@@ -34,7 +34,7 @@ import Country from './Country.svelte';
     .map((d, i) => {
       return {
         ...d,
-        lineVisible: d.centroid[0] > 0 && d.centroid[0] < mapWidth && d.centroid[1] > 0 && d.centroid[1] < mapHeight,
+        lineVisible: d.show && (d.centroid[0] > 0 && d.centroid[0] < mapWidth && d.centroid[1] > 0 && d.centroid[1] < mapHeight),
         orderId: i + 0.5
       };
     });

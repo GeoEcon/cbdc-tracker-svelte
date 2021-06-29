@@ -3,6 +3,7 @@ import { readable, derived } from 'svelte/store';
 import { loadTrackerData } from '../utils/load';
 import {
   statusFilter,
+  useCaseFilter,
   technologyFilter,
   infrastructureFilter,
   accessFilter,
@@ -22,6 +23,7 @@ export const data = derived(
   [
     rawData,
     statusFilter,
+    useCaseFilter,
     technologyFilter,
     infrastructureFilter,
     accessFilter,
@@ -31,6 +33,7 @@ export const data = derived(
   ([
     $rawData,
     $statusFilter,
+    $useCaseFilter,
     $technologyFilter,
     $infrastructureFilter,
     $accessFilter,
@@ -51,6 +54,7 @@ export const data = derived(
         },
         show:
           hasOverlap([d.categories.new_status], $statusFilter) &&
+          hasOverlap(d.categories.use_case, $useCaseFilter) &&
           hasOverlap(d.categories.technology, $technologyFilter) &&
           hasOverlap(d.categories.infrastructure, $infrastructureFilter) &&
           hasOverlap(d.categories.access, $accessFilter) &&

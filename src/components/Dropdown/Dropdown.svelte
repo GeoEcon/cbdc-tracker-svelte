@@ -8,20 +8,53 @@
   export let label = '';
 
   let searchValue = '';
-  let hoveredSuggestionId = null;
+  let hoveredSuggestion = null;
   let showSuggestions = false;
   let chips = [];
+
+  function handleShowSuggestions() {
+    hoveredSuggestion = 0;
+    showSuggestions = true;
+  }
+
+  function handleCloseSuggestions() {
+    showSuggestions = false;
+  }
 
   function handleKeydown(e) {
     if (e.keyCode === 27) { // esc
       searchValue = '';
       showSuggestions = false;
     }
+
+    if (hoveredSuggestion !== null) {
+      if (e.keyCode === 13) { // enter
+        handleSuggestionSelect(suggestions[hoveredSuggestion].id);
+      }
+    }
+    
+    if (showSuggestions) {
+      if (e.keyCode === 38) { // arrow up
+        hoveredSuggestion = Math.max(hoveredSuggestion - 1, 0);
+      } else if (e.keyCode === 40) { // arrow down
+        hoveredSuggestion = Math.min(hoveredSuggestion + 1, suggestions.length - 1);
+      }
+    } else {
+      if (e.keyCode === 40) { // arrow down
+        hoveredSuggestion = 0;
+        showSuggestions = true;
+      }
+    }
   }
 
   function handleSuggestionSelect(id) {
     filter.click(id);
-    chips = [...chips, $filter.find(d => d.id === id)];
+    const index = chips.map(d => d.id).indexOf(id);
+    if (index > -1) {
+      chips = chips.filter(d => d.id !== id);
+    } else {
+      chips = [...chips, $filter.find(d => d.id === id)];
+    }
     showSuggestions = false;
   }
 
@@ -32,8 +65,6 @@
     const regexp = new RegExp(searchValue, 'gi');
     return regexp.test(d.name);
   });
-
-  $: console.log($filter)
 </script>
 
 <svelte:window on:keydown={handleKeydown}/>
@@ -47,6 +78,7 @@
           <Chip
             id={id}
             name={name}
+            on:close={() => handleSuggestionSelect(id)}
           />
         </li>
       {/each}
@@ -58,18 +90,18 @@
       autocomplete="no"
       spellcheck="no"
       bind:value={searchValue}
-      on:focus={() => showSuggestions = true}
-      use:clickOutside={() => showSuggestions = false}
+      on:focus={handleShowSuggestions}
+      use:clickOutside={handleCloseSuggestions}
     />
   </div>
   {#if (showSuggestions)}
     <ul class="suggestions">
-      {#each suggestions as { id, name } (id)}
+      {#each suggestions as { id, name }, i (id)}
         <li
-          class:active={hoveredSuggestionId && hoveredSuggestionId === id}
+          class:active={hoveredSuggestion === i}
           class:selected={hasOverlap([id], $filter)}
-          on:mouseenter={() => hoveredSuggestionId = id}
-          on:mouseleave={() => hoveredSuggestionId = null}
+          on:mouseenter={() => hoveredSuggestion = i}
+          on:mouseleave={() => hoveredSuggestion = null}
           on:click={() => handleSuggestionSelect(id)}
         >{name}</li>
       {/each}
@@ -105,9 +137,10 @@
     outline: none;
   }
 
-  .suggestions {
+  ul.suggestions {
     position: absolute;
     z-index: 1000;
+    list-style-type: none;
   }
 
   .suggestions li {

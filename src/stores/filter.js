@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
-import { areAllSelected } from '../utils/logic';
+import { areAllSelected, areAllUnselected } from '../utils/logic';
 
 import { statusLevels } from '../utils/scales';
 
@@ -59,17 +59,22 @@ function createMultiFilter() {
 
   const click = (id) =>
     update((f) => {
+      let res = [];
       if (areAllSelected(f)) {
-        return f.map((d) => ({
+        res = f.map((d) => ({
           ...d,
           selected: [id].flat().includes(d.id),
         }));
       } else {
-        return f.map((d) => ({
+        res = f.map((d) => ({
           ...d,
           selected: [id].flat().includes(d.id) ? !d.selected : d.selected,
         }));
       }
+      if (areAllUnselected(res)) {
+        res = res.map(d => ({...d, selected: true}));
+      }
+      return res;
     });
 
   const applyBoolArray = (arr) => {
@@ -100,7 +105,9 @@ function createMultiFilter() {
 }
 
 export const statusFilter = createMultiFilter();
+export const useCaseFilter = createMultiFilter();
 export const technologyFilter = createMultiFilter();
+export const architectureFilter = createMultiFilter();
 export const infrastructureFilter = createMultiFilter();
 export const accessFilter = createMultiFilter();
 export const corporatePartnershipFilter = createMultiFilter();
@@ -108,7 +115,9 @@ export const crossborderPartnershipsFilter = createMultiFilter();
 
 export const initFilters = (data) => {
   statusFilter.init(statusLevels.map((d) => d.name));
+  useCaseFilter.init(data, 'categories.use_case');
   technologyFilter.init(data, 'categories.technology');
+  architectureFilter.init(data, 'categories.architecture');
   infrastructureFilter.init(data, 'categories.infrastructure');
   accessFilter.init(data, 'categories.access');
   corporatePartnershipFilter.init(data, 'categories.corporate_partnership');

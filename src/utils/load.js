@@ -6,7 +6,7 @@ const splitValue = (value) =>
   value
     .split(',')
     .map((d) => d.trim())
-    .filter((d) => d);
+    .map((d) => d === '' ? 'n/a' : d);
 
 export const loadTrackerData = async (dataPath) => {
   // load and format the data
@@ -17,7 +17,6 @@ export const loadTrackerData = async (dataPath) => {
       overview: d.Overview,
       key_developments: d['Key Developments'],
       categories: {
-        // current_status: splitValue(d['Current Status']),
         new_status: d['New Status'],
         use_case: splitValue(d['Use case']),
         technology: splitValue(d['Underlying technology: corda or Ethereum']),

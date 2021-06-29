@@ -8,3 +8,5 @@ export const hasOverlap = (arr, filter) => {
 export const isDefined = (value) => value !== undefined && value !== null;
 
 export const areAllSelected = (arr, property = 'selected') => arr.every(d => d[property]);
+
+export const areAllUnselected = (arr, property = 'selected') => arr.every(d => !d[property]);
