@@ -6,6 +6,7 @@
   import { data } from '../../stores/data';
   import { dataCountries } from '../../stores/datacountries';
   import { colorCategory, hoveredIds, selectedIds } from '../../stores/selection';
+  import { filterByCategory } from '../../stores/filter';
   import styles from '../../utils/styles';
 
   import Canvas from '../Canvas.svelte';
@@ -31,6 +32,11 @@
 
   function handleCentroidClick(id) {
     selectedIds.add(id);
+  }
+
+  function handleHoverTagClick(e) {
+    const { detail: { category, name } } = e;
+    filterByCategory(category, name);
   }
   
   onMount(() => {
@@ -86,6 +92,9 @@
       <HoverTag
         data={$dataCountries.find(d => d.id === hoveredId)}
         mapWidth={$mapWidth}
+        on:mouseenter={() => handleCentroidMouseEnter(hoveredId)}
+        on:mouseleave={() => handleCentroidMouseLeave(hoveredId)}
+        on:tagclick={handleHoverTagClick}
       />
     {/each}
   </svg>

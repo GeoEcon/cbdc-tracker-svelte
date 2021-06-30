@@ -1,4 +1,6 @@
 <script>
+  import { sortBy } from 'lodash-es';
+
   import { clickOutside } from '../../actions/clickoutside';
   import { setFocus } from '../../actions/focus';
   import { areAllSelected, hasOverlap } from "../../utils/logic";
@@ -19,7 +21,6 @@
 
   function handleResetClick() {
     filter.selectAll();
-    chips = [];
   }
 
   function handleShowSuggestions() {
@@ -55,18 +56,18 @@
 
   function handleSuggestionSelect(id) {
     filter.click(id);
-    const index = chips.map(d => d.id).indexOf(id);
-    if (areAllSelected($filter)) {
-      chips = [];
-    } else if (index > -1) {
-      chips = chips.filter(d => d.id !== id);
-    } else {
-      chips = [...chips, $filter.find(d => d.id === id)];
-    }
     showSuggestions = false;
   }
 
   $: id = `dropdown_${label.toLowerCase()}`;
+
+  $: {
+    let prelimChips = $filter.filter(d => d.selected);
+    if (prelimChips.length === $filter.length) {
+      prelimChips = [];
+    }
+    chips = prelimChips;
+  }
 
   $: suggestions = $filter.filter(d => {
     if (!searchValue) return true;

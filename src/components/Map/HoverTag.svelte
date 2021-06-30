@@ -1,4 +1,5 @@
 <script>
+  import { createEventDispatcher } from 'svelte';
   import { fade, draw } from 'svelte/transition';
 
   import { tagConnectorPath, tagLabelPath } from '../../utils/paths';
@@ -15,8 +16,18 @@
   const pathGrowDuration = 200;
   const cornerRadius = 5;
 
+  const dispatch = createEventDispatcher();
+
   let textCategoryElems = [];
   let textNameElems = [];
+
+  function handleTagLabelClick(tag) {
+    const { category, name } = tag;
+    dispatch('tagclick', {
+      category,
+      name
+    });
+  }
 
   $: tags = [
     data.name,
@@ -101,6 +112,8 @@
 <g
   class="hover-tag"
   transform="translate({data.centroid[0]} {data.centroid[1]})"
+  on:mouseenter
+  on:mouseleave
 >
   {#each tagsPathsRefined as tag (tag.id)}
     <path
@@ -115,18 +128,22 @@
       transition:draw={{duration: pathGrowDuration}}
     />
     <g
+      class="tag-label"
       in:fade={{delay: pathGrowDuration}}
       out:fade={{delay: 0}}
+      style="--stroke: {data.categories.new_status.color};"
     >
       <path
         class="tag-label-path background"
+        class:country={tag.title === 'Country'}
         d={tagLabelPath(tag.x2, tag.y2, tag.x3, tag.y3, tag.x4, tag.y4, tag.x5, tag.y5, tag.x6, tag.y6, tag.direction * cornerRadius)}
       />
       <path
         class="tag-label-path"
+        class:country={tag.title === 'Country'}
         d={tagLabelPath(tag.x2, tag.y2, tag.x3, tag.y3, tag.x4, tag.y4, tag.x5, tag.y5, tag.x6, tag.y6, tag.direction * cornerRadius)}
-        stroke={data.categories.new_status.color}
         fill={tag.title === 'Country' ? data.categories.new_status.color : 'var(--secWhite)'}
+        on:click={() => handleTagLabelClick(tag)}
       />
       <g
         class="tag-label-content"
@@ -165,6 +182,10 @@
     pointer-events: none;
   }
 
+  g.tag-label {
+    pointer-events: all;
+  }
+
   .background {
     fill: none;
   }
@@ -185,7 +206,16 @@
   }
 
   .tag-label-path {
+    stroke: var(--stroke);
     stroke-width: 2;
+  }
+
+  .tag-label-path:not(.country) {
+    cursor: pointer;
+  }
+
+  .tag-label-path:not(.country):hover {
+    stroke: var(--darkgray);
   }
 
   .tag-label-path.background {

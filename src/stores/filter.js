@@ -132,3 +132,29 @@ export const initFilters = (data) => {
     'categories.crossborder_partnerships'
   );
 };
+
+export const filterByCategory = (category, name) => {
+  switch (category) {
+    case 'name':
+      countryFilter.selectOne(name);
+      break;
+    case 'new_status':
+      statusFilter.selectOne(name);
+      break;
+    case 'use_case':
+      useCaseFilter.selectOne(name);
+      break;
+    case 'technology':
+      technologyFilter.selectOne(name);
+      break;
+    case 'architecture':
+      architectureFilter.selectOne(name);
+      break;
+    case 'infrastructure':
+      infrastructureFilter.selectOne(name);
+      break;
+    case 'access':
+      accessFilter.selectOne(name);
+      break;
+  }
+};
