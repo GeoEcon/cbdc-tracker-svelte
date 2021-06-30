@@ -158,6 +158,7 @@
 <style>
   g {
     user-select: none;
+    pointer-events: none;
   }
 
   .background {
