@@ -28,18 +28,9 @@ export const rawData = readable([], async (set) => {
   set(await loadTrackerData(trackerDataPath));
 });
 
-export const data = derived(
+export const scaledData = derived(
   [
     rawData,
-    statusFilter,
-    countryFilter,
-    useCaseFilter,
-    technologyFilter,
-    architectureFilter,
-    infrastructureFilter,
-    accessFilter,
-    corporatePartnershipFilter,
-    crossborderPartnershipsFilter,
     statusColorScale,
     countryColorScale,
     useCaseColorScale,
@@ -50,15 +41,6 @@ export const data = derived(
   ],
   ([
     $rawData,
-    $statusFilter,
-    $countryFilter,
-    $useCaseFilter,
-    $technologyFilter,
-    $architectureFilter,
-    $infrastructureFilter,
-    $accessFilter,
-    $corporatePartnershipFilter,
-    $crossborderPartnershipsFilter,
     $statusColorScale,
     $countryColorScale,
     $useCaseColorScale,
@@ -100,15 +82,47 @@ export const data = derived(
             name: d.categories.access,
             color: $accessColorScale[d.categories.access],
           },
-        },
+        }
+      };
+    });
+  }, []);
+
+export const data = derived(
+  [
+    scaledData,
+    statusFilter,
+    countryFilter,
+    useCaseFilter,
+    technologyFilter,
+    architectureFilter,
+    infrastructureFilter,
+    accessFilter,
+    corporatePartnershipFilter,
+    crossborderPartnershipsFilter,
+  ],
+  ([
+    $scaledData,
+    $statusFilter,
+    $countryFilter,
+    $useCaseFilter,
+    $technologyFilter,
+    $architectureFilter,
+    $infrastructureFilter,
+    $accessFilter,
+    $corporatePartnershipFilter,
+    $crossborderPartnershipsFilter,
+  ]) => {
+    return $scaledData.map((d) => {
+      return {
+        ...d,
         show:
-          hasOverlap([d.categories.new_status], $statusFilter) &&
-          hasOverlap([d.name], $countryFilter) &&
-          hasOverlap([d.categories.use_case], $useCaseFilter) &&
-          hasOverlap([d.categories.technology], $technologyFilter) &&
-          hasOverlap([d.categories.architecture], $architectureFilter) &&
-          hasOverlap([d.categories.infrastructure], $infrastructureFilter) &&
-          hasOverlap([d.categories.access], $accessFilter) &&
+          hasOverlap([d.categories.new_status.name], $statusFilter) &&
+          hasOverlap([d.name.name], $countryFilter) &&
+          hasOverlap([d.categories.use_case.name], $useCaseFilter) &&
+          hasOverlap([d.categories.technology.name], $technologyFilter) &&
+          hasOverlap([d.categories.architecture.name], $architectureFilter) &&
+          hasOverlap([d.categories.infrastructure.name], $infrastructureFilter) &&
+          hasOverlap([d.categories.access.name], $accessFilter) &&
           hasOverlap(
             [d.categories.corporate_partnership],
             $corporatePartnershipFilter

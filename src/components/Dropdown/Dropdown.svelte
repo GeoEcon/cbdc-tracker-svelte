@@ -4,9 +4,12 @@
   import { areAllSelected, hasOverlap } from "../../utils/logic";
 
   import Chip from './Chip.svelte';
+  import BarChart from './BarChart.svelte';
+  import Suggestion from './Suggestion.svelte';
 
   export let filter;
   export let label = '';
+  export let fullRollup = [];
   export let rollup = [];
 
   let searchValue = '';
@@ -106,15 +109,10 @@
       {/each}
     </ul>
   </div>
-  <div class="bar-chart">
-    {#each rollup as { name, percent, color } (name)}
-      <span
-        class="bar"
-        style="width: {percent}%; background-color: {color};"
-      >
-      </span>
-    {/each}
-  </div>
+  <BarChart
+    rollup={rollup}
+    fullRollup={fullRollup}
+  />
   {#if (showSuggestions)}
     <div class="suggestions">
       <input
@@ -129,18 +127,17 @@
       />
       <ul class="suggestions">
         {#each suggestions as { id, name }, i (id)}
-          <li
-            class:active={hoveredSuggestion === i}
-            class:selected={hasOverlap([id], $filter)}
+          <Suggestion
+            name={name}
+            fullRollup={fullRollup.find(d => d.name === name)}
+            rollup={rollup.find(d => d.name === name)}
+            isActive={hoveredSuggestion === i}
+            isSelected={!areAllSelected($filter) && hasOverlap([id], $filter)}
+            showColorBox={label !== 'Country'}
             on:mouseenter={() => hoveredSuggestion = i}
             on:mouseleave={() => hoveredSuggestion = null}
             on:click={() => handleSuggestionSelect(id)}
-          >
-            <span>{name}</span>
-            {#if (!areAllSelected($filter) && hasOverlap([id], $filter))}
-              <span class="close">+</span>
-            {/if}
-          </li>
+          />
         {/each}
       </ul>
     </div>
@@ -223,19 +220,6 @@
     margin: 0.2rem;
   }
 
-  .bar-chart {
-    display: flex;
-    width: 100%;
-    height: calc(0.2 * var(--inputHeight));
-    background-color: var(--background);
-  }
-
-  .bar {
-    display: inline-block;
-    height: 100%;
-    transition: width 0.2s;
-  }
-
   .suggestions {
     position: absolute;
     z-index: 1000;
@@ -246,7 +230,7 @@
   input {
     width: 100%;
     height: var(--inputHeight);
-    padding: 0 0.3rem;
+    padding: 0 0.5rem;
     font-size: 1.1rem;
     background-color: var(--secWhite);
     border: none;
@@ -257,29 +241,5 @@
     max-height: 400px;
     list-style-type: none;
     overflow-y: scroll;
-  }
-
-  .suggestions ul li {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.2rem 0.3rem;
-    font-size: 1rem;
-    cursor: pointer;
-  }
-
-  .suggestions ul li.active {
-    background-color: var(--gray);
-  }
-
-  .suggestions ul li span.close {
-    margin-right: 1rem;
-    font-size: 1.2rem;
-    line-height: 0.1;
-    transform: rotate(45deg);
-  }
-
-  .suggestions ul li.active span.close {
-    font-weight: bold;
   }
 </style>

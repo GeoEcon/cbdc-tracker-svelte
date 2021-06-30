@@ -8,6 +8,12 @@
     infrastructureFilter,
     accessFilter } from '../../stores/filter';
   import {
+    fullStatusRollup,
+    fullUseCaseRollup,
+    fullTechnologyRollup,
+    fullArchitectureRollup,
+    fullInfrastructureRollup,
+    fullAccessRollup,
     statusRollup,
     useCaseRollup,
     technologyRollup,
@@ -21,46 +27,54 @@
     {
       filter: statusFilter,
       label: 'Status',
+      fullRollup: $fullStatusRollup,
       rollup: $statusRollup
     },
     {
       filter: useCaseFilter,
       label: 'Use case',
+      fullRollup: $fullUseCaseRollup,
       rollup: $useCaseRollup
     },
     {
       filter: technologyFilter,
       label: 'Technology',
+      fullRollup: $fullTechnologyRollup,
       rollup: $technologyRollup
     },
     {
       filter: architectureFilter,
       label: 'Architecture',
+      fullRollup: $fullArchitectureRollup,
       rollup: $architectureRollup
     },
     {
       filter: infrastructureFilter,
       label: 'Infrastructure',
+      fullRollup: $fullInfrastructureRollup,
       rollup: $infrastructureRollup
     },
     {
       filter: accessFilter,
       label: 'Access',
+      fullRollup: $fullAccessRollup,
       rollup: $accessRollup
     },
     {
       filter: countryFilter,
       label: 'Country',
-      rollup: [] //$countryRollup
+      fullRollup: [],
+      rollup: []
     }
   ].map((d, i) => ({...d, id: i}));
 </script>
 
 <div class="filter-bar">
-  {#each dropdowns as { id, filter, label, rollup } (id)}
+  {#each dropdowns as { id, filter, label, fullRollup, rollup } (id)}
     <Dropdown
       filter={filter}
       label={label}
+      fullRollup={fullRollup}
       rollup={rollup}
     />
   {/each}

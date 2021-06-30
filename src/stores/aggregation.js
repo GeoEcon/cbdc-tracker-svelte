@@ -2,7 +2,7 @@ import { derived } from 'svelte/store';
 import { rollups } from 'd3';
 import { sortBy } from 'lodash-es';
 
-import { data } from './data';
+import { scaledData, data } from './data';
 import { statusLevels } from '../utils/status';
 
 const generateRollup = (arr, sortArr = null) => {
@@ -24,6 +24,21 @@ const generateRollup = (arr, sortArr = null) => {
   }
   return rollup;
 };
+
+export const fullStatusRollup = derived(scaledData, $scaledData => generateRollup($scaledData.map(d => d.categories.new_status), statusLevels.map(d => d.name)));
+
+export const fullCountryRollup = derived(scaledData, $scaledData => generateRollup($scaledData.map(d => d.name)));
+
+export const fullUseCaseRollup = derived(scaledData, $scaledData => generateRollup($scaledData.map(d => d.categories.use_case)));
+
+export const fullTechnologyRollup = derived(scaledData, $scaledData => generateRollup($scaledData.map(d => d.categories.technology)));
+
+export const fullArchitectureRollup = derived(scaledData, $scaledData => generateRollup($scaledData.map(d => d.categories.architecture)));
+
+export const fullInfrastructureRollup = derived(scaledData, $scaledData => generateRollup($scaledData.map(d => d.categories.infrastructure)));
+
+export const fullAccessRollup = derived(scaledData, $scaledData => generateRollup($scaledData.map(d => d.categories.access)));
+
 
 const showData = derived(data, $data => $data.filter(d => d.show));
 
