@@ -14,6 +14,7 @@ import {
 } from './filter';
 import { hasOverlap } from '../utils/logic';
 import {
+  categoryNameScale,
   statusColorScale,
   countryColorScale,
   useCaseColorScale,
@@ -31,6 +32,7 @@ export const rawData = readable([], async (set) => {
 export const scaledData = derived(
   [
     rawData,
+    categoryNameScale,
     statusColorScale,
     countryColorScale,
     useCaseColorScale,
@@ -41,6 +43,7 @@ export const scaledData = derived(
   ],
   ([
     $rawData,
+    $categoryNameScale,
     $statusColorScale,
     $countryColorScale,
     $useCaseColorScale,
@@ -54,34 +57,51 @@ export const scaledData = derived(
         ...d,
         name: {
           name: d.name,
+          title: $categoryNameScale.name,
           color: $countryColorScale[d.name]
         },
         categories: {
           ...d.categories,
           new_status: {
             name: d.categories.new_status,
+            title: $categoryNameScale.new_status,
             color: $statusColorScale[d.categories.new_status],
           },
           use_case: {
             name: d.categories.use_case,
+            title: $categoryNameScale.use_case,
             color: $useCaseColorScale[d.categories.use_case],
           },
           technology: {
             name: d.categories.technology,
+            title: $categoryNameScale.technology,
             color: $technologyColorScale[d.categories.technology],
           },
           architecture: {
             name: d.categories.architecture,
+            title: $categoryNameScale.architecture,
             color: $architectureColorScale[d.categories.architecture],
           },
           infrastructure: {
             name: d.categories.infrastructure,
+            title: $categoryNameScale.infrastructure,
             color: $infrastructureColorScale[d.categories.infrastructure],
           },
           access: {
             name: d.categories.access,
+            title: $categoryNameScale.access,
             color: $accessColorScale[d.categories.access],
           },
+          corporate_partnership: {
+            name: d.categories.corporate_partnership,
+            title: $categoryNameScale.corporate_partnership,
+            color: '#000000'
+          },
+          crossborder_partnerships: {
+            name: d.categories.crossborder_partnerships,
+            title: $categoryNameScale.crossborder_partnerships,
+            color: '#000000'
+          }
         }
       };
     });
@@ -124,11 +144,11 @@ export const data = derived(
           hasOverlap([d.categories.infrastructure.name], $infrastructureFilter) &&
           hasOverlap([d.categories.access.name], $accessFilter) &&
           hasOverlap(
-            [d.categories.corporate_partnership],
+            [d.categories.corporate_partnership.name],
             $corporatePartnershipFilter
           ) &&
           hasOverlap(
-            [d.categories.crossborder_partnerships],
+            [d.categories.crossborder_partnerships.name],
             $crossborderPartnershipsFilter
           ),
       };

@@ -5,12 +5,17 @@
   export let color = '#000000';
   export let radius = 14;
   export let opacity = 1.0;
+  export let reactive = true;
 </script>
 
 <g
   class="centroid"
   transform="translate({dataCountry.centroid[0]} {dataCountry.centroid[1]})"
   use:css={{opacity}}
+  on:mouseenter
+  on:mouseleave
+  on:click
+  style="pointer-events: {reactive ? 'all' : 'none'};"
 >
   <circle
     class="background"

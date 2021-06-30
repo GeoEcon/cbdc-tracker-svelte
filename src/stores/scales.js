@@ -22,6 +22,18 @@ export const generateHarmonicColorScale = (arr, na = 'n/a', naColor = styles.gra
   return arr.reduce((acc, cur, i) => ({ ...acc, [cur]: (cur === na ? naColor : colors[i]) }), {});
 };
 
+export const categoryNameScale = writable({
+  name: 'Country',
+  new_status: 'Status',
+  use_case: 'Use case',
+  technology: 'Technology',
+  architecture: 'Architecture',
+  infrastructure: 'Infrastructure',
+  access: 'Access',
+  corporate_partnership: 'Corporate partnership',
+  crossborder_partnerships: 'Crossborder partnerships'
+});
+
 export const statusColorScale = writable(
   (function () {
     return statusLevels.reduce(

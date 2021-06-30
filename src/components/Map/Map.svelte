@@ -5,12 +5,13 @@
   import { mapWidth, mapHeight, initialTransform, mapTransform, projectedData } from '../../stores/map';
   import { data } from '../../stores/data';
   import { dataCountries } from '../../stores/datacountries';
-  import { colorCategory } from '../../stores/selection';
+  import { colorCategory, hoveredIds, selectedIds } from '../../stores/selection';
   import styles from '../../utils/styles';
 
   import Canvas from '../Canvas.svelte';
   import Country from './Country.svelte';
   import Centroid from './Centroid.svelte';
+  import HoverTag from './HoverTag.svelte';
 
   export let zoomExtent = [1, 10];
 
@@ -19,6 +20,18 @@
     .on('zoom', ({ transform }) => mapTransform.set(transform));
 
   let zoomCatcherElem, zoomCatcher;
+
+  function handleCentroidMouseEnter(id) {
+    hoveredIds.add(id);
+  }
+
+  function handleCentroidMouseLeave(id) {
+    hoveredIds.remove(id);
+  }
+
+  function handleCentroidClick(id) {
+    selectedIds.add(id);
+  }
   
   onMount(() => {
     zoomCatcher = select(zoomCatcherElem);
@@ -58,11 +71,20 @@
     viewBox="0 0 {$mapWidth} {$mapHeight}"
     bind:this={zoomCatcherElem}
   >
-    {#each $dataCountries as country (country.orderId)}
-      <Centroid
-        dataCountry={country}
-        color={country.categories[$colorCategory].color}
-        opacity={country.show ? 1 : 0.3}
+  {#each $dataCountries as country (country.orderId)}
+    <Centroid
+      dataCountry={country}
+      color={country.categories[$colorCategory].color}
+      opacity={country.show ? 1 : 0.3}
+      on:mouseenter={() => handleCentroidMouseEnter(country.id)}
+      on:mouseleave={() => handleCentroidMouseLeave(country.id)}
+      on:click={() => handleCentroidClick(country.id)}
+    />
+    {/each}
+    {#each $hoveredIds as hoveredId (hoveredId)}
+      <HoverTag
+        data={$dataCountries.find(d => d.id === hoveredId)}
+        mapWidth={$mapWidth}
       />
     {/each}
   </svg>

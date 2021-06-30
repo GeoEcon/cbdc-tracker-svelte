@@ -26,7 +26,7 @@
     display: flex;
     width: 100%;
     height: calc(0.2 * var(--inputHeight));
-    background-color: var(--background);
+    background-color: var(--gray);
   }
 
   .bar {
