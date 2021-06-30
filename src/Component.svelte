@@ -19,7 +19,7 @@
   }
   
   onMount(() => {
-    selectedId.set(187);
+    // selectedId.set(187);
   });
 
   $: isVertical.set(width < 600);

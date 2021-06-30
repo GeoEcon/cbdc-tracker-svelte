@@ -30,7 +30,10 @@
   }
 
   $: tags = [
-    data.name,
+    {
+      category: 'name',
+      ...data.name
+    },
     ...Object.keys(data.categories)
     .map(key => {
       return {
@@ -46,8 +49,8 @@
   $: tagDirection = 1; //data.centroid[0] < mapWidth / 2 ? 1 : -1;
 
   $: tagsPaths = tags.map((tag, i) => {
-    const direction = (tag.title === 'Country' ? -1 : 1) * tagDirection;
-    const height = tag.title === 'Country' ? tagHeight : totalHeight;
+    const direction = (tag.category === 'name' ? -1 : 1) * tagDirection;
+    const height = tag.category === 'name' ? tagHeight : totalHeight;
     const x2 = direction * tagOffset;
     const y2 = i * (tagHeight + tagGap) - height / 2 + tagHeight / 2;
     const x3 = x2 + labelArrowWidth * direction;
@@ -81,14 +84,14 @@
     const tag = tagsPaths[i];
     const { direction } = tag;
     const { width: widthCategory } = textCategoryElems[i].getBBox();
-    const { width: widthName } = textName.getBBox();
+    const { width: widthName, height } = textName.getBBox();
     const width = Math.max(widthCategory, widthName);
     return {
       ...tag,
       x4: tag.x4 + width * direction,
       x5: tag.x4 + width * direction,
       textCategoryYOffset: -tagHeight / 6,
-      textNameYOffset: tagHeight / 3
+      textNameYOffset: tag.category === 'name' ? height / 4 : tagHeight / 3
     };
   });
 </script>
@@ -135,29 +138,31 @@
     >
       <path
         class="tag-label-path background"
-        class:country={tag.title === 'Country'}
+        class:country={tag.category === 'country'}
         d={tagLabelPath(tag.x2, tag.y2, tag.x3, tag.y3, tag.x4, tag.y4, tag.x5, tag.y5, tag.x6, tag.y6, tag.direction * cornerRadius)}
       />
       <path
         class="tag-label-path"
-        class:country={tag.title === 'Country'}
+        class:country={tag.category === 'name'}
         d={tagLabelPath(tag.x2, tag.y2, tag.x3, tag.y3, tag.x4, tag.y4, tag.x5, tag.y5, tag.x6, tag.y6, tag.direction * cornerRadius)}
-        fill={tag.title === 'Country' ? data.categories.new_status.color : 'var(--secWhite)'}
+        fill={tag.category === 'name' ? data.categories.new_status.color : 'var(--secWhite)'}
         on:click={() => handleTagLabelClick(tag)}
       />
       <g
         class="tag-label-content"
         transform="translate({tag.x2} {tag.y2})"
       >
-        <text
-          class="tag-text-category"
-          text-anchor="{tag.direction === 1 ? 'start' : 'end'}"
-          dx={labelArrowWidth * tag.direction}
-          dy={tag.textCategoryYOffset}
-          fill={tag.title === 'Country' ? 'var(--darkgray)' : data.categories.new_status.color}
-        >
-          {tag.title}
-        </text>
+        {#if (tag.category !== 'name')}
+          <text
+            class="tag-text-category"
+            text-anchor="{tag.direction === 1 ? 'start' : 'end'}"
+            dx={labelArrowWidth * tag.direction}
+            dy={tag.textCategoryYOffset}
+            fill={tag.category === 'name' ? 'var(--darkgray)' : data.categories.new_status.color}
+          >
+            {tag.title}
+          </text>
+        {/if}
         <text
           class="tag-text-name"
           text-anchor="{tag.direction === 1 ? 'start' : 'end'}"
