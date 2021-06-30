@@ -8,7 +8,7 @@
   export let data;
   export let tagHeight = 35;
   export let tagGap = 10;
-  export let tagOffset = 50;
+  export let tagOffset = 40;
   export let mapWidth = 0;
 
   const labelArrowWidth = 30;
@@ -30,16 +30,18 @@
     .filter(d => d.name !== 'n/a')
   ];
 
-  $: totalHeight = Math.max(0, tagHeight * tags.length + tagGap * (tags.length - 1));
+  $: totalHeight = Math.max(0, tagHeight * (tags.length - 1) + tagGap * (tags.length - 2));
 
-  $: tagDirection = data.centroid[0] < mapWidth / 2 ? 1 : -1;
+  $: tagDirection = 1; //data.centroid[0] < mapWidth / 2 ? 1 : -1;
 
   $: tagsPaths = tags.map((tag, i) => {
-    const x2 = tagDirection * tagOffset;
-    const y2 = i * (tagHeight + tagGap) - totalHeight / 2 + tagHeight / 2;
-    const x3 = x2 + labelArrowWidth * tagDirection;
+    const direction = (tag.title === 'Country' ? -1 : 1) * tagDirection;
+    const height = tag.title === 'Country' ? tagHeight : totalHeight;
+    const x2 = direction * tagOffset;
+    const y2 = i * (tagHeight + tagGap) - height / 2 + tagHeight / 2;
+    const x3 = x2 + labelArrowWidth * direction;
     const y3 = y2 - tagHeight / 2;
-    const x4 = x3 + 0.5 * labelArrowWidth * tagDirection;
+    const x4 = x3 + 0.5 * labelArrowWidth * direction;
     const y4 = y3;
     const x5 = x4;
     const y5 = y4 + tagHeight;
@@ -59,19 +61,21 @@
       x5,
       y5,
       x6,
-      y6
+      y6,
+      direction
     };
   });
 
   $: tagsPathsRefined = textNameElems.map((textName, i) => {
     const tag = tagsPaths[i];
+    const { direction } = tag;
     const { width: widthCategory } = textCategoryElems[i].getBBox();
     const { width: widthName } = textName.getBBox();
     const width = Math.max(widthCategory, widthName);
     return {
       ...tag,
-      x4: tag.x4 + width * tagDirection,
-      x5: tag.x4 + width * tagDirection,
+      x4: tag.x4 + width * direction,
+      x5: tag.x4 + width * direction,
       textCategoryYOffset: -tagHeight / 6,
       textNameYOffset: tagHeight / 3
     };
@@ -116,11 +120,11 @@
     >
       <path
         class="tag-label-path background"
-        d={tagLabelPath(tag.x2, tag.y2, tag.x3, tag.y3, tag.x4, tag.y4, tag.x5, tag.y5, tag.x6, tag.y6, tagDirection * cornerRadius)}
+        d={tagLabelPath(tag.x2, tag.y2, tag.x3, tag.y3, tag.x4, tag.y4, tag.x5, tag.y5, tag.x6, tag.y6, tag.direction * cornerRadius)}
       />
       <path
         class="tag-label-path"
-        d={tagLabelPath(tag.x2, tag.y2, tag.x3, tag.y3, tag.x4, tag.y4, tag.x5, tag.y5, tag.x6, tag.y6, tagDirection * cornerRadius)}
+        d={tagLabelPath(tag.x2, tag.y2, tag.x3, tag.y3, tag.x4, tag.y4, tag.x5, tag.y5, tag.x6, tag.y6, tag.direction * cornerRadius)}
         stroke={data.categories.new_status.color}
         fill={tag.title === 'Country' ? data.categories.new_status.color : 'var(--secWhite)'}
       />
@@ -130,8 +134,8 @@
       >
         <text
           class="tag-text-category"
-          text-anchor="{tagDirection === 1 ? 'start' : 'end'}"
-          dx={labelArrowWidth * tagDirection}
+          text-anchor="{tag.direction === 1 ? 'start' : 'end'}"
+          dx={labelArrowWidth * tag.direction}
           dy={tag.textCategoryYOffset}
           fill={tag.title === 'Country' ? 'var(--darkgray)' : data.categories.new_status.color}
         >
@@ -139,8 +143,8 @@
         </text>
         <text
           class="tag-text-name"
-          text-anchor="{tagDirection === 1 ? 'start' : 'end'}"
-          dx={labelArrowWidth * tagDirection}
+          text-anchor="{tag.direction === 1 ? 'start' : 'end'}"
+          dx={labelArrowWidth * tag.direction}
           dy={tag.textNameYOffset}
         >
           {tag.name}
