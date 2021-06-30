@@ -152,7 +152,7 @@
 <Centroid
   dataCountry={data}
   color={data.categories.new_status.color}
-  reactive={false}
+  isReactive={false}
 />
 
 <style>

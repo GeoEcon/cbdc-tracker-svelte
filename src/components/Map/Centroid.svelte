@@ -5,7 +5,7 @@
   export let color = '#000000';
   export let radius = 14;
   export let opacity = 1.0;
-  export let reactive = true;
+  export let isReactive = true;
 </script>
 
 <g
@@ -15,7 +15,7 @@
   on:mouseenter
   on:mouseleave
   on:click
-  style="pointer-events: {reactive ? 'all' : 'none'};"
+  style="pointer-events: {isReactive ? 'all' : 'none'};"
 >
   <circle
     class="background"

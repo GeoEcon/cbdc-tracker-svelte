@@ -76,6 +76,7 @@
       dataCountry={country}
       color={country.categories[$colorCategory].color}
       opacity={country.show ? 1 : 0.3}
+      isReactive={country.show}
       on:mouseenter={() => handleCentroidMouseEnter(country.id)}
       on:mouseleave={() => handleCentroidMouseLeave(country.id)}
       on:click={() => handleCentroidClick(country.id)}
