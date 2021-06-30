@@ -4,7 +4,7 @@ import { sortBy } from 'lodash-es';
 import { data } from './data';
 import { projectedData, mapWidth, mapHeight } from './map';
 import { statusLevels } from '../utils/status';
-import { colorCategory } from './selection';
+import { colorCategory } from './colorcategory';
 import { isDefined } from '../utils/logic';
 
 export const dataCountries = derived(

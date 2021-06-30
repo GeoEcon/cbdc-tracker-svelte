@@ -22,6 +22,7 @@ import {
   architectureColorScale,
   infrastructureColorScale,
   accessColorScale } from '../stores/scales';
+import styles from '../utils/styles';
 
 const trackerDataPath = 'data/tracker.csv';
 
@@ -95,12 +96,12 @@ export const scaledData = derived(
           corporate_partnership: {
             name: d.categories.corporate_partnership,
             title: $categoryNameScale.corporate_partnership,
-            color: '#000000'
+            color: styles.darkgray
           },
           crossborder_partnerships: {
             name: d.categories.crossborder_partnerships,
             title: $categoryNameScale.crossborder_partnerships,
-            color: '#000000'
+            color: styles.darkgray
           }
         }
       };

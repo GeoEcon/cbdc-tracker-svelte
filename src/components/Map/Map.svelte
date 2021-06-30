@@ -5,7 +5,8 @@
   import { mapWidth, mapHeight, initialTransform, mapTransform, projectedData } from '../../stores/map';
   import { data } from '../../stores/data';
   import { dataCountries } from '../../stores/datacountries';
-  import { colorCategory, hoveredIds, selectedIds } from '../../stores/selection';
+  import { colorCategory } from '../../stores/colorcategory';
+  import { hoveredIds, selectedId } from '../../stores/selection';
   import { filterByCategory } from '../../stores/filter';
   import styles from '../../utils/styles';
 
@@ -31,7 +32,7 @@
   }
 
   function handleCentroidClick(id) {
-    selectedIds.add(id);
+    selectedId.set(id);
   }
 
   function handleHoverTagClick(e) {

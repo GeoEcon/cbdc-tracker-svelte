@@ -1,8 +1,8 @@
-import { writable } from 'svelte/store';
+import { writable, derived } from 'svelte/store';
+
+import { dataCountries } from './datacountries';
 
 const removeTimeOut = 400;
-
-export const colorCategory = writable('new_status');
 
 const generateIdArrayStore = () => {
   const { set, update, subscribe } = writable([]);
@@ -33,4 +33,11 @@ const generateIdArrayStore = () => {
 };
 
 export const hoveredIds = generateIdArrayStore();
-export const selectedIds = generateIdArrayStore();
+export const selectedId = writable();
+
+export const selectedDatum = derived([dataCountries, selectedId], ([$dataCountries, $selectedId]) => {
+  if ($selectedId === null) return null;
+  const datum = $dataCountries.find(d => d.id === $selectedId);
+  if (!datum) return null;
+  return datum;
+}, null);

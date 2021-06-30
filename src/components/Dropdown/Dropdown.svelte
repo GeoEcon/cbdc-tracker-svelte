@@ -200,10 +200,11 @@
     min-height: var(--inputHeight);
     height: auto;
     background-color: var(--secWhite);
+    cursor: pointer;
   }
 
   .field:hover {
-    cursor: pointer;
+    background-color: var(--gray);
   }
 
   ul.chips {

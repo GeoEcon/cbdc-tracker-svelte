@@ -30,7 +30,7 @@ export const loadTrackerData = async (dataPath) => {
         corporate_partnership: curate(d['Corporate partnership']),
         crossborder_partnerships: curate(d['Cross-border partnerships']),
       },
-      sources: d.Sources,
+      sources: d.Sources.split(' '),
       notes: d.Notes,
     };
   });
