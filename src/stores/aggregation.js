@@ -4,6 +4,7 @@ import { sortBy } from 'lodash-es';
 
 import { scaledData, data } from './data';
 import { statusLevels } from '../utils/status';
+import { sortToEnd } from '../utils/misc';
 
 const generateRollup = (arr, sortArr = null) => {
   let rollup = rollups(arr, d => d.length, d => d.name)
@@ -22,6 +23,9 @@ const generateRollup = (arr, sortArr = null) => {
       return d.name.toLowerCase()
     });
   }
+
+  rollup = sortToEnd(rollup, 'name', 'n/a');
+
   return rollup;
 };
 

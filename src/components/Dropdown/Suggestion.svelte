@@ -65,7 +65,7 @@
   }
 
   li span.number {
-    margin-right: 0.5rem;
+    margin: 0 0.5rem;
     color: var(--darkgray);
     font-size: 0.8rem;
   }

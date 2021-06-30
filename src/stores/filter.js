@@ -4,6 +4,7 @@ import { sortBy } from 'lodash-es';
 import { areAllSelected, areAllUnselected } from '../utils/logic';
 
 import { statusLevels } from '../utils/status';
+import { sortToEnd } from '../utils/misc';
 
 function createMultiFilter() {
   const { subscribe, set, update } = writable([]);
@@ -23,13 +24,13 @@ function createMultiFilter() {
       values = sortBy(values, d => d.toLowerCase());
     }
     set(
-      values.map((value) => {
+      sortToEnd(values.map((value) => {
         return {
           id: value,
           name: value,
           selected: true,
         };
-      })
+      }), 'name', 'n/a')
     );
   };
 
