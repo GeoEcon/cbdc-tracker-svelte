@@ -133,9 +133,10 @@ import { extractHostname } from '../../utils/misc';
     overflow-y: scroll;
   }
 
-  @media (min-width: 600px) {
+  @media (min-width: 980px) {
     .modal-inner {
       width: 90%;
+      max-width: 1600px;
       height: 90%;
     }
   }
@@ -205,7 +206,7 @@ import { extractHostname } from '../../utils/misc';
     color: var(--background);
   }
 
-  @media (min-width: 600px) {
+  @media (min-width: 980px) {
     .header-content p {
       width: 60%;
     }
@@ -216,7 +217,7 @@ import { extractHostname } from '../../utils/misc';
     flex-direction: column;
   }
 
-  @media (min-width: 600px) {
+  @media (min-width: 980px) {
     .body {
       flex-direction: row;
     }
@@ -224,23 +225,34 @@ import { extractHostname } from '../../utils/misc';
 
   .categories {
     flex: 1;
-    padding: 1.5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 1.5rem;
   }
 
   @media (min-width: 600px) {
     .categories {
+      flex-direction: row;
+    }
+  }
+
+  @media (min-width: 980px) {
+    .categories {
+      flex-direction: column;
       order: 2;
     }
   }
 
   .category {
-    padding: 1.5rem 0;
+    margin: 1.5rem;
   }
 
   .category h3 {
     color: var(--darkgray);
     font-size: 1.5rem;
     font-weight: normal;
+    white-space: nowrap;
   }
 
   .chip {
@@ -264,7 +276,7 @@ import { extractHostname } from '../../utils/misc';
     padding: 2rem 3rem;
   }
 
-  @media (min-width: 600px) {
+  @media (min-width: 980px) {
     main {
       order: 1;
       width: 60%;
@@ -289,7 +301,7 @@ import { extractHostname } from '../../utils/misc';
     list-style-type: none;
   }
 
-  @media (min-width: 600px) {
+  @media (min-width: 980px) {
     ul.sources {
       flex-direction: row;
     }
