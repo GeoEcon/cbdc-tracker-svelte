@@ -136,25 +136,25 @@ export const initFilters = (data) => {
 export const filterByCategory = (category, name) => {
   switch (category) {
     case 'name':
-      countryFilter.selectOne(name);
+      countryFilter.click(name);
       break;
     case 'new_status':
-      statusFilter.selectOne(name);
+      statusFilter.click(name);
       break;
     case 'use_case':
-      useCaseFilter.selectOne(name);
+      useCaseFilter.click(name);
       break;
     case 'technology':
-      technologyFilter.selectOne(name);
+      technologyFilter.click(name);
       break;
     case 'architecture':
-      architectureFilter.selectOne(name);
+      architectureFilter.click(name);
       break;
     case 'infrastructure':
-      infrastructureFilter.selectOne(name);
+      infrastructureFilter.click(name);
       break;
     case 'access':
-      accessFilter.selectOne(name);
+      accessFilter.click(name);
       break;
   }
 };

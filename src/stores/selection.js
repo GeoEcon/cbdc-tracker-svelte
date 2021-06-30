@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 
-const removeTimeOut = 1000;
+const removeTimeOut = 400;
 
 export const colorCategory = writable('new_status');
 
