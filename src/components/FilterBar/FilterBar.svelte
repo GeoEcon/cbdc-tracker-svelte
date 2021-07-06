@@ -79,6 +79,7 @@
   class="filter-bar"
   use:css={{maxColumns, halfMaxColumns: Math.ceil(maxColumns / 2)}}
 >
+  <h5>Filters</h5>
   <div class="grid-container">
     {#each dropdownsTop as { id, filter, label, fullRollup, rollup } (id)}
       <Dropdown
@@ -104,6 +105,13 @@
 <style>
   .filter-bar {
     width: 100%;
+  }
+
+  h5 {
+    margin: 1rem 0 0 1rem;
+    color: var(--darkgray);
+    font-family: var(--primFont);
+    font-size: 1rem;
   }
 
   .grid-container {

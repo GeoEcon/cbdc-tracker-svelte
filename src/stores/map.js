@@ -31,13 +31,13 @@ export const initialTransform = derived(
     if ($isVertical) {
       return zoomIdentity.translate($mapWidth / 0.7, $mapHeight / 1.7).scale(4.1);
     } else {
-      return zoomIdentity.translate($mapWidth / 2, $mapHeight / 2);
+      return zoomIdentity.translate($mapWidth / 2, $mapHeight / 1.8);
     }
   },
   zoomIdentity
 );
 
-export const mapTransform = writable(zoomIdentity);
+export const mapTransform = writable(initialTransform);
 
 export const projections = derived(
   [mapWidth, mapHeight],

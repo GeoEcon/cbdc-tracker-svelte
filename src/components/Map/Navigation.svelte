@@ -40,7 +40,7 @@
     z-index: 1000;
     display: flex;
     flex-direction: column;
-    margin: 1rem;
+    margin: 2rem 1rem;
     color: var(--darkgray);
     border: 1px solid var(--gray);
     background-color: var(--background);

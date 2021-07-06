@@ -1,6 +1,4 @@
 <script>
-  import { sortBy } from 'lodash-es';
-
   import { clickOutside } from '../../actions/clickoutside';
   import { setFocus } from '../../actions/focus';
   import { areAllSelected, hasOverlap } from "../../utils/logic";

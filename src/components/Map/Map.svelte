@@ -7,10 +7,12 @@
   import { dataCountries } from '../../stores/datacountries';
   import { colorCategory } from '../../stores/colorcategory';
   import { hoveredIds, selectedId } from '../../stores/selection';
-  import { filterByCategory } from '../../stores/filter';
+  import { statusFilter, filterByCategory } from '../../stores/filter';
+  import { fullStatusRollup, statusRollup } from '../../stores/aggregation';
   import styles from '../../utils/styles';
 
   import Navigation from './Navigation.svelte';
+  import Legend from './Legend.svelte';
   import Canvas from '../Canvas.svelte';
   import Country from './Country.svelte';
   import Centroid from './Centroid.svelte';
@@ -56,8 +58,9 @@
   onMount(() => {
     zoomCatcher = select(zoomCatcherElem);
     zoomCatcher.call(zoom);
-    zoomCatcher.call(zoom.transform, $initialTransform);
   });
+
+  $: if (zoomCatcher) zoomCatcher.call(zoom.transform, $initialTransform);
 </script>
 
 <div
@@ -69,6 +72,12 @@
     on:reset={handleZoomReset}
     on:plus={handleZoomPlus}
     on:minus={handleZoomMinus}
+  />
+  <Legend
+    filter={statusFilter}
+    label="Status"
+    fullRollup={fullStatusRollup}
+    rollup={statusRollup}
   />
   <Canvas
     width={$mapWidth}

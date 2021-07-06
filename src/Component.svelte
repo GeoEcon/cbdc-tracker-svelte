@@ -62,8 +62,10 @@
   }
 
   .component-wrapper {
-    width: 100%;
+    width: calc(100% - 1rem);
+    margin: 0.5rem;
     font-size: 12px;
+    border: 1px solid var(--gray);
   }
 
   @media (min-width: 600px) {
