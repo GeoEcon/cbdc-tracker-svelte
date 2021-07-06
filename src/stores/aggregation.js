@@ -25,7 +25,7 @@ const generateRollup = (arr, sortArr = null) => {
   }
 
   rollup = sortToEnd(rollup, 'name', 'not available');
-console.log(rollup)
+
   return rollup;
 };
 

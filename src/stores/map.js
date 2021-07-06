@@ -37,7 +37,7 @@ export const initialTransform = derived(
   zoomIdentity
 );
 
-export const mapTransform = writable(initialTransform);
+export const mapTransform = writable(zoomIdentity);
 
 export const projections = derived(
   [mapWidth, mapHeight],

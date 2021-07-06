@@ -8,6 +8,7 @@
   import { filterByCategory } from './stores/filter';
 
   import FilterBar from './components/FilterBar/FilterBar.svelte';
+  import Logo from './components/Logo.svelte';
   import Map from './components/Map/Map.svelte';
   import Modal from './components/Modal/Modal.svelte';
 
@@ -31,6 +32,7 @@
   use:css={styles}
 >
   <FilterBar />
+  <Logo />
   <Map />
   {#if ($selectedDatum)}
     <Modal

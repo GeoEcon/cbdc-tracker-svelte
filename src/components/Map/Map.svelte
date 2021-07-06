@@ -1,6 +1,6 @@
 <script>
   import { onMount } from 'svelte';
-  import { zoom as d3zoom, select } from 'd3';
+  import { zoom as d3zoom, select, zoomIdentity } from 'd3';
 
   import { mapWidth, mapHeight, initialTransform, mapTransform, projectedData } from '../../stores/map';
   import { data } from '../../stores/data';
@@ -10,6 +10,7 @@
   import { filterByCategory } from '../../stores/filter';
   import styles from '../../utils/styles';
 
+  import Navigation from './Navigation.svelte';
   import Canvas from '../Canvas.svelte';
   import Country from './Country.svelte';
   import Centroid from './Centroid.svelte';
@@ -22,6 +23,18 @@
     .on('zoom', ({ transform }) => mapTransform.set(transform));
 
   let zoomCatcherElem, zoomCatcher;
+  
+  function handleZoomReset() {
+    zoomCatcher.transition().duration(400).call(zoom.transform, $initialTransform);
+  }
+
+  function handleZoomPlus() {
+    zoomCatcher.transition().duration(400).call(zoom.scaleBy, 2);
+  }
+
+  function handleZoomMinus() {
+    zoomCatcher.transition().duration(400).call(zoom.scaleBy, 0.5);
+  }
 
   function handleCentroidMouseEnter(id) {
     hoveredIds.add(id);
@@ -43,9 +56,8 @@
   onMount(() => {
     zoomCatcher = select(zoomCatcherElem);
     zoomCatcher.call(zoom);
+    zoomCatcher.call(zoom.transform, $initialTransform);
   });
-
-  $: if(zoomCatcher) zoomCatcher.call(zoom.transform, $initialTransform);
 </script>
 
 <div
@@ -53,6 +65,11 @@
   bind:clientWidth={$mapWidth}
   bind:clientHeight={$mapHeight}
 >
+  <Navigation
+    on:reset={handleZoomReset}
+    on:plus={handleZoomPlus}
+    on:minus={handleZoomMinus}
+  />
   <Canvas
     width={$mapWidth}
     height={$mapHeight}
