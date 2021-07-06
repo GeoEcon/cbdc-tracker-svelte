@@ -37,7 +37,6 @@
     position: absolute;
     right: 0;
     top: 0;
-    bottom: auto;
     z-index: 1000;
     display: flex;
     flex-direction: column;
@@ -45,13 +44,6 @@
     color: var(--darkgray);
     border: 1px solid var(--gray);
     background-color: var(--background);
-  }
-
-  @media (min-width: 600px) {
-    .navigation {
-      top: auto;
-      bottom: 0;
-    }
   }
 
   button {
