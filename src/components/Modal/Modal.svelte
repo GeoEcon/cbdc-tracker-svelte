@@ -30,8 +30,7 @@ import { extractHostname } from '../../utils/misc';
       category: key,
       ...datum.categories[key]
     };
-  })
-    .filter(d => d.name !== 'not available');
+  });
 </script>
 
 <svelte:window on:keydown={handleKeydown} />

@@ -96,12 +96,12 @@ export const scaledData = derived(
           corporate_partnership: {
             name: d.categories.corporate_partnership,
             title: $categoryNameScale.corporate_partnership,
-            color: styles.darkgray
+            color: styles.gray
           },
           crossborder_partnerships: {
             name: d.categories.crossborder_partnerships,
             title: $categoryNameScale.crossborder_partnerships,
-            color: styles.darkgray
+            color: styles.gray
           }
         }
       };
