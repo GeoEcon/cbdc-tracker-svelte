@@ -1,4 +1,4 @@
-export const sortToEnd = (arr, col = 'name', value = 'n/a') => {
+export const sortToEnd = (arr, col = 'name', value = 'not available') => {
   const endItem = arr.find(d => d[col] === value);
   if (!endItem) return arr;
   return [...arr.filter(d => d[col] !== value), endItem];

@@ -41,7 +41,7 @@
         ...data.categories[key]
       };
     })
-    .filter(d => d.name !== 'n/a')
+    .filter(d => d.name !== 'not available')
   ];
 
   $: totalHeight = Math.max(0, tagHeight * (tags.length - 1) + tagGap * (tags.length - 2));

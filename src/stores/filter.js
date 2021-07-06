@@ -30,7 +30,7 @@ function createMultiFilter() {
           name: value,
           selected: true,
         };
-      }), 'name', 'n/a')
+      }), 'name', 'not available')
     );
   };
 

@@ -37,7 +37,6 @@
   g {
     opacity: var(--opacity);
     cursor: pointer;
-    transition: all 0.2s;
   }
 
   circle {

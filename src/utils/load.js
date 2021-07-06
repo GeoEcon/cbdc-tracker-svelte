@@ -5,11 +5,11 @@ const splitValue = (value) =>
   value
     .split(',')
     .map((d) => d.trim())
-    .map((d) => d === '' ? 'n/a' : d);
+    .map((d) => d === '' ? 'not available' : d);
 
 const curate = (value) => {
-  if (!value) return 'n/a';
-  return value;
+  if (!value) return 'not available';
+  return value.replace('n/a', 'not available');
 };
 
 export const loadTrackerData = async (dataPath) => {
@@ -38,7 +38,7 @@ export const loadTrackerData = async (dataPath) => {
   // filter for valid entries
   const filteredData = data
     .filter(
-      (d) => d.categories.new_status !== 'n/a'
+      (d) => d.categories.new_status !== 'not available'
     )
     .filter(
       (d) => d.categories.new_status !== 'No development yet'

@@ -17,7 +17,7 @@ const generateCategoryColors = (numColors = 8, chroma = 50, lightness = 80) =>
     hcl((360 * i) / (1 + numColors), chroma, lightness).formatHex()
   );
 
-export const generateHarmonicColorScale = (arr, na = 'n/a', naColor = styles.gray) => {
+export const generateHarmonicColorScale = (arr, na = 'not available', naColor = styles.gray) => {
   const colors = generateCategoryColors(arr.length);
   return arr.reduce((acc, cur, i) => ({ ...acc, [cur]: (cur === na ? naColor : colors[i]) }), {});
 };

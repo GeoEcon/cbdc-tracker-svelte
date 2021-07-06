@@ -31,7 +31,7 @@ import { extractHostname } from '../../utils/misc';
       ...datum.categories[key]
     };
   })
-    .filter(d => d.name !== 'n/a');
+    .filter(d => d.name !== 'not available');
 </script>
 
 <svelte:window on:keydown={handleKeydown} />
@@ -149,7 +149,7 @@ import { extractHostname } from '../../utils/misc';
 
   .header-top-line {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     width: 100%;
     padding: 0 1.5rem;
   }

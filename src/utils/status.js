@@ -1,7 +1,7 @@
 export const statusColors = [
-  '#95D69A',
-  '#61D8D6',
   '#AAC8FC',
+  '#61D8D6',
+  '#95D69A',
   '#F1B2EE',
   '#FFB3B5',
   '#DAC584',
