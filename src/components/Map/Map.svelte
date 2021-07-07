@@ -17,6 +17,7 @@
   import Country from './Country.svelte';
   import Centroid from './Centroid.svelte';
   import HoverTag from './HoverTag.svelte';
+  import GestureNote from './GestureNote.svelte';
 
   export let zoomExtent = [1, 10];
 
@@ -31,6 +32,16 @@
     });
 
   let zoomCatcherElem, zoomCatcher;
+  let showGestureNote = false;
+
+  function handleMapTouchstart(e) {
+    if (e.touches && e.touches.length <= 1) {
+      showGestureNote = true;
+      setTimeout(() => showGestureNote = false, 2000);
+      return;
+    }
+    showGestureNote = false;
+  }
   
   function handleZoomReset() {
     zoomCatcher.transition().duration(400).call(zoom.transform, $initialTransform);
@@ -79,6 +90,7 @@
   class="map"
   bind:clientWidth={$mapWidth}
   bind:clientHeight={$mapHeight}
+  on:touchstart={handleMapTouchstart}
 >
   <Navigation
     on:reset={handleZoomReset}
@@ -91,6 +103,9 @@
     fullRollup={fullStatusRollup}
     rollup={statusRollup}
   />
+  {#if (showGestureNote)}
+    <GestureNote />
+  {/if}
   <Canvas
     width={$mapWidth}
     height={$mapHeight}
