@@ -19,7 +19,8 @@
   use:css={{opacity}}
   on:mouseenter
   on:mouseleave
-  on:touchstart|stopPropagation={() => dispatch('click')}
+  on:touchstart|stopPropagation
+  on:touchend|stopPropagation
   on:click
 >
   <circle

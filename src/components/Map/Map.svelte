@@ -33,10 +33,12 @@
 
   let zoomCatcherElem, zoomCatcher;
   let showGestureNote = false;
+  let numGestureNotes = 0;
 
-  function handleMapTouchstart(e) {
-    if (e.touches && e.touches.length <= 1) {
+  function handleMapTouchend(e) {
+    if (numGestureNotes < 2 && e.touches && e.touches.length <= 1) {
       showGestureNote = true;
+      numGestureNotes++;
       setTimeout(() => showGestureNote = false, 2000);
       return;
     }
@@ -69,7 +71,10 @@
     hoveredIds.remove(id);
   }
 
-  function handleCentroidClick(id) {
+  function handleCentroidClick(e, id) {
+    if (e.touches && e.touches.length > 1) return;
+    e.preventDefault();
+    e.stopPropagation();
     selectedId.set(id);
   }
 
@@ -90,7 +95,7 @@
   class="map"
   bind:clientWidth={$mapWidth}
   bind:clientHeight={$mapHeight}
-  on:touchstart={handleMapTouchstart}
+  on:touchend={handleMapTouchend}
 >
   <Navigation
     on:reset={handleZoomReset}
@@ -139,7 +144,8 @@
       isReactive={country.show}
       on:mouseenter={(e) => handleCentroidMouseEnter(e, country.id)}
       on:mouseleave={(e) => handleCentroidMouseLeave(e, country.id)}
-      on:click={() => handleCentroidClick(country.id)}
+      on:touchstart={(e) => handleCentroidClick(e, country.id)}
+      on:click={(e) => handleCentroidClick(e, country.id)}
     />
     {/each}
     {#each $hoveredIds as hoveredId (hoveredId)}

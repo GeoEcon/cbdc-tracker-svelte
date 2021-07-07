@@ -222,7 +222,7 @@
 
   .suggestions {
     position: absolute;
-    z-index: 1000;
+    z-index: 10000;
     width: 100%;
     background-color: var(--secWhite);
   }
