@@ -10,7 +10,6 @@
   export let tagHeight = 35;
   export let tagGap = 10;
   export let tagOffset = 40;
-  export let mapWidth = 0;
 
   const labelArrowWidth = 30;
   const pathGrowDuration = 200;

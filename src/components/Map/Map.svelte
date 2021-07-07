@@ -22,7 +22,13 @@
 
   const zoom = d3zoom()
     .scaleExtent(zoomExtent)
-    .on('zoom', ({ transform }) => mapTransform.set(transform));
+    .filter((e) => {
+      if (e.touches && e.touches.length <= 1) return false;
+      return true;
+    })
+    .on('zoom', (e) => {
+      mapTransform.set(e.transform);
+    });
 
   let zoomCatcherElem, zoomCatcher;
   
@@ -38,7 +44,8 @@
     zoomCatcher.transition().duration(400).call(zoom.scaleBy, 0.5);
   }
 
-  function handleCentroidMouseEnter(id) {
+  function handleCentroidMouseEnter(e, id) {
+    if (e.touches) return;
     hoveredIds.add(id);
   }
 
@@ -46,7 +53,9 @@
     hoveredIds.remove(id);
   }
 
-  function handleCentroidClick(id) {
+  function handleCentroidClick(e, id) {
+    console.log(e)
+    if (e.touches) return;
     selectedId.set(id);
   }
 
@@ -110,15 +119,14 @@
       color={country.categories[$colorCategory].color}
       opacity={country.show ? 1 : 0.3}
       isReactive={country.show}
-      on:mouseenter={() => handleCentroidMouseEnter(country.id)}
+      on:mouseenter={(e) => handleCentroidMouseEnter(e, country.id)}
       on:mouseleave={() => handleCentroidMouseLeave(country.id)}
-      on:click={() => handleCentroidClick(country.id)}
+      on:click={(e) => handleCentroidClick(e, country.id)}
     />
     {/each}
     {#each $hoveredIds as hoveredId (hoveredId)}
       <HoverTag
         data={$dataCountries.find(d => d.id === hoveredId)}
-        mapWidth={$mapWidth}
         on:mouseenter={() => handleCentroidMouseEnter(hoveredId)}
         on:mouseleave={() => handleCentroidMouseLeave(hoveredId)}
         on:tagclick={handleHoverTagClick}
