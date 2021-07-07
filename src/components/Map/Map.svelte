@@ -46,16 +46,19 @@
 
   function handleCentroidMouseEnter(e, id) {
     if (e.touches) return;
+    e.preventDefault();
+    e.stopPropagation();
     hoveredIds.add(id);
   }
 
-  function handleCentroidMouseLeave(id) {
+  function handleCentroidMouseLeave(e, id) {
+    if (e.touches) return;
+    e.preventDefault();
+    e.stopPropagation();
     hoveredIds.remove(id);
   }
 
-  function handleCentroidClick(e, id) {
-    console.log(e)
-    if (e.touches) return;
+  function handleCentroidClick(id) {
     selectedId.set(id);
   }
 
@@ -120,15 +123,15 @@
       opacity={country.show ? 1 : 0.3}
       isReactive={country.show}
       on:mouseenter={(e) => handleCentroidMouseEnter(e, country.id)}
-      on:mouseleave={() => handleCentroidMouseLeave(country.id)}
-      on:click={(e) => handleCentroidClick(e, country.id)}
+      on:mouseleave={(e) => handleCentroidMouseLeave(e, country.id)}
+      on:click={() => handleCentroidClick(country.id)}
     />
     {/each}
     {#each $hoveredIds as hoveredId (hoveredId)}
       <HoverTag
         data={$dataCountries.find(d => d.id === hoveredId)}
-        on:mouseenter={() => handleCentroidMouseEnter(hoveredId)}
-        on:mouseleave={() => handleCentroidMouseLeave(hoveredId)}
+        on:mouseenter={(e) => handleCentroidMouseEnter(e, hoveredId)}
+        on:mouseleave={(e) => handleCentroidMouseLeave(e, hoveredId)}
         on:tagclick={handleHoverTagClick}
       />
     {/each}
