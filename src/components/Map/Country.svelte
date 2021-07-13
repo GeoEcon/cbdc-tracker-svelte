@@ -31,10 +31,8 @@
     ctx.stroke(p);
 
     if (mode === 'stroke') {
-      console.log($tFillOpacity)
       ctx.strokeStyle = fallbackFillColor;
       ctx.lineWidth = 2;
-      ctx.beginPath();
       ctx.stroke(p);
     }
   }
