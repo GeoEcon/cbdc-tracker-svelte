@@ -1,6 +1,4 @@
 <script>
-  import { createEventDispatcher } from 'svelte';
-
   import { css } from '../../actions/css';
 
   export let dataCountry = {};
@@ -8,15 +6,15 @@
   export let radius = 14;
   export let opacity = 1.0;
   export let isReactive = true;
-
-  const dispatch = createEventDispatcher();
+  export let inverted = false;
 </script>
 
 <g
   class="centroid"
   class:reactive={isReactive}
+  class:inverted
   transform="translate({dataCountry.centroid[0]} {dataCountry.centroid[1]})"
-  use:css={{opacity}}
+  use:css={{opacity, color}}
   on:mouseenter
   on:mouseleave
   on:touchstart|stopPropagation
@@ -28,7 +26,6 @@
     cx="0"
     cy="0"
     r={radius}
-    fill={color}
   />
   <circle
     class="foreground"
@@ -37,6 +34,15 @@
     r={radius / 1.5}
     stroke-width={radius / 7}
   />
+  {#if (inverted)}
+    <circle
+      class="foreground"
+      cx="0"
+      cy="0"
+      r={radius / 2.2}
+      stroke-width={radius / 7}
+    />
+  {/if}
 </g>
 
 <style>
@@ -54,8 +60,20 @@
     stroke: none;
   }
 
+  circle.background {
+    fill: var(--color);
+  }
+
+  .inverted circle.background {
+    fill: var(--background);
+  }
+
   circle.foreground {
     stroke: var(--background);
     fill: none;
+  }
+
+  .inverted circle.foreground {
+    stroke: var(--color);
   }
 </style>

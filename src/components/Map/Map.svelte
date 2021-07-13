@@ -97,6 +97,9 @@
   bind:clientHeight={$mapHeight}
   on:touchend={handleMapTouchend}
 >
+  {#if (showGestureNote)}
+    <GestureNote />
+  {/if}
   <Navigation
     on:reset={handleZoomReset}
     on:plus={handleZoomPlus}
@@ -108,9 +111,6 @@
     fullRollup={fullStatusRollup}
     rollup={statusRollup}
   />
-  {#if (showGestureNote)}
-    <GestureNote />
-  {/if}
   <Canvas
     width={$mapWidth}
     height={$mapHeight}
@@ -119,13 +119,14 @@
     --z-index="0"
   >
     {#each $projectedData as projection, i}
-      {#each projection as country (`${i}_${country.id}`)}
+      {#each projection as country}
         <Country
           path={country.path}
           color={$data.find(d => d.name.name === country.name)?.categories[$colorCategory].color}
           strokeColor={styles.gray}
           fallbackFillColor={styles.lightgray}
           fillOpacity={$data.find(d => d.name.name === country.name)?.show ? 1.0 : 0.2}
+          mode={country.status === 'country' ? 'area' : 'stroke'}
         />
       {/each}
     {/each}
@@ -142,6 +143,7 @@
       color={country.categories[$colorCategory].color}
       opacity={country.show ? 1 : 0.3}
       isReactive={country.show}
+      inverted={country.status === 'region'}
       on:mouseenter={(e) => handleCentroidMouseEnter(e, country.id)}
       on:mouseleave={(e) => handleCentroidMouseLeave(e, country.id)}
       on:touchstart={(e) => handleCentroidClick(e, country.id)}

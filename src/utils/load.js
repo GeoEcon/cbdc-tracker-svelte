@@ -42,10 +42,10 @@ export const loadTrackerData = async (dataPath) => {
     )
     .filter(
       (d) => d.categories.new_status !== 'No development yet'
-    )
-    .filter(
-      (d) => !['Euro Area'].includes(d.name)
     );
+    // .filter(
+    //   (d) => !['Euro Area'].includes(d.name)
+    // );
 
   // initialize the filters
   initFilters(filteredData);

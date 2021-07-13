@@ -34,9 +34,7 @@ export const dataCountries = derived(
       };
     }),
     [
-      d => statusLevels.map(dd => dd.name).indexOf(d.categories[$colorCategory].name),
-      d => d.centroid[0],
-      d => -d.centroid[1]
+      d => d.status
     ])
     .map((d, i) => {
       return {

@@ -1,23 +1,61 @@
 import { readable, writable, derived } from 'svelte/store';
 import { zoomIdentity, geoEqualEarth, geoPath } from 'd3';
-import { feature } from 'topojson-client';
+import { feature, merge } from 'topojson-client';
 
 import { isVertical } from './device';
-import { loadJson, loadNaturalEarth } from '../utils/load';
+import { loadJson } from '../utils/load';
 
 const sphere = { type: 'Sphere' };
 
+const euroCountries = [
+  'Belgium',
+  'Germany',
+  'Ireland',
+  'Spain',
+  'France',
+  'Italy',
+  'Luxembourg',
+  'The Netherlands',
+  'Austria',
+  'Portugal',
+  'Finland',
+  'Greece',
+  'Slovenia',
+  'Cyprus',
+  'Malta',
+  'Slovakia',
+  'Estonia',
+  'Latvia',
+  'Lithuania'
+];
+
 const worldDataPath = 'data/countries-topo.json'; // https://raw.githubusercontent.com/deldersveld/topojson/master/world-countries.json
-// const naturalEarthDataPath = 'data/countries-110.json';
 const specialDataPath = 'data/countries-special.json';
 
 const features = readable([], async (set) => {
   const world = await loadJson(worldDataPath);
   const { features: worldFeatures } = feature(world, world.objects.countries1);
 
+  // some smaller countries
   const specialFeatures = await loadJson(specialDataPath);
 
-  set([...worldFeatures, ...specialFeatures].map((d, i) => ({ ...d, id: i })));
+  const countries = [...worldFeatures, ...specialFeatures].map(d => {
+    return {
+      ...d,
+      status: 'country'
+    };
+  })
+  .filter((d) => !['Antarctica'].includes(d.properties.name));
+
+  // create the Euro area
+  const euroArea = {
+    type: 'Feature',
+    geometry: merge(world, world.objects.countries1.geometries.filter(d => euroCountries.includes(d.properties.name))),
+    properties: { name: 'Euro Area'},
+    status: 'region'
+  };
+
+  set([...countries, euroArea].map((d, i) => ({ ...d, id: i })));
 });
 
 let initialProjectionState = [];
@@ -83,14 +121,16 @@ export const projectedData = derived(
   ([$features, $paths]) => {
     return $paths.map((path) => {
       return $features
-        .filter((d) => !['Antarctica'].includes(d.properties.name))
         .map((d, i) => {
-          return {
+          const centroid = path.centroid(d);
+          const projected = {
             id: i,
             name: d.properties.name,
+            status: d.status,
             path: path(d),
-            centroid: path.centroid(d),
+            centroid,
           };
+          return projected;
         });
     });
   }

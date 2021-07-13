@@ -178,6 +178,7 @@
   dataCountry={data}
   color={data.categories.new_status.color}
   isReactive={false}
+  inverted={data.status === 'region'}
 />
 
 <style>

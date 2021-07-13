@@ -7,6 +7,7 @@
   export let strokeColor = '#000000';
   export let fallbackFillColor = '#FFFFFF';
   export let fillOpacity = 1.0;
+  export let mode = 'area';
   export let contextName = 'canvas';
 
   const { register, deregister, invalidate } = getContext(contextName);
@@ -16,19 +17,24 @@
   });
 
   function draw(ctx) {
-    
     ctx.fillStyle = color ? color : fallbackFillColor;
-    ctx.strokeStyle = strokeColor;
-    ctx.lineWidth = 1;
+    ctx.strokeStyle = mode === 'stroke' && color ? color : strokeColor;
+    ctx.lineWidth = mode === 'stroke' ? 5 : 1;
     
     const p = new Path2D(path);
     ctx.beginPath();
 
     ctx.globalAlpha = $tFillOpacity;
-    ctx.fill(p);
+    if (mode === 'area') ctx.fill(p);
 
     ctx.globalAlpha = 1.0;
     ctx.stroke(p);
+
+    if (mode === 'stroke') {
+      ctx.strokeStyle = fallbackFillColor;
+      ctx.lineWidth = 2;
+      ctx.stroke(p);
+    }
   }
 
   onMount(() => {
