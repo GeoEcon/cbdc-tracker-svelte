@@ -18,6 +18,7 @@ export const loadTrackerData = async (dataPath) => {
     return {
       owner: d.Owner,
       name: d.Name,
+      currency_name: d['Name of CBDC'],
       overview: d.Overview,
       key_developments: d['Key Developments'],
       categories: {
@@ -30,7 +31,7 @@ export const loadTrackerData = async (dataPath) => {
         corporate_partnership: curate(d['Corporate partnership']),
         crossborder_partnerships: curate(d['Cross-border partnerships']),
       },
-      sources: d.Sources.split(' '),
+      sources: d.Sources.split(' ').filter(d => d),
       notes: d.Notes,
     };
   });
@@ -43,9 +44,6 @@ export const loadTrackerData = async (dataPath) => {
     .filter(
       (d) => d.categories.new_status !== 'No development yet'
     );
-    // .filter(
-    //   (d) => !['Euro Area'].includes(d.name)
-    // );
 
   // initialize the filters
   initFilters(filteredData);

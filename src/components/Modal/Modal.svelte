@@ -4,7 +4,7 @@
 
   import { isVertical } from '../../stores/device';
   import { css } from '../../actions/css';
-import { extractHostname } from '../../utils/misc';
+  import { extractHostname } from '../../utils/misc';
 
   export let datum;
 
@@ -66,26 +66,36 @@ import { extractHostname } from '../../utils/misc';
         </button>
       </div>
       <div class="header-content">
+        {#if (datum.currency_name)} 
+          <h2>{datum.currency_name}</h2>
+        {/if}
         <h1>{datum.name.name}</h1>
         <p>{datum.overview}</p>
       </div>
     </div>
     <div class="body">
-      <div class="categories">
-        {#each categories as cat (cat.title)}
-          <div
-            class="category"
-            style="--chipColor: {cat.color};"
-          >
-            <h3>{cat.title}</h3>
-            <button
-              class="chip"
-              on:click={() => handleCategoryClick(cat.category, cat.name)}
+      <div class="categories-wrapper">
+        <h2>Properties<span class="small">(Click to filter)</span></h2>
+        <div class="categories">
+          {#each categories as cat (cat.title)}
+            <div
+              class="category"
+              use:css={{chipColor: cat.color}}
             >
-              {cat.name}
-            </button>
-          </div>
-        {/each}
+              <h3>{cat.title}</h3>
+              {#if (cat.filterable)}
+                <button
+                  class="chip"
+                  on:click={() => handleCategoryClick(cat.category, cat.name)}
+                >
+                  {cat.name}
+                </button>
+              {:else}
+                <span>{cat.name}</span>
+              {/if}
+            </div>
+          {/each}
+        </div>
       </div>
       <main>
         <h2>Key developments</h2>
@@ -187,6 +197,12 @@ import { extractHostname } from '../../utils/misc';
     padding: 0 3rem;
   }
 
+  .header-content h2 {
+    margin: 0.5rem 0;
+    font-size: 1.5rem;
+    color: var(--background);
+  }
+
   .header-content h1 {
     margin: 1rem 0;
     font-size: 3rem;
@@ -222,12 +238,15 @@ import { extractHostname } from '../../utils/misc';
     }
   }
 
+  .categories-wrapper {
+    padding: 2rem;
+  }
+
   .categories {
     flex: 1;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    padding: 1.5rem;
   }
 
   @media (min-width: 600px) {
@@ -237,14 +256,17 @@ import { extractHostname } from '../../utils/misc';
   }
 
   @media (min-width: 980px) {
+    .categories-wrapper {
+      order: 2;
+    }
+
     .categories {
       flex-direction: column;
-      order: 2;
     }
   }
 
   .category {
-    margin: 1.5rem;
+    margin: 1.5rem 1.5rem 1.5rem 0;
   }
 
   .category h3 {
@@ -252,6 +274,14 @@ import { extractHostname } from '../../utils/misc';
     font-size: 1.5rem;
     font-weight: normal;
     white-space: nowrap;
+  }
+
+  .category span {
+    display: inline-block;
+    margin: 0.5rem 0;
+    color: var(--darkgray);
+    font-size: 1.2rem;
+    opacity: 0.8;
   }
 
   .chip {
@@ -282,10 +312,16 @@ import { extractHostname } from '../../utils/misc';
     }
   }
 
-  main h2 {
+  main h2, .categories-wrapper h2 {
     margin: 0.8rem 0;
     color: var(--darkgray);
     font-size: 1.7rem;
+  }
+
+  .small {
+    display: inline-block;
+    margin: 0 0.4rem;
+    font-size: 1rem;
   }
 
   main h4 {

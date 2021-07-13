@@ -67,41 +67,49 @@ export const scaledData = derived(
             name: d.categories.new_status,
             title: $categoryNameScale.new_status,
             color: $statusColorScale[d.categories.new_status],
+            filterable: true
           },
           use_case: {
             name: d.categories.use_case,
             title: $categoryNameScale.use_case,
             color: $useCaseColorScale[d.categories.use_case],
+            filterable: true
           },
           technology: {
             name: d.categories.technology,
             title: $categoryNameScale.technology,
             color: $technologyColorScale[d.categories.technology],
+            filterable: true
           },
           architecture: {
             name: d.categories.architecture,
             title: $categoryNameScale.architecture,
             color: $architectureColorScale[d.categories.architecture],
+            filterable: true
           },
           infrastructure: {
             name: d.categories.infrastructure,
             title: $categoryNameScale.infrastructure,
             color: $infrastructureColorScale[d.categories.infrastructure],
+            filterable: true
           },
           access: {
             name: d.categories.access,
             title: $categoryNameScale.access,
             color: $accessColorScale[d.categories.access],
+            filterable: true
           },
           corporate_partnership: {
             name: d.categories.corporate_partnership,
             title: $categoryNameScale.corporate_partnership,
-            color: styles.gray
+            color: styles.gray,
+            filterable: false
           },
           crossborder_partnerships: {
             name: d.categories.crossborder_partnerships,
             title: $categoryNameScale.crossborder_partnerships,
-            color: styles.gray
+            color: styles.gray,
+            filterable: false
           }
         }
       };
