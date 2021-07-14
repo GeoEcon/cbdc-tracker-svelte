@@ -1,6 +1,6 @@
 <script>
   import { onMount } from 'svelte';
-  import { zoom as d3zoom, select, zoomIdentity } from 'd3';
+  import { zoom as d3zoom, select } from 'd3';
 
   import { mapWidth, mapHeight, initialTransform, mapTransform, projectedData } from '../../stores/map';
   import { data } from '../../stores/data';
@@ -45,15 +45,22 @@
     showGestureNote = false;
   }
   
-  function handleZoomReset() {
-    zoomCatcher.transition().duration(400).call(zoom.transform, $initialTransform);
+  function zoomReset({animation = true} = {}) {
+    if (!zoomCatcher) return;
+    if (animation) {
+      zoomCatcher.transition().duration(400).call(zoom.transform, $initialTransform);
+    } else {
+      zoomCatcher.call(zoom.transform, $initialTransform);
+    }
   }
 
-  function handleZoomPlus() {
+  function zoomPlus() {
+    if (!zoomCatcher) return;
     zoomCatcher.transition().duration(400).call(zoom.scaleBy, 2);
   }
 
-  function handleZoomMinus() {
+  function zoomMinus() {
+    if (!zoomCatcher) return;
     zoomCatcher.transition().duration(400).call(zoom.scaleBy, 0.5);
   }
 
@@ -86,9 +93,10 @@
   onMount(() => {
     zoomCatcher = select(zoomCatcherElem);
     zoomCatcher.call(zoom);
+    zoomReset();
   });
 
-  $: if (zoomCatcher) zoomCatcher.call(zoom.transform, $initialTransform);
+  $: $data, zoomReset({animation: true});
 </script>
 
 <div
@@ -101,9 +109,9 @@
     <GestureNote />
   {/if}
   <Navigation
-    on:reset={handleZoomReset}
-    on:plus={handleZoomPlus}
-    on:minus={handleZoomMinus}
+    on:reset={zoomReset}
+    on:plus={zoomPlus}
+    on:minus={zoomMinus}
   />
   <Legend
     filter={statusFilter}
