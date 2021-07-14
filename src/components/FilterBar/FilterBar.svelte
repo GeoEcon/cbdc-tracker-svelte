@@ -1,4 +1,6 @@
 <script>
+  import { slide } from 'svelte/transition';
+
   import {
     statusFilter,
     countryFilter,
@@ -20,9 +22,13 @@
     architectureRollup,
     infrastructureRollup,
     accessRollup } from '../../stores/aggregation';
+  import { isVertical } from '../../stores/device';
   import { css } from '../../actions/css';
 
+  import FilterTitle from './FilterTitle.svelte';
   import Dropdown from '../Dropdown/Dropdown.svelte';
+
+  $: extraFiltersExpanded = !$isVertical;
 
   $: dropdownsTop = [
     {
@@ -79,7 +85,9 @@
   class="filter-bar"
   use:css={{maxColumns, halfMaxColumns: Math.ceil(maxColumns / 2)}}
 >
-  <h5>Filters</h5>
+  <FilterTitle
+    label="Filters"
+  />
   <div class="standard grid-container">
     {#each dropdownsTop as { id, filter, label, fullRollup, rollup } (id)}
       <Dropdown
@@ -90,28 +98,33 @@
       />
     {/each}
   </div>
-  <div class="extra grid-container">
-    {#each dropdownsBottom as { id, filter, label, fullRollup, rollup } (id)}
-      <Dropdown
-        filter={filter}
-        label={label}
-        fullRollup={fullRollup}
-        rollup={rollup}
-      />
-    {/each}
-  </div>
+  <FilterTitle
+    label="Extra filters"
+    expandable
+    bind:expanded={extraFiltersExpanded}
+  />
+  {#if (extraFiltersExpanded)}
+    <div
+      class="extra grid-container"
+      transition:slide
+    >
+      {#each dropdownsBottom as { id, filter, label, fullRollup, rollup } (id)}
+        <Dropdown
+          filter={filter}
+          label={label}
+          fullRollup={fullRollup}
+          rollup={rollup}
+        />
+      {/each}
+    </div>
+  {/if}
 </div>
 
 <style>
   .filter-bar {
     width: 100%;
-  }
-
-  h5 {
-    margin: 1rem 0 0 1rem;
-    color: var(--darkgray);
-    font-family: var(--primFont);
-    font-size: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px dashed var(--gray);
   }
 
   .grid-container {
