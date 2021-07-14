@@ -10,12 +10,14 @@
   export let tagHeight = 35;
   export let tagGap = 10;
   export let tagOffset = 40;
+  export let mapWidth = 0;
+
+  const dispatch = createEventDispatcher();
 
   const labelArrowWidth = 30;
   const pathGrowDuration = 200;
   const cornerRadius = 5;
-
-  const dispatch = createEventDispatcher();
+  const offset = 20;
 
   let textCategoryElems = [];
   let textNameElems = [];
@@ -43,13 +45,15 @@
     .filter(d => d.name !== 'not available')
   ];
 
+  $: maxTagWidth = Math.max(0, ...[...textCategoryElems.map(d => d.getBBox()), textNameElems.map(d => d.getBBox())].map(d => d.width).filter(d => d));
+  $: isAtLeftBorder = data.centroid[0] < maxTagWidth + offset + tagOffset + 2 * labelArrowWidth;
+  $: isAtRightBorder = data.centroid[0] > mapWidth - offset - maxTagWidth - tagOffset - 2 * labelArrowWidth;
+
   $: totalHeight = Math.max(0, tagHeight * (tags.length - 1) + tagGap * (tags.length - 2));
 
-  $: tagDirection = 1; //data.centroid[0] < mapWidth / 2 ? 1 : -1;
-
   $: tagsPaths = tags.map((tag, i) => {
-    const direction = (tag.category === 'name' ? -1 : 1) * tagDirection;
-    const height = tag.category === 'name' ? tagHeight : totalHeight;
+    let direction = isAtRightBorder ? -1 : isAtLeftBorder ? 1 : (tag.category === 'name' ? -1 : 1);
+    const height = tag.category === 'name' && !isAtLeftBorder && !isAtRightBorder? tagHeight : totalHeight;
     const x2 = direction * tagOffset;
     const y2 = i * (tagHeight + tagGap) - height / 2 + tagHeight / 2;
     const x3 = x2 + labelArrowWidth * direction;

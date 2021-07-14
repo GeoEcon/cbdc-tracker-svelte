@@ -161,6 +161,7 @@
     {#each $hoveredIds as hoveredId (hoveredId)}
       <HoverTag
         data={$dataCountries.find(d => d.id === hoveredId)}
+        mapWidth={$mapWidth}
         on:mouseenter={(e) => handleCentroidMouseEnter(e, hoveredId)}
         on:mouseleave={(e) => handleCentroidMouseLeave(e, hoveredId)}
         on:tagclick={handleHoverTagClick}
