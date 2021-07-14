@@ -80,7 +80,7 @@
   use:css={{maxColumns, halfMaxColumns: Math.ceil(maxColumns / 2)}}
 >
   <h5>Filters</h5>
-  <div class="grid-container">
+  <div class="standard grid-container">
     {#each dropdownsTop as { id, filter, label, fullRollup, rollup } (id)}
       <Dropdown
         filter={filter}
@@ -90,7 +90,7 @@
       />
     {/each}
   </div>
-  <div class="grid-container">
+  <div class="extra grid-container">
     {#each dropdownsBottom as { id, filter, label, fullRollup, rollup } (id)}
       <Dropdown
         filter={filter}
