@@ -239,7 +239,7 @@
   }
 
   .categories-wrapper {
-    padding: 2rem;
+    padding: 2rem 3rem;
   }
 
   .categories {
