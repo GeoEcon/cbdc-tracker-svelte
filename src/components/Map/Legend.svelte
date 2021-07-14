@@ -89,7 +89,7 @@
 
   li:hover, li.inactive:hover {
     opacity: 1.0;
-    background-color: var(--lightgray);
+    background-color: var(--faintBlue);
   }
 
   .color {

@@ -1,7 +1,10 @@
 <script>
+  import Icon from 'svelte-awesome';
+
   import { clickOutside } from '../../actions/clickoutside';
   import { setFocus } from '../../actions/focus';
   import { areAllSelected, hasOverlap } from "../../utils/logic";
+  import { questionMark } from '../../utils/icons';
 
   import Chip from './Chip.svelte';
   import BarChart from './BarChart.svelte';
@@ -11,6 +14,7 @@
   export let label = '';
   export let fullRollup = [];
   export let rollup = [];
+  export let info = null;
 
   let searchValue = '';
   let hoveredSuggestion = null;
@@ -81,7 +85,14 @@
     class:active={showSuggestions}
     for={id}
   >
-    <span>{label}</span>
+    <span class="title">
+      {label}
+      {#if (info)}
+        <button class="info">
+          <Icon data={questionMark} />
+        </button>
+      {/if}
+    </span>
     {#if (chips.length)}
       <button
         on:click={handleResetClick}
@@ -180,7 +191,27 @@
     color: var(--primBlack);
   }
 
-  label button span.reset{
+  label span.title {
+    display: flex;
+  }
+
+  label span.title button.info {
+    margin: 0 0.3rem;
+  }
+
+  :global(.dropdown .fa-icon) {
+    fill: var(--darkgray) !important;
+  }
+
+  :global(.dropdown button.info:hover .fa-icon) {
+    fill: var(--tertBlue) !important;
+  }
+
+  :global(.dropdown .fa-icon path:not(:first-child)) {
+    display: none;
+  }
+
+  label button span.reset {
     display: inline-block;
     margin: 0 0.2rem;
     font-size: 1.3rem;
@@ -188,7 +219,7 @@
     transform: rotate(45deg);
   }
 
-  label button:hover span.reset{
+  label button:hover span.reset {
     font-weight: bold;
   }
 
@@ -202,7 +233,7 @@
   }
 
   .field:hover {
-    background-color: var(--gray);
+    background-color: var(--faintBlue);
   }
 
   ul.chips {

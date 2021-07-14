@@ -16,5 +16,7 @@ export default {
   gray: '#DBDBDB',
   lightgray: '#F7F7F7',
 
-  background: '#FFFFFF'
+  background: '#FFFFFF',
+
+  faintBlue: '#0055962F'
 };

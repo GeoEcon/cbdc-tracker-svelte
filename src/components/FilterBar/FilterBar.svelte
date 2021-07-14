@@ -50,31 +50,36 @@
       filter: useCaseFilter,
       label: 'Use case',
       fullRollup: $fullUseCaseRollup,
-      rollup: $useCaseRollup
+      rollup: $useCaseRollup,
+      info: true
     },
     {
       filter: technologyFilter,
       label: 'Technology',
       fullRollup: $fullTechnologyRollup,
-      rollup: $technologyRollup
+      rollup: $technologyRollup,
+      info: true
     },
     {
       filter: architectureFilter,
       label: 'Architecture',
       fullRollup: $fullArchitectureRollup,
-      rollup: $architectureRollup
+      rollup: $architectureRollup,
+      info: true
     },
     {
       filter: infrastructureFilter,
       label: 'Infrastructure',
       fullRollup: $fullInfrastructureRollup,
-      rollup: $infrastructureRollup
+      rollup: $infrastructureRollup,
+      info: true
     },
     {
       filter: accessFilter,
       label: 'Access',
       fullRollup: $fullAccessRollup,
-      rollup: $accessRollup
+      rollup: $accessRollup,
+      info: true
     }
   ].map((d, i) => ({...d, id: i}));
 
@@ -108,12 +113,13 @@
       class="extra grid-container"
       transition:slide
     >
-      {#each dropdownsBottom as { id, filter, label, fullRollup, rollup } (id)}
+      {#each dropdownsBottom as { id, filter, label, fullRollup, rollup, info } (id)}
         <Dropdown
           filter={filter}
           label={label}
           fullRollup={fullRollup}
           rollup={rollup}
+          info={info}
         />
       {/each}
     </div>

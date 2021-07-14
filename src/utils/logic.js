@@ -1,3 +1,5 @@
+export const getInstance = () => `${(new Date()).getTime() + Math.random()}`.replace('.', '');
+
 export const hasOverlap = (arr, filter) => {
   return filter
     .filter((d) => d.selected)

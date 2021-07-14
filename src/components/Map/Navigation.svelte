@@ -56,10 +56,10 @@
   }
 
   button:hover {
-    background-color: var(--gray);
+    background-color: var(--faintBlue);
   }
 
-  :global(button .fa-icon) {
+  :global(.navigation button .fa-icon) {
     fill: var(--darkgray) !important;
   }
 </style>

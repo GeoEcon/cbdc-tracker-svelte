@@ -44,7 +44,7 @@
   }
 
   li.active {
-    background-color: var(--gray);
+    background-color: var(--faintBlue);
   }
 
   li span.color {
