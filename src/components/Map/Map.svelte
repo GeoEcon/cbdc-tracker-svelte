@@ -18,6 +18,7 @@
   import Centroid from './Centroid.svelte';
   import HoverTag from './HoverTag.svelte';
   import GestureNote from './GestureNote.svelte';
+import { isVertical } from '../../stores/device';
 
   export let zoomExtent = [1, 10];
 
@@ -96,7 +97,7 @@
     zoomReset({animation: false});
   });
 
-  $: $data, zoomReset();
+  $: if ($data && !$isVertical) zoomReset();
 </script>
 
 <div
