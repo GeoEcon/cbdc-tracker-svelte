@@ -3,7 +3,7 @@ import { zoomIdentity, geoEqualEarth, geoPath } from 'd3';
 import { feature, merge } from 'topojson-client';
 
 import { isVertical } from './device';
-import { loadJson } from '../utils/load';
+import { loadJson, loadCapitals } from '../utils/load';
 
 const sphere = { type: 'Sphere' };
 
@@ -31,6 +31,7 @@ const euroCountries = [
 
 const worldDataPath = 'data/countries-topo.json'; // https://raw.githubusercontent.com/deldersveld/topojson/master/world-countries.json
 const specialDataPath = 'data/countries-special.json';
+const capitalDataPath = 'data/capitals.csv';
 
 const features = readable([], async (set) => {
   const world = await loadJson(worldDataPath);
@@ -55,7 +56,23 @@ const features = readable([], async (set) => {
     status: 'region'
   };
 
-  set([...countries, euroArea].map((d, i) => ({ ...d, id: i })));
+  // get the capitals
+  const capitals = await loadCapitals(capitalDataPath);
+
+  // merge
+  const mapData = [...countries, euroArea].map((d, i) => {
+    const { lat, lon, name } = capitals.find(capital => capital.country === d.properties.name) || {};
+    return {
+      ...d,
+      id: i,
+      capital: {
+        name,
+        coordinates: [+lon, +lat]
+      }
+    };
+  });
+
+  set(mapData);
 });
 
 let initialProjectionState = [];
@@ -122,7 +139,8 @@ export const projectedData = derived(
     return $paths.map((path) => {
       return $features
         .map((d, i) => {
-          const centroid = path.centroid(d);
+          const centroid = d.capital.name ? path.projection()(d.capital.coordinates) : path.centroid(d);
+          console.log(d.properties.name, centroid)
           const projected = {
             id: i,
             name: d.properties.name,

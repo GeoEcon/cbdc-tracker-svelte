@@ -69,3 +69,7 @@ export const loadNaturalEarth = async (dataPath) => {
     };
   });
 };
+
+export const loadCapitals = async (dataPath) => {
+  return await csv(dataPath);
+};
