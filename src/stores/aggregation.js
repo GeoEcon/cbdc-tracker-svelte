@@ -37,11 +37,11 @@ export const fullUseCaseRollup = derived(scaledData, $scaledData => generateRoll
 
 export const fullTechnologyRollup = derived(scaledData, $scaledData => generateRollup($scaledData.map(d => d.categories.technology)));
 
-export const fullArchitectureRollup = derived(scaledData, $scaledData => generateRollup($scaledData.map(d => d.categories.architecture)));
+export const fullArchitectureRollup = derived(scaledData, $scaledData => generateRollup($scaledData.filter(d => ['Retail', 'Both'].includes(d.categories.use_case.name)).map(d => d.categories.architecture)));
 
 export const fullInfrastructureRollup = derived(scaledData, $scaledData => generateRollup($scaledData.map(d => d.categories.infrastructure)));
 
-export const fullAccessRollup = derived(scaledData, $scaledData => generateRollup($scaledData.map(d => d.categories.access)));
+export const fullAccessRollup = derived(scaledData, $scaledData => generateRollup($scaledData.filter(d => ['Retail', 'Both'].includes(d.categories.use_case.name)).map(d => d.categories.access)));
 
 
 const showData = derived(data, $data => $data.filter(d => d.show));
@@ -54,8 +54,8 @@ export const useCaseRollup = derived(showData, $showData => generateRollup($show
 
 export const technologyRollup = derived(showData, $showData => generateRollup($showData.map(d => d.categories.technology)));
 
-export const architectureRollup = derived(showData, $showData => generateRollup($showData.map(d => d.categories.architecture)));
+export const architectureRollup = derived(showData, $showData => generateRollup($showData.filter(d => ['Retail', 'Both'].includes(d.categories.use_case.name)).map(d => d.categories.architecture)));
 
 export const infrastructureRollup = derived(showData, $showData => generateRollup($showData.map(d => d.categories.infrastructure)));
 
-export const accessRollup = derived(showData, $showData => generateRollup($showData.map(d => d.categories.access)));
+export const accessRollup = derived(showData, $showData => generateRollup($showData.filter(d => ['Retail', 'Both'].includes(d.categories.use_case.name)).map(d => d.categories.access)));
