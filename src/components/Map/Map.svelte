@@ -9,6 +9,7 @@
   import { hoveredIds, selectedId } from '../../stores/selection';
   import { statusFilter, filterByCategory, countryFilter } from '../../stores/filter';
   import { fullStatusRollup, statusRollup, totalCountries } from '../../stores/aggregation';
+  import { isVertical } from '../../stores/device';
   import styles from '../../utils/styles';
 
   import Navigation from './Navigation.svelte';
@@ -18,9 +19,8 @@
   import Centroid from './Centroid.svelte';
   import HoverTag from './HoverTag.svelte';
   import GestureNote from './GestureNote.svelte';
-import { isVertical } from '../../stores/device';
 
-  export let zoomExtent = [1, 10];
+  export let zoomExtent = [1, 25];
 
   const zoom = d3zoom()
     .scaleExtent(zoomExtent)
