@@ -18,7 +18,7 @@
     filterByCategory(category, name);
   }
 
-  function handleParentMessenger() {
+  function sendDimensions(width, height) {
     const message = {
       height,
       width
@@ -28,9 +28,8 @@
   }
 
   $: isVertical.set(width < 600);
+  $: sendDimensions(width, height);
 </script>
-
-<svelte:window on:load={handleParentMessenger} on:resize={handleParentMessenger} />
 
 <div
   class="component-wrapper"
@@ -69,10 +68,8 @@
   }
 
   .component-wrapper {
-    width: calc(100% - 1rem);
-    margin: 0.5rem;
+    width: 100%;
     font-size: 12px;
-    border: 1px solid var(--gray);
   }
 
   @media (min-width: 600px) {
