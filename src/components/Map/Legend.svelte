@@ -30,7 +30,7 @@
 >
   <div class="countries">
     <h5 class="total">
-      <span>{totalCountries}</span> countr{totalCountries === 1 ? 'y' : 'ies'} tracked
+      <span>{totalCountries}</span> countr{totalCountries === 1 ? 'y' : 'ies'} / region{totalCountries === 1 ? '' : 's'} tracked
     </h5>
     <Dropdown
       filter={countryFilter}
@@ -44,7 +44,7 @@
       {#each data as { id, name, color, n } (id)}
         <li
           class:inactive={n === 0}
-          on:click={() => handleClick(id)}
+          on:click|stopPropagation={() => handleClick(id)}
         >
           <span
             class="color"
@@ -69,16 +69,23 @@
     left: 0;
     top: 0;
     z-index: 800;
-    width: 200px;
-    min-width: 200px;
-    max-width: 200px;
-    margin: 2rem 1rem;
+    width: 100%;
+    margin: 0;
     padding: 0.5rem 0;
     color: var(--darkgray);
     font-family: var(--primFont);
     font-size: 0.9rem;
     background-color: var(--background);
     border: 1px solid var(--gray);
+  }
+
+  @media (min-width: 600px) {
+    .legend {
+      width: 240px;
+      min-width: 240px;
+      max-width: 240px;
+      margin: 2rem 1rem;
+    }
   }
 
   .legend.vertical {
@@ -109,7 +116,15 @@
   }
 
   ul {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     list-style-type: none;
+  }
+
+  @media (min-width: 600px) {
+    ul {
+      display: block;
+    }
   }
 
   li {
