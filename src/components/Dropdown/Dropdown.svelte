@@ -114,7 +114,6 @@
           bind:this={infoElem}
           on:mouseenter={() => handleInfo(true)}
           on:mouseleave={() => handleInfo(false)}
-          on:click|stopPropagation={() => handleInfo(true)}
         >
           <Icon data={questionMark} />
         </button>
