@@ -24,7 +24,7 @@ const generateRollup = (arr, sortArr = null) => {
     });
   }
 
-  rollup = sortToEnd(rollup, 'name', 'not available');
+  rollup = sortToEnd(rollup, 'name', 'Undecided');
 
   return rollup;
 };

@@ -30,7 +30,7 @@ function createMultiFilter() {
           name: value,
           selected: true,
         };
-      }), 'name', 'not available')
+      }), 'name', 'Undecided')
     );
   };
 

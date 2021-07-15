@@ -43,7 +43,7 @@
         ...data.categories[key]
       };
     })
-    .filter(d => d.name !== 'not available')
+    .filter(d => d.name !== 'Undecided')
   ];
 
   $: totalHeight = Math.max(0, tagHeight * (tags.length - 0) + tagGap * (tags.length - 1));

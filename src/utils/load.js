@@ -5,11 +5,11 @@ const splitValue = (value) =>
   value
     .split(',')
     .map((d) => d.trim())
-    .map((d) => d === '' ? 'not available' : d);
+    .map((d) => d === '' ? 'Undecided' : d);
 
 const curate = (value) => {
-  if (!value) return 'not available';
-  return value.replace('n/a', 'not available');
+  if (!value) return 'Undecided';
+  return value.replace('n/a', 'Undecided');
 };
 
 export const loadTrackerData = async (dataPath) => {
@@ -40,6 +40,9 @@ export const loadTrackerData = async (dataPath) => {
   const filteredData = data
     .filter(
       (d) => d.categories.new_status !== 'not available'
+    )
+    .filter(
+      (d) => d.categories.new_status !== 'Undecided'
     )
     .filter(
       (d) => d.categories.new_status !== 'No development yet'
