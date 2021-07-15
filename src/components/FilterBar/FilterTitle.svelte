@@ -6,8 +6,6 @@
   export let label = '';
   export let expandable = false;
   export let expanded = false;
-
-  $: console.log(expanded)
 </script>
 
 <button

@@ -11,6 +11,7 @@
   export let tagGap = 10;
   export let tagOffset = 40;
   export let mapWidth = 0;
+  export let mapHeight = 0;
 
   const dispatch = createEventDispatcher();
 
@@ -45,17 +46,21 @@
     .filter(d => d.name !== 'not available')
   ];
 
-  $: maxTagWidth = Math.max(0, ...[...textCategoryElems.map(d => d.getBBox()), textNameElems.map(d => d.getBBox())].map(d => d.width).filter(d => d));
-  $: isAtLeftBorder = data.centroid[0] < maxTagWidth + offset + tagOffset + 2 * labelArrowWidth;
-  $: isAtRightBorder = data.centroid[0] > mapWidth - offset - maxTagWidth - tagOffset - 2 * labelArrowWidth;
+  $: totalHeight = Math.max(0, tagHeight * (tags.length - 0) + tagGap * (tags.length - 1));
 
-  $: totalHeight = Math.max(0, tagHeight * (tags.length - 1) + tagGap * (tags.length - 2));
+  $: maxTagWidth = Math.max(0, ...[...textCategoryElems.map(d => d.getBBox()), textNameElems.map(d => d.getBBox())].map(d => d.width).filter(d => d));
+  $: isAtTopBorder = data.centroid[1] - totalHeight / 2 < offset;
+  $: isAtLeftBorder = data.centroid[0] < maxTagWidth + offset + tagOffset + 2 * labelArrowWidth;
+  $: isAtBottomBorder = data.centroid[1] + totalHeight / 2 > mapHeight - offset;
+  $: isAtRightBorder = data.centroid[0] > mapWidth - offset - maxTagWidth - tagOffset - 2 * labelArrowWidth;
+  
+  $: yShift = isAtTopBorder ? totalHeight / 2 - data.centroid[1] : isAtBottomBorder ? mapHeight - (data.centroid[1] + totalHeight / 1.8) : 0;
 
   $: tagsPaths = tags.map((tag, i) => {
     let direction = isAtRightBorder ? -1 : isAtLeftBorder ? 1 : (tag.category === 'name' ? -1 : 1);
     const height = tag.category === 'name' && !isAtLeftBorder && !isAtRightBorder? tagHeight : totalHeight;
     const x2 = direction * tagOffset;
-    const y2 = i * (tagHeight + tagGap) - height / 2 + tagHeight / 2;
+    const y2 = i * (tagHeight + tagGap) - height / 2 + tagHeight / 2 + yShift;
     const x3 = x2 + labelArrowWidth * direction;
     const y3 = y2 - tagHeight / 2;
     const x4 = x3 + 0.5 * labelArrowWidth * direction;

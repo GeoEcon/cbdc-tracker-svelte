@@ -93,10 +93,10 @@
   onMount(() => {
     zoomCatcher = select(zoomCatcherElem);
     zoomCatcher.call(zoom);
-    zoomReset();
+    zoomReset({animation: false});
   });
 
-  $: $data, zoomReset({animation: true});
+  $: $data, zoomReset();
 </script>
 
 <div
@@ -162,6 +162,7 @@
       <HoverTag
         data={$dataCountries.find(d => d.id === hoveredId)}
         mapWidth={$mapWidth}
+        mapHeight={$mapHeight}
         on:mouseenter={(e) => handleCentroidMouseEnter(e, hoveredId)}
         on:mouseleave={(e) => handleCentroidMouseLeave(e, hoveredId)}
         on:tagclick={handleHoverTagClick}
