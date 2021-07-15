@@ -15,7 +15,7 @@
 >
   {label}
   {#if (expandable)}
-    <span><Icon data={expanded ? minus : plus} scale="0.8" /></span>
+    <span><Icon data={expanded ? minus : plus} scale="0.5" /></span>
   {/if}
 </button>
 
