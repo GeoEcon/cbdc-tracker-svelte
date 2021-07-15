@@ -1,6 +1,4 @@
 <script>
-  import { onMount } from 'svelte';
-
   import styles from './utils/styles';
   import { css } from './actions/css';
   import { isVertical } from './stores/device';
@@ -12,23 +10,32 @@
   import Map from './components/Map/Map.svelte';
   import Modal from './components/Modal/Modal.svelte';
 
-  let width;
+  let width = 0;
+  let height = 0;
 
   function handleModalCategoryClick(e) {
     const { detail: { category, name} } = e;
     filterByCategory(category, name);
   }
-  
-  onMount(() => {
-    // selectedId.set(187);
-  });
+
+  function handleParentMessenger() {
+    const message = {
+      height,
+      width
+    };
+
+	  window.top.postMessage(message, "*");
+  }
 
   $: isVertical.set(width < 600);
 </script>
 
+<svelte:window on:load={handleParentMessenger} on:resize={handleParentMessenger} />
+
 <div
   class="component-wrapper"
   bind:clientWidth={width}
+  bind:clientHeight={height}
   use:css={styles}
 >
   <FilterBar />
