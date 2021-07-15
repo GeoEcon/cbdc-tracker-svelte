@@ -8,7 +8,7 @@
   import { colorCategory } from '../../stores/colorcategory';
   import { hoveredIds, selectedId } from '../../stores/selection';
   import { statusFilter, filterByCategory } from '../../stores/filter';
-  import { fullStatusRollup, statusRollup } from '../../stores/aggregation';
+  import { fullStatusRollup, statusRollup, totalCountries } from '../../stores/aggregation';
   import styles from '../../utils/styles';
 
   import Navigation from './Navigation.svelte';
@@ -118,6 +118,7 @@
     label="Status"
     fullRollup={fullStatusRollup}
     rollup={statusRollup}
+    totalCountries={$totalCountries}
   />
   <Canvas
     width={$mapWidth}

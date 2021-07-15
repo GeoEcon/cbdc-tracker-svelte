@@ -5,6 +5,7 @@
   export let label;
   export let fullRollup;
   export let rollup;
+  export let totalCountries = 0;
 
   function handleClick(id) {
     filter.click(id);
@@ -26,6 +27,9 @@
   class:vertical={$isVertical}
 >
   <h5>{label}</h5>
+  <div class="total">
+    <span>{totalCountries}</span> tracked countr{totalCountries === 1 ? 'y' : 'ies'}
+  </div>
   <ul>
     {#each data as { id, name, color, n } (id)}
       <li
@@ -68,8 +72,16 @@
   }
 
   h5 {
-    margin: 0.5rem;
+    margin: 0.3rem 0.5rem;
     font-size: 1rem;
+  }
+
+  .total {
+    margin: 0.2rem 0.5rem;
+  }
+
+  .total span {
+    font-weight: 600;
   }
 
   ul {

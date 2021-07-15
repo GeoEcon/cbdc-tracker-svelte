@@ -59,3 +59,7 @@ export const architectureRollup = derived(showData, $showData => generateRollup(
 export const infrastructureRollup = derived(showData, $showData => generateRollup($showData.map(d => d.categories.infrastructure)));
 
 export const accessRollup = derived(showData, $showData => generateRollup($showData.filter(d => ['Retail', 'Both'].includes(d.categories.use_case.name)).map(d => d.categories.access)));
+
+export const totalCountries = derived(scaledData, $scaledData => {
+  return [...new Set($scaledData.map(d => d.name))].length;
+});
