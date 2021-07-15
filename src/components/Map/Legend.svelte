@@ -117,7 +117,8 @@
 
   ul {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-auto-flow: column;
     list-style-type: none;
   }
 
