@@ -1,6 +1,7 @@
 import { readable, writable, derived } from 'svelte/store';
 import { zoomIdentity, geoEqualEarth, geoPath } from 'd3';
 import { feature, merge } from 'topojson-client';
+import geojsonRewind from '@mapbox/geojson-rewind';
 
 import { isVertical } from './device';
 import { loadJson, loadCapitals } from '../utils/load';
@@ -34,11 +35,17 @@ const specialDataPath = 'data/countries-special.json';
 const capitalDataPath = 'data/capitals.csv';
 
 const features = readable([], async (set) => {
+  console.log(geojsonRewind)
   const world = await loadJson(worldDataPath);
   const { features: worldFeatures } = feature(world, world.objects.countries1);
 
   // some smaller countries
-  const specialFeatures = await loadJson(specialDataPath);
+  const specialFeatures = (await loadJson(specialDataPath)).map(d => {
+    return {
+      ...d,
+      geometry: geojsonRewind(d.geometry, true)
+    };
+  });
 
   const countries = [...worldFeatures, ...specialFeatures].map(d => {
     return {

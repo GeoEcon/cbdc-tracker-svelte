@@ -9,6 +9,7 @@
     "start": "sirv public --no-clear"
   },
   "devDependencies": {
+    "@mapbox/geojson-rewind": "^0.5.1",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^11.0.0",

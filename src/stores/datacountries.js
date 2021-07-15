@@ -1,10 +1,8 @@
 import { derived } from 'svelte/store';
-import { sortBy } from 'lodash-es';
+import { sortBy, xor } from 'lodash-es';
 
 import { data } from './data';
 import { projectedData, mapWidth, mapHeight } from './map';
-import { statusLevels } from '../utils/status';
-import { colorCategory } from './colorcategory';
 import { isDefined } from '../utils/logic';
 
 export const dataCountries = derived(
@@ -12,17 +10,15 @@ export const dataCountries = derived(
     data,
     projectedData,
     mapWidth,
-    mapHeight,
-    colorCategory
+    mapHeight
   ], ([
     $data,
     $projectedData,
     $mapWidth,
-    $mapHeight,
-    $colorCategory
+    $mapHeight
   ]) => {
   const availableCountries = $data.map(d => d.name.name);
-  return sortBy($projectedData
+  const dataCountries = sortBy($projectedData
     .flat()
     .filter(d => isDefined(d.path))
     .filter(d => availableCountries.includes(d.name))
@@ -43,4 +39,6 @@ export const dataCountries = derived(
         orderId: i + 0.5
       };
     });
+    // console.log(dataCountries.length, availableCountries.length, xor(dataCountries.map(d => d.name.name), availableCountries))
+    return dataCountries;
   }, []);
