@@ -1,11 +1,11 @@
 <script>
-  import Icon from 'svelte-awesome';
-
   import { clickOutside } from '../../actions/clickoutside';
   import { setFocus } from '../../actions/focus';
   import { areAllSelected, hasOverlap } from "../../utils/logic";
   import { questionMark } from '../../utils/icons';
-
+  import { getCoords } from '../../utils/misc';
+  
+  import Icon from 'svelte-awesome';
   import Chip from './Chip.svelte';
   import BarChart from './BarChart.svelte';
   import Suggestion from './Suggestion.svelte';
@@ -15,11 +15,30 @@
   export let fullRollup = [];
   export let rollup = [];
   export let info = null;
+  export let tooltip = null;
+  export let showReset = false;
+  export let hideColorBoxes = false;
+  export let showClickHint = false;
 
   let searchValue = '';
   let hoveredSuggestion = null;
   let showSuggestions = false;
   let chips = [];
+  let infoElem;
+
+  function handleInfo(show) {
+    if (!info || !infoElem) return;
+    if (show && !$tooltip) {
+      const { x, y, width, height } = getCoords(infoElem);
+      tooltip.set({
+        info,
+        x: x + width / 2,
+        y: y + height
+      });
+      return;
+    }
+    tooltip.set(null);
+  }
 
   function handleResetClick() {
     filter.selectAll();
@@ -85,15 +104,23 @@
     class:active={showSuggestions}
     for={id}
   >
-    <span class="title">
+    <span
+      class="title"
+    >
       {label}
       {#if (info)}
-        <button class="info">
+        <button
+          class="info"
+          bind:this={infoElem}
+          on:mouseenter={() => handleInfo(true)}
+          on:mouseleave={() => handleInfo(false)}
+          on:click|stopPropagation={() => handleInfo(true)}
+        >
           <Icon data={questionMark} />
         </button>
       {/if}
     </span>
-    {#if (chips.length)}
+    {#if (showReset && chips.length)}
       <button
         on:click={handleResetClick}
       >
@@ -107,6 +134,11 @@
     on:click={() => showSuggestions = true}
     use:clickOutside={handleFieldClickOutside}
   >
+    {#if (showClickHint && !chips.length)}
+      <span class="click-hint">
+        {showClickHint}
+      </span>
+    {/if}
     <ul class="chips">
       {#each chips as { id, name} (id)}
         <li>
@@ -119,10 +151,12 @@
       {/each}
     </ul>
   </div>
-  <BarChart
-    rollup={rollup}
-    fullRollup={fullRollup}
-  />
+  {#if (rollup.length && fullRollup.length)}
+    <BarChart
+      rollup={rollup}
+      fullRollup={fullRollup}
+    />
+  {/if}
   {#if (showSuggestions)}
     <div class="suggestions">
       <input
@@ -143,7 +177,7 @@
             rollup={rollup.find(d => d.name === name)}
             isActive={hoveredSuggestion === i}
             isSelected={!areAllSelected($filter) && hasOverlap([id], $filter)}
-            showColorBox={label !== 'Country'}
+            showColorBox={!hideColorBoxes}
             on:mouseenter={() => hoveredSuggestion = i}
             on:mouseleave={() => hoveredSuggestion = null}
             on:click={() => handleSuggestionSelect(id)}
@@ -234,6 +268,15 @@
 
   .field:hover {
     background-color: var(--faintBlue);
+  }
+
+  .field span.click-hint {
+    position: absolute;
+    left: 0.5rem;
+    top: 50%;
+    color: var(--darkgray);
+    font-size: 0.9rem;
+    transform: translateY(-50%);
   }
 
   ul.chips {

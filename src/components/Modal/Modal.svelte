@@ -1,6 +1,7 @@
 <script>
   import { createEventDispatcher } from 'svelte';
   import { fade } from 'svelte/transition';
+  import { orderBy } from 'lodash-es';
 
   import { isVertical } from '../../stores/device';
   import { css } from '../../actions/css';
@@ -25,12 +26,13 @@
     close();
   }
 
-  $: categories = Object.keys(datum.categories).map(key => {
+  $: categories = orderBy(Object.keys(datum.categories).map(key => {
     return {
       category: key,
       ...datum.categories[key]
     };
-  });
+  }),
+  'filterable', 'desc');
 </script>
 
 <svelte:window on:keydown={handleKeydown} />
@@ -66,10 +68,10 @@
         </button>
       </div>
       <div class="header-content">
-        {#if (datum.currency_name)} 
-          <h2>{datum.currency_name}</h2>
-        {/if}
         <h1>{datum.name.name}</h1>
+        {#if (datum.currency_name)} 
+          <h2>Project Name – {datum.currency_name}</h2>
+        {/if}
         <p>{datum.overview}</p>
       </div>
     </div>
@@ -137,7 +139,7 @@
     position: relative;
     width: 100%;
     height: 100%;
-    padding-bottom: 40px;
+    padding-bottom: 100px;
     background-color: var(--background);
     overflow-y: scroll;
   }
@@ -198,7 +200,7 @@
   }
 
   .header-content h2 {
-    margin: 0.5rem 0;
+    margin: 0.5rem 0 1rem 0;
     font-size: 1.5rem;
     color: var(--background);
   }

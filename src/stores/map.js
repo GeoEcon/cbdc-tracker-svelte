@@ -140,7 +140,6 @@ export const projectedData = derived(
       return $features
         .map((d, i) => {
           const centroid = d.capital.name ? path.projection()(d.capital.coordinates) : path.centroid(d);
-          console.log(d.properties.name, centroid)
           const projected = {
             id: i,
             name: d.properties.name,

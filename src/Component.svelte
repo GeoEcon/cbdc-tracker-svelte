@@ -2,12 +2,14 @@
   import styles from './utils/styles';
   import { css } from './actions/css';
   import { isVertical } from './stores/device';
+  import { tooltip } from './stores/definitions';
   import { selectedDatum, selectedId } from './stores/selection';
   import { filterByCategory } from './stores/filter';
 
   import FilterBar from './components/FilterBar/FilterBar.svelte';
   import Logo from './components/Logo.svelte';
   import Map from './components/Map/Map.svelte';
+  import Tooltip from './components/Tooltip.svelte';
   import Modal from './components/Modal/Modal.svelte';
 
   let width = 0;
@@ -28,6 +30,7 @@
   }
 
   $: isVertical.set(width < 600);
+  $: if ($selectedDatum) tooltip.set(null);
   $: sendDimensions(width, height);
 </script>
 
@@ -40,6 +43,12 @@
   <FilterBar />
   <Logo />
   <Map />
+  {#if ($tooltip)}
+    <Tooltip
+      tooltip={$tooltip}
+      maxWidth={width}
+    />
+  {/if}
   {#if ($selectedDatum)}
     <Modal
       datum={$selectedDatum}
@@ -68,6 +77,7 @@
   }
 
   .component-wrapper {
+    position: relative;
     width: 100%;
     font-size: 12px;
   }

@@ -24,7 +24,7 @@ export const loadTrackerData = async (dataPath) => {
       categories: {
         new_status: curate(d['New Status']),
         use_case: curate(d['Use case']),
-        technology: curate(d['Underlying technology: corda or Ethereum']),
+        technology: curate(d['Underlying technology']),
         architecture: curate(d['Architecture: direct CBDC or hybrid']),
         infrastructure: curate(d['Infrastructure: DLT or conventional']),
         access: curate(d['Access: token or account']),

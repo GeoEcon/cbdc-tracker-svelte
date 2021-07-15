@@ -3,26 +3,23 @@
 
   import {
     statusFilter,
-    countryFilter,
     useCaseFilter,
-    technologyFilter,
     architectureFilter,
     infrastructureFilter,
     accessFilter } from '../../stores/filter';
   import {
     fullStatusRollup,
     fullUseCaseRollup,
-    fullTechnologyRollup,
     fullArchitectureRollup,
     fullInfrastructureRollup,
     fullAccessRollup,
     statusRollup,
     useCaseRollup,
-    technologyRollup,
     architectureRollup,
     infrastructureRollup,
     accessRollup } from '../../stores/aggregation';
   import { isVertical } from '../../stores/device';
+  import { definitions, tooltip } from '../../stores/definitions';
   import { css } from '../../actions/css';
 
   import FilterTitle from './FilterTitle.svelte';
@@ -35,13 +32,8 @@
       filter: statusFilter,
       label: 'Status',
       fullRollup: $fullStatusRollup,
-      rollup: $statusRollup
-    },
-    {
-      filter: countryFilter,
-      label: 'Country',
-      fullRollup: [],
-      rollup: []
+      rollup: $statusRollup,
+      info: $definitions.status
     }
   ].map((d, i) => ({...d, id: i}));
 
@@ -51,35 +43,35 @@
       label: 'Use case',
       fullRollup: $fullUseCaseRollup,
       rollup: $useCaseRollup,
-      info: true
+      info: $definitions.use_case
     },
-    {
-      filter: technologyFilter,
-      label: 'Technology',
-      fullRollup: $fullTechnologyRollup,
-      rollup: $technologyRollup,
-      info: true
-    },
+    // {
+    //   filter: technologyFilter,
+    //   label: 'Technology',
+    //   fullRollup: $fullTechnologyRollup,
+    //   rollup: $technologyRollup,
+    //   info: true
+    // },
     {
       filter: architectureFilter,
       label: 'Architecture',
       fullRollup: $fullArchitectureRollup,
       rollup: $architectureRollup,
-      info: true
+      info: $definitions.architecture
     },
     {
       filter: infrastructureFilter,
       label: 'Infrastructure',
       fullRollup: $fullInfrastructureRollup,
       rollup: $infrastructureRollup,
-      info: true
+      info: $definitions.infrastructure
     },
     {
       filter: accessFilter,
       label: 'Access',
       fullRollup: $fullAccessRollup,
       rollup: $accessRollup,
-      info: true
+      info: $definitions.access
     }
   ].map((d, i) => ({...d, id: i}));
 
@@ -94,12 +86,16 @@
     label="Filters"
   />
   <div class="standard grid-container">
-    {#each dropdownsTop as { id, filter, label, fullRollup, rollup } (id)}
+    {#each dropdownsTop as { id, filter, label, fullRollup, rollup, info }, i (id)}
       <Dropdown
         filter={filter}
         label={label}
         fullRollup={fullRollup}
         rollup={rollup}
+        info={info}
+        tooltip={tooltip}
+        showReset
+        showClickHint={i === 0 ? `${$isVertical ? 'Tap' : 'Click'} to filter` : null}
       />
     {/each}
   </div>
@@ -113,13 +109,16 @@
       class="extra grid-container"
       transition:slide
     >
-      {#each dropdownsBottom as { id, filter, label, fullRollup, rollup, info } (id)}
+      {#each dropdownsBottom as { id, filter, label, fullRollup, rollup, info }, i (id)}
         <Dropdown
           filter={filter}
           label={label}
           fullRollup={fullRollup}
           rollup={rollup}
           info={info}
+          tooltip={tooltip}
+          showReset
+          showClickHint={i === 0 ? `${$isVertical ? 'Tap' : 'Click'} to filter` : null}
         />
       {/each}
     </div>

@@ -79,7 +79,7 @@ export const scaledData = derived(
             name: d.categories.technology,
             title: $categoryNameScale.technology,
             color: $technologyColorScale[d.categories.technology],
-            filterable: true
+            filterable: false
           },
           architecture: {
             name: d.categories.architecture,

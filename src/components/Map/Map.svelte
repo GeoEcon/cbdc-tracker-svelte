@@ -7,7 +7,7 @@
   import { dataCountries } from '../../stores/datacountries';
   import { colorCategory } from '../../stores/colorcategory';
   import { hoveredIds, selectedId } from '../../stores/selection';
-  import { statusFilter, filterByCategory } from '../../stores/filter';
+  import { statusFilter, filterByCategory, countryFilter } from '../../stores/filter';
   import { fullStatusRollup, statusRollup, totalCountries } from '../../stores/aggregation';
   import styles from '../../utils/styles';
 
@@ -114,10 +114,10 @@
     on:minus={zoomMinus}
   />
   <Legend
-    filter={statusFilter}
-    label="Status"
-    fullRollup={fullStatusRollup}
-    rollup={statusRollup}
+    statusFilter={statusFilter}
+    countryFilter={countryFilter}
+    fullStatusRollup={fullStatusRollup}
+    statusRollup={statusRollup}
     totalCountries={$totalCountries}
   />
   <Canvas
@@ -134,7 +134,7 @@
           color={$data.find(d => d.name.name === country.name)?.categories[$colorCategory].color}
           strokeColor={styles.gray}
           fallbackFillColor={styles.lightgray}
-          fillOpacity={$data.find(d => d.name.name === country.name)?.show ? 1.0 : 0.2}
+          fillOpacity={$data.find(d => d.name.name === country.name)?.show ? 1.0 : 0.1}
           mode={country.status === 'country' ? 'area' : 'stroke'}
         />
       {/each}
@@ -150,7 +150,7 @@
     <Centroid
       dataCountry={country}
       color={country.categories[$colorCategory].color}
-      opacity={country.show ? 1 : 0.3}
+      opacity={country.show ? 1 : 0.2}
       isReactive={country.show}
       inverted={country.status === 'region'}
       on:mouseenter={(e) => handleCentroidMouseEnter(e, country.id)}

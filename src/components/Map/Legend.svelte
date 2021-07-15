@@ -1,19 +1,21 @@
 <script>
   import { isVertical } from '../../stores/device';
 
-  export let filter;
-  export let label;
-  export let fullRollup;
-  export let rollup;
+  import Dropdown from '../Dropdown/Dropdown.svelte';
+
+  export let statusFilter;
+  export let countryFilter;
+  export let fullStatusRollup;
+  export let statusRollup;
   export let totalCountries = 0;
 
   function handleClick(id) {
-    filter.click(id);
+    statusFilter.click(id);
   }
 
-  $: data = $filter.map(item => {
-    const fullR = $fullRollup.find(d => d.name === item.name);
-    const { n = 0 } = $rollup.find(d => d.name === item.name) || {};
+  $: data = $statusFilter.map(item => {
+    const fullR = $fullStatusRollup.find(d => d.name === item.name);
+    const { n = 0 } = $statusRollup.find(d => d.name === item.name) || {};
     return {
       ...item,
       ...fullR,
@@ -26,30 +28,39 @@
   class="legend"
   class:vertical={$isVertical}
 >
-  <h5>{label}</h5>
-  <div class="total">
-    <span>{totalCountries}</span> tracked countr{totalCountries === 1 ? 'y' : 'ies'}
+  <div class="countries">
+    <h5 class="total">
+      <span>{totalCountries}</span> countr{totalCountries === 1 ? 'y' : 'ies'} tracked
+    </h5>
+    <Dropdown
+      filter={countryFilter}
+      hideColorBoxes
+      showClickHint={`${$isVertical ? 'Tap' : 'Click'} to filter`}
+    />
   </div>
-  <ul>
-    {#each data as { id, name, color, n } (id)}
-      <li
-        class:inactive={n === 0}
-        on:click={() => handleClick(id)}
-      >
-        <span
-          class="color"
-          style="background-color: {color};"
+  <div class="status">
+    <h5>Status</h5>
+    <ul>
+      {#each data as { id, name, color, n } (id)}
+        <li
+          class:inactive={n === 0}
+          on:click={() => handleClick(id)}
         >
-        </span>
-        <span class="number">
-          {n ? n : ''}
-        </span>
-        <span class="name">
-          {name}
-        </span>
-      </li>
-    {/each}
-  </ul>
+          <span
+            class="color"
+            style="background-color: {color};"
+          >
+          </span>
+          <span class="number">
+            {n ? n : ''}
+          </span>
+          <span class="name">
+            {name}
+          </span>
+        </li>
+      {/each}
+    </ul>
+  </div>
 </div>
 
 <style>
@@ -58,17 +69,25 @@
     left: 0;
     top: 0;
     z-index: 800;
-    margin: 1rem 0.5rem;
+    width: 200px;
+    min-width: 200px;
+    max-width: 200px;
+    margin: 2rem 1rem;
+    padding: 0.5rem 0;
     color: var(--darkgray);
     font-family: var(--primFont);
     font-size: 0.9rem;
     background-color: var(--background);
-    --colorBoxWidth: 12px;
+    border: 1px solid var(--gray);
   }
 
   .legend.vertical {
     top: auto;
     bottom: 0;
+  }
+
+  .countries {
+    width: 100%;
   }
 
   h5 {
@@ -82,6 +101,11 @@
 
   .total span {
     font-weight: 600;
+  }
+
+  .status {
+    margin: 1rem 0 0 0;
+    --colorBoxWidth: 12px;
   }
 
   ul {

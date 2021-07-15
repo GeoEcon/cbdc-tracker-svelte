@@ -5,6 +5,7 @@ export const statusColors = [
   '#F1B2EE',
   '#FFB3B5',
   '#DAC584',
+  '#C8B8F5'
 ];
 
 export const statusLevels = [
@@ -32,4 +33,8 @@ export const statusLevels = [
     id: 5,
     name: 'Inactive',
   },
+  {
+    id: 6,
+    name: 'Other'
+  }
 ];
