@@ -35,7 +35,6 @@ const specialDataPath = 'data/countries-special.json';
 const capitalDataPath = 'data/capitals.csv';
 
 const features = readable([], async (set) => {
-  console.log(geojsonRewind)
   const world = await loadJson(worldDataPath);
   const { features: worldFeatures } = feature(world, world.objects.countries1);
 

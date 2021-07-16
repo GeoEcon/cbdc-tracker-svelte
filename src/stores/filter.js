@@ -158,3 +158,15 @@ export const filterByCategory = (category, name) => {
       break;
   }
 };
+
+export const resetAllFilters = () => {
+  statusFilter.selectAll();
+  countryFilter.selectAll();
+  useCaseFilter.selectAll();
+  technologyFilter.selectAll();
+  architectureFilter.selectAll();
+  infrastructureFilter.selectAll();
+  accessFilter.selectAll();
+  corporatePartnershipFilter.selectAll();
+  crossborderPartnershipsFilter.selectAll();
+};

@@ -4,7 +4,7 @@
   import { isVertical } from './stores/device';
   import { tooltip } from './stores/definitions';
   import { selectedDatum, selectedId } from './stores/selection';
-  import { filterByCategory } from './stores/filter';
+  import { resetAllFilters, filterByCategory } from './stores/filter';
 
   import FilterBar from './components/FilterBar/FilterBar.svelte';
   import Logo from './components/Logo.svelte';
@@ -17,6 +17,7 @@
 
   function handleModalCategoryClick(e) {
     const { detail: { category, name} } = e;
+    resetAllFilters();
     filterByCategory(category, name);
   }
 
