@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store';
+import { writable, derived } from 'svelte/store';
 import { sortBy } from 'lodash-es';
 
 import { areAllSelected, areAllUnselected } from '../utils/logic';
@@ -170,3 +170,37 @@ export const resetAllFilters = () => {
   corporatePartnershipFilter.selectAll();
   crossborderPartnershipsFilter.selectAll();
 };
+
+export const anyFilterActive = derived([
+  statusFilter,
+  countryFilter,
+  useCaseFilter,
+  technologyFilter,
+  architectureFilter,
+  infrastructureFilter,
+  accessFilter,
+  corporatePartnershipFilter,
+  crossborderPartnershipsFilter
+], ([
+    $statusFilter,
+    $countryFilter,
+    $useCaseFilter,
+    $technologyFilter,
+    $architectureFilter,
+    $infrastructureFilter,
+    $accessFilter,
+    $corporatePartnershipFilter,
+    $crossborderPartnershipsFilter,
+]) => {
+  return !(
+    areAllSelected($statusFilter) &&
+    areAllSelected($countryFilter) &&
+    areAllSelected($useCaseFilter) &&
+    areAllSelected($technologyFilter) &&
+    areAllSelected($architectureFilter) &&
+    areAllSelected($infrastructureFilter) &&
+    areAllSelected($accessFilter) &&
+    areAllSelected($corporatePartnershipFilter) &&
+    areAllSelected($crossborderPartnershipsFilter)
+  );
+}, false);

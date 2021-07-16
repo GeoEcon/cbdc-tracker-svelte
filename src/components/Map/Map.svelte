@@ -7,12 +7,13 @@
   import { dataCountries } from '../../stores/datacountries';
   import { colorCategory } from '../../stores/colorcategory';
   import { hoveredIds, selectedId } from '../../stores/selection';
-  import { statusFilter, filterByCategory, countryFilter } from '../../stores/filter';
+  import { statusFilter, filterByCategory, countryFilter, anyFilterActive } from '../../stores/filter';
   import { fullStatusRollup, statusRollup, totalCountries } from '../../stores/aggregation';
   import { isVertical } from '../../stores/device';
   import styles from '../../utils/styles';
 
   import Navigation from './Navigation.svelte';
+  import ResetFilters from './ResetFilters.svelte';
   import Legend from './Legend.svelte';
   import Canvas from '../Canvas.svelte';
   import Country from './Country.svelte';
@@ -114,6 +115,9 @@
     on:plus={zoomPlus}
     on:minus={zoomMinus}
   />
+  {#if ($anyFilterActive)}
+    <ResetFilters />
+  {/if}
   <Legend
     statusFilter={statusFilter}
     countryFilter={countryFilter}
