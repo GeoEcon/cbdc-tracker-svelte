@@ -12,7 +12,7 @@
   class="reset-filters"
   transition:fade={{duration: 200}}
 >
-  <button on:click={handleClick}>
+  <button on:click|stopPropagation={handleClick}>
     Reset filters
   </button>
 </div>
@@ -20,11 +20,20 @@
 <style>
   .reset-filters {
     position: absolute;
-    right: 0;
+    left: 0;
+    right: auto;
     top: 0;
     z-index: 1001;
-    margin: 2rem 4rem;
+    margin: 2rem 1rem;
     border: 1px solid var(--gray);
+  }
+
+  @media (min-width: 600px) {
+    .reset-filters {
+      left: auto;
+      right: 0;
+      margin: 2rem 4rem;
+    }
   }
 
   button {
