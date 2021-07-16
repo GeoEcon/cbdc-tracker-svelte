@@ -99,7 +99,7 @@
     zoomReset({animation: false});
   });
 
-  $: if ($data && !$isVertical) zoomReset();
+  $: if ($data && !$isVertical && $mapWidth && $mapHeight) zoomReset();
 </script>
 
 <div
