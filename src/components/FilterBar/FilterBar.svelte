@@ -23,6 +23,8 @@
   import { css } from '../../actions/css';
 
   import FilterTitle from './FilterTitle.svelte';
+  import Logo from './Logo.svelte';
+  import Share from '../Share/Share.svelte';
   import Dropdown from '../Dropdown/Dropdown.svelte';
 
   $: extraFiltersExpanded = !$isVertical;
@@ -82,9 +84,9 @@
   class="filter-bar"
   use:css={{maxColumns, halfMaxColumns: Math.ceil(maxColumns / 2)}}
 >
-  <FilterTitle
+  <!-- <FilterTitle
     label="Filters"
-  />
+  /> -->
   <div class="standard grid-container">
     {#each dropdownsTop as { id, filter, label, fullRollup, rollup, info }, i (id)}
       <Dropdown
@@ -98,6 +100,12 @@
         showClickHint={i === 0 ? `${$isVertical ? 'Tap' : 'Click'} to filter` : null}
       />
     {/each}
+    <div class="logo">
+      <Logo />
+    </div>
+    <div class="share-panel">
+      <!-- <Share /> -->
+    </div>
   </div>
   <FilterTitle
     label="Extra filters"
@@ -144,15 +152,39 @@
     justify-content: end;
   }
 
+  .grid-container.standard {
+    grid-template-columns: 1fr;
+  }
+
+  .logo {
+    display: none;
+  }
+
+  @media (min-width: 980px) {
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
   @media (min-width: 600px) {
     .grid-container {
       grid-template-columns: repeat(var(--halfMaxColumns), 1fr);
+    }
+
+    .grid-container.standard {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 
   @media (min-width: 980px) {
     .grid-container {
       grid-template-columns: repeat(var(--maxColumns), 1fr);
+    }
+
+    .grid-container.standard {
+      grid-template-columns: 1fr 2fr 1fr;
     }
   }
 </style>
