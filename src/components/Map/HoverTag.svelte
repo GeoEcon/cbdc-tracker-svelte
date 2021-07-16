@@ -24,6 +24,7 @@
   let textNameElems = [];
 
   function handleTagLabelClick(tag) {
+    if (!tag.filterable) return;
     const { category, name } = tag;
     dispatch('tagclick', {
       category,
@@ -140,6 +141,7 @@
     />
     <g
       class="tag-label"
+      class:selectable={tag.filterable}
       in:fade={{delay: pathGrowDuration}}
       out:fade={{delay: 0}}
       style="--stroke: {data.categories.new_status.color};"
@@ -224,11 +226,11 @@
     stroke-width: 2;
   }
 
-  .tag-label-path:not(.country) {
+  .selectable .tag-label-path:not(.country) {
     cursor: pointer;
   }
 
-  .tag-label-path:not(.country):hover {
+  .selectable .tag-label-path:not(.country):hover {
     stroke: var(--darkgray);
   }
 

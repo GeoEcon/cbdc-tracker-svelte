@@ -7,7 +7,7 @@
   import { dataCountries } from '../../stores/datacountries';
   import { colorCategory } from '../../stores/colorcategory';
   import { hoveredIds, selectedId } from '../../stores/selection';
-  import { statusFilter, filterByCategory, countryFilter, anyFilterActive } from '../../stores/filter';
+  import { statusFilter, filterByCategory, countryFilter, anyFilterActive, resetAllFilters } from '../../stores/filter';
   import { fullStatusRollup, statusRollup, totalCountries } from '../../stores/aggregation';
   import { isVertical } from '../../stores/device';
   import styles from '../../utils/styles';
@@ -89,6 +89,7 @@
 
   function handleHoverTagClick(e) {
     const { detail: { category, name } } = e;
+    resetAllFilters();
     filterByCategory(category, name);
   }
   

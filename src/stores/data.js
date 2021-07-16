@@ -59,7 +59,8 @@ export const scaledData = derived(
         name: {
           name: d.name,
           title: $categoryNameScale.name,
-          color: $countryColorScale[d.name]
+          color: $countryColorScale[d.name],
+          filterable: true
         },
         categories: {
           ...d.categories,
