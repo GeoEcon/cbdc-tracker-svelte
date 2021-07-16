@@ -31,7 +31,7 @@
 
   $: isVertical.set(width < 600);
   $: if ($selectedDatum) tooltip.set(null);
-  // $: sendDimensions(width, height);
+  $: sendDimensions(width, height);
 </script>
 
 <div
