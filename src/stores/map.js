@@ -5,30 +5,9 @@ import geojsonRewind from '@mapbox/geojson-rewind';
 
 import { isVertical } from './device';
 import { loadJson, loadCapitals } from '../utils/load';
+import { euroCountries, clusterSetup, geoMean } from '../utils/geo';
 
 const sphere = { type: 'Sphere' };
-
-const euroCountries = [
-  'Belgium',
-  'Germany',
-  'Ireland',
-  'Spain',
-  'France',
-  'Italy',
-  'Luxembourg',
-  'The Netherlands',
-  'Austria',
-  'Portugal',
-  'Finland',
-  'Greece',
-  'Slovenia',
-  'Cyprus',
-  'Malta',
-  'Slovakia',
-  'Estonia',
-  'Latvia',
-  'Lithuania'
-];
 
 const worldDataPath = 'data/countries-topo.json'; // https://raw.githubusercontent.com/deldersveld/topojson/master/world-countries.json
 const specialDataPath = 'data/countries-special.json';
@@ -74,7 +53,8 @@ const features = readable([], async (set) => {
       capital: {
         name,
         coordinates: [+lon, +lat]
-      }
+      },
+      isClusterMember: clusterSetup.map(cluster => cluster.countries).flat().includes(d.properties.name)
     };
   });
 
@@ -143,7 +123,7 @@ export const projectedData = derived(
   [features, paths],
   ([$features, $paths]) => {
     return $paths.map((path) => {
-      return $features
+      const features = $features
         .map((d, i) => {
           const centroid = d.capital.name ? path.projection()(d.capital.coordinates) : path.centroid(d);
           const projected = {
@@ -152,9 +132,22 @@ export const projectedData = derived(
             status: d.status,
             path: path(d),
             centroid,
+            isClusterMember: d.isClusterMember
           };
-          return projected;
-        });
+        return projected;
+      });
+      return features;
     });
   }
 );
+
+export const clusters = derived(paths, $paths => {
+  return $paths.map(path => {
+    return clusterSetup.map(cluster => {
+      return {
+        ...cluster,
+        centroid: path.projection()(cluster.centroid)
+      };
+    });
+  });
+}, []);

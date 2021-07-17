@@ -1,9 +1,11 @@
 import { derived } from 'svelte/store';
-import { sortBy, xor } from 'lodash-es';
+import { sortBy } from 'lodash-es';
 
 import { data } from './data';
-import { projectedData, mapWidth, mapHeight } from './map';
+import { projectedData, mapWidth, mapHeight, clusters } from './map';
+import { colorCategory } from './colorcategory';
 import { isDefined } from '../utils/logic';
+import styles from '../utils/styles';
 
 export const dataCountries = derived(
   [
@@ -39,6 +41,17 @@ export const dataCountries = derived(
         orderId: i + 0.5
       };
     });
-    // console.log(dataCountries.length, availableCountries.length, xor(dataCountries.map(d => d.name.name), availableCountries))
     return dataCountries;
   }, []);
+
+  export const dataClusters = derived([clusters, dataCountries, colorCategory], ([$clusters, $dataCountries, $colorCategory]) => {
+    return $clusters[0].map(cluster => {
+      const countries = $dataCountries.filter(d => cluster.countries.includes(d.name.name));
+      console.log(countries)
+      return {
+        ...cluster,
+        show: countries.some(d => d.show),
+        color: countries.length ? countries[0].categories[$colorCategory].color : styles.darkgray
+      };
+    });
+  });
