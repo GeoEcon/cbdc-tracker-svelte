@@ -37,6 +37,7 @@
     justify-content: center;
     height: 100%;
     padding: 0.2rem 0.3rem;
+    color: var(--primBlack);
     font-size: 0.9rem;
     background-color: var(--background);
     border: none;

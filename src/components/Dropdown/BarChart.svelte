@@ -1,6 +1,7 @@
 <script>
   export let rollup = [];
   export let fullRollup = [];
+  export let dummy = false;
 
   $: combinedRollup = fullRollup.map(full => {
     const { percent = 0 } = rollup.find(d => d.name === full.name) || {};
@@ -12,13 +13,15 @@
 </script>
 
 <div class="bar-chart">
-  {#each combinedRollup as { name, percent, color } (name)}
-    <span
-      class="bar"
-      style="width: {percent}%; background-color: {color};"
-    >
-    </span>
-  {/each}
+  {#if (!dummy)}
+    {#each combinedRollup as { name, percent, color } (name)}
+      <span
+        class="bar"
+        style="width: {percent}%; background-color: {color};"
+      >
+      </span>
+    {/each}
+  {/if}
 </div>
 
 <style>

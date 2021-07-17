@@ -2,6 +2,7 @@
   import { slide } from 'svelte/transition';
 
   import {
+    countryFilter,
     statusFilter,
     useCaseFilter,
     architectureFilter,
@@ -30,6 +31,13 @@
   $: extraFiltersExpanded = !$isVertical;
 
   $: dropdownsTop = [
+    {
+      filter: countryFilter,
+      label: 'Country',
+      fullRollup: [],
+      rollup: [],
+      info: null
+    },
     {
       filter: statusFilter,
       label: 'Status',
@@ -97,14 +105,14 @@
         info={info}
         tooltip={tooltip}
         showReset
-        showClickHint={i === 0 ? `${$isVertical ? 'Tap' : 'Click'} to filter` : null}
+        showClickHint={`${$isVertical ? 'Tap' : 'Click'} to filter`}
       />
     {/each}
-    <div class="logo">
-      <Logo />
-    </div>
     <div class="share-panel">
       <!-- <Share /> -->
+    </div>
+    <div class="logo">
+      <Logo />
     </div>
   </div>
   <FilterTitle
@@ -126,7 +134,7 @@
           info={info}
           tooltip={tooltip}
           showReset
-          showClickHint={i === 0 ? `${$isVertical ? 'Tap' : 'Click'} to filter` : null}
+          showClickHint={`${$isVertical ? 'Tap' : 'Click'} to filter`}
         />
       {/each}
     </div>
@@ -157,6 +165,7 @@
   }
 
   .logo {
+    justify-self: end;
     display: none;
   }
 
@@ -184,7 +193,7 @@
     }
 
     .grid-container.standard {
-      grid-template-columns: 1fr 2fr 1fr;
+      grid-template-columns: repeat(4, 1fr);
     }
   }
 </style>

@@ -150,12 +150,11 @@
       {/each}
     </ul>
   </div>
-  {#if (rollup.length && fullRollup.length)}
-    <BarChart
-      rollup={rollup}
-      fullRollup={fullRollup}
-    />
-  {/if}
+  <BarChart
+    rollup={rollup}
+    fullRollup={fullRollup}
+    dummy={!rollup.length || !fullRollup.length}
+  />
   {#if (showSuggestions)}
     <div class="suggestions">
       <input
