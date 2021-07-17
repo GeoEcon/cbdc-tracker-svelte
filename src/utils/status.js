@@ -3,8 +3,8 @@ export const statusColors = [
   '#61D8D6',
   '#95D69A',
   '#F1B2EE',
-  '#FFB3B5',
   '#DAC584',
+  '#FFB3B5',
   '#C8B8F5'
 ];
 
@@ -27,11 +27,11 @@ export const statusLevels = [
   },
   {
     id: 4,
-    name: 'Cancelled',
+    name: 'Inactive',
   },
   {
     id: 5,
-    name: 'Inactive',
+    name: 'Cancelled',
   },
   {
     id: 6,

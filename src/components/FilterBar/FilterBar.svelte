@@ -92,9 +92,9 @@
   class="filter-bar"
   use:css={{maxColumns, halfMaxColumns: Math.ceil(maxColumns / 2)}}
 >
-  <!-- <FilterTitle
+  <FilterTitle
     label="Filters"
-  /> -->
+  />
   <div class="standard grid-container">
     {#each dropdownsTop as { id, filter, label, fullRollup, rollup, info }, i (id)}
       <Dropdown
@@ -116,7 +116,7 @@
     </div>
   </div>
   <FilterTitle
-    label="Extra filters"
+    label="Additional filters"
     expandable
     bind:expanded={extraFiltersExpanded}
   />
@@ -151,7 +151,7 @@
   .grid-container {
     display: grid;
     width: 100%;
-    padding: 1rem;
+    padding: 0.5rem 1rem;
     grid-template-columns: repeat(1, 1fr);
     column-gap: 0.3rem;
     row-gap: 0.3rem;
@@ -165,6 +165,7 @@
   }
 
   .logo {
+    align-self: flex-start;
     justify-self: end;
     display: none;
   }

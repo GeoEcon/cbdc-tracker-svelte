@@ -10,7 +10,7 @@
 
 <style>
   .logo {
-    width: 270px;
+    max-width: 270px;
   }
 
   img {

@@ -23,7 +23,7 @@
   button.filter-title {
     display: flex;
     align-items: center;
-    margin: 1rem 0 0 1rem;
+    margin: 0.2rem 0 0 1rem;
     color: var(--darkgray);
     font-family: var(--primFont);
     font-size: 1rem;

@@ -26,7 +26,7 @@
     z-index: 1001;
     margin: 2rem 1rem;
     background-color: var(--background);
-    border: 1px solid var(--gray);
+    border: 1px solid var(--primOrange);
   }
 
   @media (min-width: 600px) {
@@ -49,6 +49,7 @@
   }
 
   button:hover {
+    color: var(--primBlack);
     background-color: var(--faintBlue);
   } 
 </style>
