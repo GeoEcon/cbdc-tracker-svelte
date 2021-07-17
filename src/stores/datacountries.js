@@ -5,6 +5,7 @@ import { data } from './data';
 import { projectedData, mapWidth, mapHeight, clusters } from './map';
 import { colorCategory } from './colorcategory';
 import { isDefined } from '../utils/logic';
+import { getMinus } from '../utils/geo';
 import styles from '../utils/styles';
 
 export const dataCountries = derived(
@@ -12,14 +13,17 @@ export const dataCountries = derived(
     data,
     projectedData,
     mapWidth,
-    mapHeight
+    mapHeight,
+    clusters
   ], ([
     $data,
     $projectedData,
     $mapWidth,
-    $mapHeight
+    $mapHeight,
+    $clusters
   ]) => {
   const availableCountries = $data.map(d => d.name.name);
+  const clusters = $clusters[0];
   const dataCountries = sortBy($projectedData
     .flat()
     .filter(d => isDefined(d.path))
@@ -28,7 +32,8 @@ export const dataCountries = derived(
       const datum = $data.find(dd => dd.name.name === d.name);
       return {
         ...d,
-        ...datum
+        ...datum,
+        cluster: clusters.find(cluster => cluster.countries.includes(datum.name.name))
       };
     }),
     [
@@ -38,7 +43,8 @@ export const dataCountries = derived(
       return {
         ...d,
         lineVisible: d.show && (d.centroid[0] > 0 && d.centroid[0] < $mapWidth && d.centroid[1] > 0 && d.centroid[1] < $mapHeight),
-        orderId: i + 0.5
+        orderId: i + 0.5,
+        offset: d.isClusterMember ? getMinus(d.cluster.centroid, d.centroid) : [0, 0]
       };
     });
     return dataCountries;
@@ -47,7 +53,6 @@ export const dataCountries = derived(
   export const dataClusters = derived([clusters, dataCountries, colorCategory], ([$clusters, $dataCountries, $colorCategory]) => {
     return $clusters[0].map(cluster => {
       const countries = $dataCountries.filter(d => cluster.countries.includes(d.name.name));
-      console.log(countries)
       return {
         ...cluster,
         show: countries.some(d => d.show),

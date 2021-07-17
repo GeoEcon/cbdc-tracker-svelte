@@ -1,6 +1,6 @@
 <script>
   import { onMount } from 'svelte';
-  import { zoom as d3zoom, select } from 'd3';
+  import { zoom as d3zoom, select, zoomIdentity } from 'd3';
 
   import { mapWidth, mapHeight, initialTransform, mapTransform, projectedData, clusters } from '../../stores/map';
   import { data } from '../../stores/data';
@@ -23,15 +23,19 @@
 
   export let zoomExtent = [1, 25];
 
+  let isZoomed = false;
+
   const zoom = d3zoom()
     .scaleExtent(zoomExtent)
     .filter((e) => {
       if (e.touches && e.touches.length <= 1) return false;
       return true;
     })
+    .on('start', () => isZoomed = true)
     .on('zoom', (e) => {
       mapTransform.set(e.transform);
-    });
+    })
+    .on('end', () => isZoomed = false);
 
   let zoomCatcherElem, zoomCatcher;
   let showGestureNote = false;
@@ -91,6 +95,20 @@
     const { detail: { category, name } } = e;
     resetAllFilters();
     filterByCategory(category, name);
+  }
+
+  function handleClusterClick(e, centroid) {
+    // const scale = 1;
+    // const dx = centroid[0];
+    // const dy = centroid[1];
+    // console.log(dx, dy)
+    // zoomCatcher
+    //   .transition()
+    //   .duration(400)
+    //   .call(zoom.transform,
+    //         zoomIdentity
+    //           .scale(scale)
+    //           .translate(dx, dy));
   }
   
   onMount(() => {
@@ -155,19 +173,18 @@
     bind:this={zoomCatcherElem}
   >
     {#each $dataCountries as country (country.orderId)}
-      {#if (!country.isClusterMember || $mapTransform.k > 5)}
         <Centroid
           dataCountry={country}
           color={country.categories[$colorCategory].color}
           opacity={country.show ? 1 : 0}
           isReactive={country.show}
           inverted={country.status === 'region'}
+          offset={$mapTransform.k > 5 ? [0, 0] : country.offset}
           on:mouseenter={(e) => handleCentroidMouseEnter(e, country.id)}
           on:mouseleave={(e) => handleCentroidMouseLeave(e, country.id)}
           on:touchstart={(e) => handleCentroidClick(e, country.id)}
           on:click={(e) => handleCentroidClick(e, country.id)}
         />
-      {/if}
     {/each}
     {#each $hoveredIds as hoveredId (hoveredId)}
       <HoverTag
@@ -185,9 +202,10 @@
         <Centroid
           dataCountry={cluster}
           color={cluster.color}
-          opacity={cluster.show ? 1 : 0.2}
+          opacity={cluster.show ? 1 : 0}
           isReactive={cluster.show}
-          on:click={(e) => handleCentroidClick(e, cluster.id)}
+          isCluster
+          on:click={(e) => handleClusterClick(e, cluster.centroid)}
         />
       {/if}
     {/each}

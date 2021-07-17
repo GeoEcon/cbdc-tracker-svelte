@@ -61,3 +61,7 @@ export const geoMean = (coords) => {
   const y = mean(coords, d => d[1]);
   return [x || 0, y || 0];
 };
+
+export const getMinus = (coord1, coord2) => {
+  return [coord1[0] - coord2[0], coord1[1] - coord2[1]];
+} 
