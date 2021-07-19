@@ -35,7 +35,10 @@
   $: tags = [
     {
       category: 'name',
-      ...data.name
+      ...{
+        ...data.name,
+        name: data.name.name === 'United States of America' ? 'USA' : data.name.name
+      }
     },
     ...Object.keys(data.categories)
     .map(key => {

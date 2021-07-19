@@ -1,8 +1,8 @@
 export const statusColors = [
-  '#AAC8FC',
-  '#61D8D6',
-  '#95D69A',
   '#F1B2EE',
+  '#95D69A',
+  '#61D8D6',
+  '#AAC8FC',
   '#DAC584',
   '#FFB3B5',
   '#C8B8F5'
@@ -11,19 +11,19 @@ export const statusColors = [
 export const statusLevels = [
   {
     id: 0,
-    name: 'Research',
+    name: 'Launched',
   },
   {
     id: 1,
-    name: 'Development',
-  },
-  {
-    id: 2,
     name: 'Pilot',
   },
   {
+    id: 2,
+    name: 'Development',
+  },
+  {
     id: 3,
-    name: 'Launched',
+    name: 'Research',
   },
   {
     id: 4,

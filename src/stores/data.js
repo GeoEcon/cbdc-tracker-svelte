@@ -24,7 +24,8 @@ import {
   accessColorScale } from '../stores/scales';
 import styles from '../utils/styles';
 
-const trackerDataPath = 'data/tracker.csv';
+// const trackerDataPath = 'data/tracker.csv';
+const trackerDataPath = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRvC1JtWY8a2W4b8DLPfnfb9rmhuHBmWO22TvSXXpk25CZTBU9_8f6YtxM9rmBK2YajII5ltDE6ynGZ/pub?gid=0&single=true&output=csv';
 
 export const rawData = readable([], async (set) => {
   set(await loadTrackerData(trackerDataPath));

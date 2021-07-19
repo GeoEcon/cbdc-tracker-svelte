@@ -1,4 +1,6 @@
 <script>
+  import { onMount } from 'svelte';
+
   import styles from './utils/styles';
   import { css } from './actions/css';
   import { isVertical } from './stores/device';
@@ -28,6 +30,10 @@
 
 	  window.top.postMessage(message, "*");
   }
+
+  onMount(() => {
+    console.log(window.location.search);
+  });
 
   $: isVertical.set(width < 600);
   $: if ($selectedDatum) tooltip.set(null);

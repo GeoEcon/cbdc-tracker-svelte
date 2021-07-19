@@ -19,6 +19,7 @@
     architectureRollup,
     infrastructureRollup,
     accessRollup } from '../../stores/aggregation';
+  import { categoryNameScale } from '../../stores/scales';
   import { isVertical } from '../../stores/device';
   import { definitions, tooltip } from '../../stores/definitions';
   import { css } from '../../actions/css';
@@ -33,14 +34,14 @@
   $: dropdownsTop = [
     {
       filter: countryFilter,
-      label: 'Country',
+      label: $categoryNameScale.name,
       fullRollup: [],
       rollup: [],
       info: null
     },
     {
       filter: statusFilter,
-      label: 'Status',
+      label: $categoryNameScale.new_status,
       fullRollup: $fullStatusRollup,
       rollup: $statusRollup,
       info: $definitions.status
@@ -50,7 +51,7 @@
   $: dropdownsBottom = [
     {
       filter: useCaseFilter,
-      label: 'Use case',
+      label: $categoryNameScale.use_case,
       fullRollup: $fullUseCaseRollup,
       rollup: $useCaseRollup,
       info: $definitions.use_case
@@ -64,21 +65,21 @@
     // },
     {
       filter: architectureFilter,
-      label: 'Architecture',
+      label: $categoryNameScale.architecture,
       fullRollup: $fullArchitectureRollup,
       rollup: $architectureRollup,
       info: $definitions.architecture
     },
     {
       filter: infrastructureFilter,
-      label: 'Infrastructure',
+      label: $categoryNameScale.infrastructure,
       fullRollup: $fullInfrastructureRollup,
       rollup: $infrastructureRollup,
       info: $definitions.infrastructure
     },
     {
       filter: accessFilter,
-      label: 'Access',
+      label: $categoryNameScale.access,
       fullRollup: $fullAccessRollup,
       rollup: $accessRollup,
       info: $definitions.access
