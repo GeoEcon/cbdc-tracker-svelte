@@ -125,6 +125,12 @@
       startGestureNote();
     }
   }
+
+  function handleMouseDown() {
+    if (!zoomable && numGestureNotes < 10) {
+      startGestureNote();
+    }
+  }
   
   onMount(() => {
     zoomCatcher = select(zoomCatcherElem);
@@ -144,6 +150,7 @@
   bind:clientWidth={$mapWidth}
   bind:clientHeight={$mapHeight}
   on:touchend={handleMapTouchend}
+  on:mousedown={handleMouseDown}
 >
   {#if (showGestureNote)}
     <GestureNote
