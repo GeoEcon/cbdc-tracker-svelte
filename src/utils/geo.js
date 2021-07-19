@@ -43,7 +43,7 @@ export const clusterSetup = [
       'Saint Lucia',
       'Grenada'
     ],
-    centroid: [-64, 14]
+    centroid: [-64, 15]
   },
   {
     id: 2,

@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   import { zoom as d3zoom, select, zoomIdentity } from 'd3';
 
-  import { mapWidth, mapHeight, initialTransform, mapTransform, projectedData, clusters } from '../../stores/map';
+  import { mapWidth, mapHeight, initialTransform, mapTransform, projectedData } from '../../stores/map';
   import { data } from '../../stores/data';
   import { dataCountries, dataClusters } from '../../stores/datacountries';
   import { colorCategory } from '../../stores/colorcategory';
@@ -21,12 +21,11 @@
   import HoverTag from './HoverTag.svelte';
   import GestureNote from './GestureNote.svelte';
 
-  export let zoomExtent = [1, 25];
+  const clusterZoom = 8;
 
   let isZoomed = false;
 
   const zoom = d3zoom()
-    .scaleExtent(zoomExtent)
     .filter((e) => {
       if (e.touches && e.touches.length <= 1) return false;
       return true;
@@ -97,18 +96,12 @@
     filterByCategory(category, name);
   }
 
-  function handleClusterClick(e, centroid) {
-    // const scale = 1;
-    // const dx = centroid[0];
-    // const dy = centroid[1];
-    // console.log(dx, dy)
-    // zoomCatcher
-    //   .transition()
-    //   .duration(400)
-    //   .call(zoom.transform,
-    //         zoomIdentity
-    //           .scale(scale)
-    //           .translate(dx, dy));
+  function handleClusterClick(centroid, scale, mt, width, height) {
+    const scaleDiff = scale / mt.k;
+    const dx = (mt.x - centroid[0]) * scaleDiff + width / 2;
+    const dy = (mt.y - centroid[1]) * scaleDiff + height / 2;
+    const transform = zoomIdentity.translate(dx, dy).scale(scale);
+    zoomCatcher.transition().duration(400).call(zoom.transform, transform);
   }
   
   onMount(() => {
@@ -118,8 +111,6 @@
   });
 
   $: if ($data && !$isVertical && $mapWidth && $mapHeight) zoomReset();
-
-  // $: console.log($dataClusters)
 </script>
 
 <div
@@ -153,17 +144,15 @@
     --position="absolute"
     --z-index="0"
   >
-    {#each $projectedData as projection, i}
-      {#each projection as country}
-        <Country
-          path={country.path}
-          color={$data.find(d => d.name.name === country.name)?.categories[$colorCategory].color}
-          strokeColor={styles.gray}
-          fallbackFillColor={styles.lightgray}
-          fillOpacity={$data.find(d => d.name.name === country.name)?.show ? 1.0 : 0.1}
-          mode={country.status === 'country' ? 'area' : 'stroke'}
-        />
-      {/each}
+    {#each $projectedData as country}
+      <Country
+        path={country.path}
+        color={$data.find(d => d.name.name === country.name)?.categories[$colorCategory].color}
+        strokeColor={styles.gray}
+        fallbackFillColor={styles.lightgray}
+        fillOpacity={$data.find(d => d.name.name === country.name)?.show ? 1.0 : 0.1}
+        mode={country.status === 'country' ? 'area' : 'stroke'}
+      />
     {/each}
   </Canvas>
   <svg
@@ -179,13 +168,27 @@
           opacity={country.show ? 1 : 0}
           isReactive={country.show}
           inverted={country.status === 'region'}
-          offset={$mapTransform.k > 5 ? [0, 0] : country.offset}
+          offset={$mapTransform.k > $initialTransform.k * clusterZoom ? [0, 0] : country.offset}
           on:mouseenter={(e) => handleCentroidMouseEnter(e, country.id)}
           on:mouseleave={(e) => handleCentroidMouseLeave(e, country.id)}
           on:touchstart={(e) => handleCentroidClick(e, country.id)}
           on:click={(e) => handleCentroidClick(e, country.id)}
         />
     {/each}
+    
+    {#each $dataClusters as cluster (cluster.id)}
+      {#if ($mapTransform.k < $initialTransform.k * clusterZoom)}
+        <Centroid
+          dataCountry={cluster}
+          color={cluster.color}
+          opacity={cluster.show ? 1 : 0}
+          isReactive={cluster.show}
+          isCluster
+          on:click={() => handleClusterClick(cluster.centroid, $initialTransform.k * (clusterZoom + 0.1), $mapTransform, $mapWidth, $mapHeight)}
+        />
+      {/if}
+    {/each}
+
     {#each $hoveredIds as hoveredId (hoveredId)}
       <HoverTag
         data={$dataCountries.find(d => d.id === hoveredId)}
@@ -195,19 +198,6 @@
         on:mouseleave={(e) => handleCentroidMouseLeave(e, hoveredId)}
         on:tagclick={handleHoverTagClick}
       />
-    {/each}
-
-    {#each $dataClusters as cluster (cluster.id)}
-      {#if ($mapTransform.k < 5)}
-        <Centroid
-          dataCountry={cluster}
-          color={cluster.color}
-          opacity={cluster.show ? 1 : 0}
-          isReactive={cluster.show}
-          isCluster
-          on:click={(e) => handleClusterClick(e, cluster.centroid)}
-        />
-      {/if}
     {/each}
   </svg>
 </div>

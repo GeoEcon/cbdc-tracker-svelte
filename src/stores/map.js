@@ -3,7 +3,6 @@ import { zoomIdentity, geoEqualEarth, geoPath } from 'd3';
 import { feature, merge } from 'topojson-client';
 import geojsonRewind from '@mapbox/geojson-rewind';
 
-import { isVertical } from './device';
 import { loadJson, loadCapitals } from '../utils/load';
 import { euroCountries, clusterSetup, geoMean } from '../utils/geo';
 
@@ -18,27 +17,33 @@ const features = readable([], async (set) => {
   const { features: worldFeatures } = feature(world, world.objects.countries1);
 
   // some smaller countries
-  const specialFeatures = (await loadJson(specialDataPath)).map(d => {
+  const specialFeatures = (await loadJson(specialDataPath)).map((d) => {
     return {
       ...d,
-      geometry: geojsonRewind(d.geometry, true)
+      geometry: geojsonRewind(d.geometry, true),
     };
   });
 
-  const countries = [...worldFeatures, ...specialFeatures].map(d => {
-    return {
-      ...d,
-      status: 'country'
-    };
-  })
-  .filter((d) => !['Antarctica'].includes(d.properties.name));
+  const countries = [...worldFeatures, ...specialFeatures]
+    .map((d) => {
+      return {
+        ...d,
+        status: 'country',
+      };
+    })
+    .filter((d) => !['Antarctica'].includes(d.properties.name));
 
   // create the Euro area
   const euroArea = {
     type: 'Feature',
-    geometry: merge(world, world.objects.countries1.geometries.filter(d => euroCountries.includes(d.properties.name))),
-    properties: { name: 'Euro Area'},
-    status: 'region'
+    geometry: merge(
+      world,
+      world.objects.countries1.geometries.filter((d) =>
+        euroCountries.includes(d.properties.name)
+      )
+    ),
+    properties: { name: 'Euro Area' },
+    status: 'region',
   };
 
   // get the capitals
@@ -46,108 +51,94 @@ const features = readable([], async (set) => {
 
   // merge
   const mapData = [...countries, euroArea].map((d, i) => {
-    const { lat, lon, name } = capitals.find(capital => capital.country === d.properties.name) || {};
+    const { lat, lon, name } =
+      capitals.find((capital) => capital.country === d.properties.name) || {};
     return {
       ...d,
       id: i,
       capital: {
         name,
-        coordinates: [+lon, +lat]
+        coordinates: [+lon, +lat],
       },
-      isClusterMember: clusterSetup.map(cluster => cluster.countries).flat().includes(d.properties.name)
+      isClusterMember: clusterSetup
+        .map((cluster) => cluster.countries)
+        .flat()
+        .includes(d.properties.name),
     };
   });
 
   set(mapData);
 });
 
-let initialProjectionState = [];
-
 export const mapWidth = writable(0);
 export const mapHeight = writable(0);
 
 export const initialTransform = derived(
-  [isVertical, mapWidth, mapHeight],
-  ([$isVertical, $mapWidth, $mapHeight]) => {
-    if ($isVertical) {
-      return zoomIdentity.translate($mapWidth / 0.7, $mapHeight / 1.7).scale(4.1);
-    } else {
-      return zoomIdentity.translate($mapWidth / 2, $mapHeight / 1.8);
-    }
+  [mapWidth, mapHeight],
+  ([$mapWidth, $mapHeight]) => {
+    const projection = geoEqualEarth()
+      .fitSize([$mapWidth, $mapHeight], sphere)
+      .translate([0, 0])
+      .rotate([-6, 0]);
+    const [ x, y ] = projection.translate();
+    return zoomIdentity.translate(x + $mapWidth / 2, y + $mapHeight / 1.8).scale(projection.scale());
   },
   zoomIdentity
 );
 
-export const mapTransform = writable(initialTransform);
+export const mapTransform = writable(zoomIdentity);
 
-export const projections = derived(
+export const projection = derived(
   [mapWidth, mapHeight],
   ([$mapWidth, $mapHeight]) => {
-    const projections = [
-      geoEqualEarth()
-        .fitSize([$mapWidth, $mapHeight], sphere)
-        .translate([0, 0])
-        .rotate([-6, 0]),
-    ];
-    const [tx, ty] = projections[0].translate();
-    initialProjectionState = [{
-      ts: projections[0].scale(),
-      tx,
-      ty,
-    }];
-    return projections;
+    const projection = geoEqualEarth()
+      .fitSize([$mapWidth, $mapHeight], sphere)
+      .translate([0, 0])
+      .rotate([-6, 0]);
+    return projection;
   }
 );
 
-const transformedProjections = derived(
-  [projections, mapTransform],
-  ([$projections, $mapTransform]) => {
-    return $projections.map((projection, i) => {
-      return projection
-        .scale(initialProjectionState[i].ts * $mapTransform.k)
-        .translate([$mapTransform.x, $mapTransform.y]);
-    });
+const transformedProjection = derived(
+  [projection, mapTransform],
+  ([$projection, $mapTransform]) => {
+    return $projection
+      .translate([$mapTransform.x, $mapTransform.y])
+      .scale($mapTransform.k);
   }
 );
 
-export const paths = derived(
-  transformedProjections,
-  ($transformedProjections) => {
-    return $transformedProjections.map((projection) => {
-      return geoPath(projection);
-    });
-  }
-);
+export const path = derived(transformedProjection, ($transformedProjection) => {
+  return geoPath($transformedProjection);
+});
 
-export const projectedData = derived(
-  [features, paths],
-  ([$features, $paths]) => {
-    return $paths.map((path) => {
-      const features = $features
-        .map((d, i) => {
-          const centroid = d.capital.name ? path.projection()(d.capital.coordinates) : path.centroid(d);
-          const projected = {
-            id: i,
-            name: d.properties.name,
-            status: d.status,
-            path: path(d),
-            centroid,
-            isClusterMember: d.isClusterMember
-          };
-        return projected;
-      });
-      return features;
-    });
-  }
-);
+export const projectedData = derived([features, path], ([$features, $path]) => {
+  const features = $features.map((d, i) => {
+    const centroid = d.capital.name
+      ? $path.projection()(d.capital.coordinates)
+      : $path.centroid(d);
+    const projected = {
+      id: i,
+      name: d.properties.name,
+      status: d.status,
+      path: $path(d),
+      centroid,
+      isClusterMember: d.isClusterMember,
+    };
+    return projected;
+  });
+  return features;
+});
 
-export const clusters = derived(paths, $paths => {
-  return $paths.map(path => {
-    return clusterSetup.map(cluster => {
+export const clusters = derived(
+  path,
+  ($path) => {
+    return clusterSetup.map((cluster) => {
       return {
         ...cluster,
-        centroid: path.projection()(cluster.centroid)
+        centroid: $path.projection()(cluster.centroid),
       };
     });
-  });
-}, []);
+  },
+  []
+);

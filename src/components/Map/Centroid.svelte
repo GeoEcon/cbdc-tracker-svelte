@@ -13,12 +13,13 @@
   export let isReactive = true;
   export let inverted = false;
 
-  const tOffset = tweened(null, { duration: 200 });
+  const tOffset = tweened(null, { duration: 100 });
   
   let deactivated = false;
 
-  $: tOffset.set(offset);
   $: deactivated = offset[0] !== 0 && offset[1] !== 0;
+  $: internalRadius = radius * (isCluster ? 1.3 : 1);
+  $: tOffset.set(offset, { duration: deactivated ? 0 : 200});
 </script>
 
 <g
@@ -40,36 +41,36 @@
     class="background"
     cx="0"
     cy="0"
-    r={radius}
+    r={internalRadius}
   />
   <circle
     class="foreground"
     cx="0"
     cy="0"
-    r={radius / 1.5}
-    stroke-width={radius / 7}
+    r={internalRadius / 1.5}
+    stroke-width={internalRadius / 7}
   />
   {#if (isCluster)}
     <circle
       class="foreground"
       cx="0"
       cy="0"
-      r={radius / 1.2}
-      stroke-width={radius / 15}
+      r={internalRadius / 1.2}
+      stroke-width={internalRadius / 15}
     />
     <circle
       class="foreground"
       cx="0"
       cy="0"
-      r={radius / 2}
-      stroke-width={radius / 15}
+      r={internalRadius / 2}
+      stroke-width={internalRadius / 15}
     />
     <circle
       class="foreground"
       cx="0"
       cy="0"
-      r={radius / 2.5}
-      stroke-width={radius / 15}
+      r={internalRadius / 2.5}
+      stroke-width={internalRadius / 15}
     />
   {/if}
   {#if (inverted)}
@@ -77,8 +78,8 @@
       class="foreground"
       cx="0"
       cy="0"
-      r={radius / 2.2}
-      stroke-width={radius / 7}
+      r={internalRadius / 2.2}
+      stroke-width={internalRadius / 7}
     />
   {/if}
 </g>
