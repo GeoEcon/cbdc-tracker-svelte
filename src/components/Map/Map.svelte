@@ -96,7 +96,7 @@
     filterByCategory(category, name);
   }
 
-  function handleClusterClick(centroid, scale, mt, width, height) {
+  function handleClusterClick(centroid, scale, mt, it, width, height) {
     const scaleDiff = scale / mt.k;
     const dx = (mt.x - centroid[0]) * scaleDiff + width / 2;
     const dy = (mt.y - centroid[1]) * scaleDiff + height / 2;
@@ -184,7 +184,7 @@
           opacity={cluster.show ? 1 : 0}
           isReactive={cluster.show}
           isCluster
-          on:click={() => handleClusterClick(cluster.centroid, $initialTransform.k * (clusterZoom + 0.1), $mapTransform, $mapWidth, $mapHeight)}
+          on:click={() => handleClusterClick(cluster.centroid, $initialTransform.k * (clusterZoom + 0.1), $mapTransform, $initialTransform, $mapWidth, $mapHeight)}
         />
       {/if}
     {/each}

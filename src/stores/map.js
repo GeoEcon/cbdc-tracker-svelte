@@ -3,6 +3,7 @@ import { zoomIdentity, geoEqualEarth, geoPath } from 'd3';
 import { feature, merge } from 'topojson-client';
 import geojsonRewind from '@mapbox/geojson-rewind';
 
+import { isVertical } from './device';
 import { loadJson, loadCapitals } from '../utils/load';
 import { euroCountries, clusterSetup, geoMean } from '../utils/geo';
 
@@ -73,21 +74,6 @@ const features = readable([], async (set) => {
 export const mapWidth = writable(0);
 export const mapHeight = writable(0);
 
-export const initialTransform = derived(
-  [mapWidth, mapHeight],
-  ([$mapWidth, $mapHeight]) => {
-    const projection = geoEqualEarth()
-      .fitSize([$mapWidth, $mapHeight], sphere)
-      .translate([0, 0])
-      .rotate([-6, 0]);
-    const [ x, y ] = projection.translate();
-    return zoomIdentity.translate(x + $mapWidth / 2, y + $mapHeight / 1.8).scale(projection.scale());
-  },
-  zoomIdentity
-);
-
-export const mapTransform = writable(zoomIdentity);
-
 export const projection = derived(
   [mapWidth, mapHeight],
   ([$mapWidth, $mapHeight]) => {
@@ -98,6 +84,24 @@ export const projection = derived(
     return projection;
   }
 );
+
+export const initialTransform = derived(
+  [isVertical, mapWidth, mapHeight],
+  ([$isVertical, $mapWidth, $mapHeight]) => {
+    const projection = geoEqualEarth()
+      .fitSize([$mapWidth, $mapHeight], sphere)
+      .translate([0, 0])
+      .rotate([-6, 0]);
+    const [ x, y ] = projection.translate();
+    if ($isVertical) {
+      return zoomIdentity.translate(x + $mapWidth / 0.7, y + $mapHeight / 1.7).scale(projection.scale() * 4);
+    }
+    return zoomIdentity.translate(x + $mapWidth / 2, y + $mapHeight / 1.8).scale(projection.scale());
+  },
+  zoomIdentity
+);
+
+export const mapTransform = writable(zoomIdentity);
 
 const transformedProjection = derived(
   [projection, mapTransform],
