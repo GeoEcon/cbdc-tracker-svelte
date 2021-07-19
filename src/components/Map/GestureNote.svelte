@@ -1,5 +1,11 @@
 <script>
   import { fade } from 'svelte/transition';
+
+  import { shift } from '../../utils/icons';
+
+  import Icon from 'svelte-awesome';
+
+  export let mode = 'mobile';
 </script>
 
 <div
@@ -7,7 +13,11 @@
   transition:fade
 >
   <div class="content">
-    Use two fingers to pan and zoom the map.
+    {#if (mode === 'mobile')}
+      Use two fingers to pan and zoom the map.
+    {:else if (mode === 'desktop')}
+      <Icon data={shift} /> Press Shift to pan and zoom the map. <Icon data={shift} />
+    {/if}
   </div>
 </div>
 

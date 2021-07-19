@@ -1,5 +1,5 @@
 <script>
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
   import { zoom as d3zoom, select, zoomIdentity } from 'd3';
 
   import { mapWidth, mapHeight, initialTransform, mapTransform, projectedData } from '../../stores/map';
@@ -24,10 +24,12 @@
   const clusterZoom = 8;
 
   let isZoomed = false;
+  let zoomable = false;
 
   const zoom = d3zoom()
     .filter((e) => {
       if (e.touches && e.touches.length <= 1) return false;
+      if (!$isVertical && !zoomable) return false;
       return true;
     })
     .on('start', () => isZoomed = true)
@@ -39,12 +41,18 @@
   let zoomCatcherElem, zoomCatcher;
   let showGestureNote = false;
   let numGestureNotes = 0;
+  let tid;
+
+  const startGestureNote = (ms = 2000) => {
+    showGestureNote = true;
+    numGestureNotes++;
+    clearTimeout(tid);
+    setTimeout(() => showGestureNote = false, ms);
+  };
 
   function handleMapTouchend(e) {
     if (numGestureNotes < 2 && e.touches && e.touches.length <= 1) {
-      showGestureNote = true;
-      numGestureNotes++;
-      setTimeout(() => showGestureNote = false, 2000);
+      startGestureNote();
       return;
     }
     showGestureNote = false;
@@ -103,6 +111,20 @@
     const transform = zoomIdentity.translate(dx, dy).scale(scale);
     zoomCatcher.transition().duration(400).call(zoom.transform, transform);
   }
+
+  function handleKeyDown(e) {
+    if (['Shift', 'Meta', 'Control'].includes(e.key)) zoomable = true;
+  }
+
+  function handleKeyUp(e) {
+    if (['Shift', 'Meta', 'Control'].includes(e.key)) zoomable = false;
+  }
+
+  function handleScroll() {
+    if (!zoomable && numGestureNotes < 1000) {
+      startGestureNote();
+    }
+  }
   
   onMount(() => {
     zoomCatcher = select(zoomCatcherElem);
@@ -110,8 +132,12 @@
     zoomReset({animation: false});
   });
 
+  onDestroy(() => clearTimeout(tid));
+
   $: if ($data && !$isVertical && $mapWidth && $mapHeight) zoomReset();
 </script>
+
+<svelte:window on:keydown={handleKeyDown} on:keyup={handleKeyUp} on:mousewheel={handleScroll} />
 
 <div
   class="map"
@@ -120,7 +146,9 @@
   on:touchend={handleMapTouchend}
 >
   {#if (showGestureNote)}
-    <GestureNote />
+    <GestureNote
+      mode={$isVertical ? 'mobile' : 'desktop'}
+    />
   {/if}
   <Navigation
     on:reset={zoomReset}
