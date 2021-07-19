@@ -5,7 +5,7 @@ import geojsonRewind from '@mapbox/geojson-rewind';
 
 import { isVertical } from './device';
 import { loadJson, loadCapitals } from '../utils/load';
-import { euroCountries, clusterSetup, geoMean } from '../utils/geo';
+import { euroCountries, clusterSetup } from '../utils/geo';
 
 const sphere = { type: 'Sphere' };
 
