@@ -134,7 +134,7 @@
 
   onDestroy(() => clearTimeout(tid));
 
-  $: if ($data && !$isVertical && $mapWidth && $mapHeight) zoomReset();
+  $: if ($data && !$isVertical && $mapWidth && $mapHeight) zoomReset({animation: $data.length});
 </script>
 
 <svelte:window on:keydown={handleKeyDown} on:keyup={handleKeyUp} on:mousewheel={handleScroll} />
