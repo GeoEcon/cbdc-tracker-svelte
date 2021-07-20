@@ -5,8 +5,7 @@ import { data } from './data';
 import { projectedData, mapWidth, mapHeight, clusters } from './map';
 import { colorCategory } from './colorcategory';
 import { isDefined } from '../utils/logic';
-import { getMinus } from '../utils/geo';
-import styles from '../utils/styles';
+import { getMinus, getColorFromCountries } from '../utils/geo';
 
 export const dataCountries = derived(
   [
@@ -55,7 +54,7 @@ export const dataCountries = derived(
       return {
         ...cluster,
         show: countries.some(d => d.show),
-        color: countries.length ? countries[0].categories[$colorCategory].color : styles.darkgray
+        color: getColorFromCountries(countries, $colorCategory)
       };
     });
   });

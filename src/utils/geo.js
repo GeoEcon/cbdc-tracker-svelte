@@ -1,4 +1,6 @@
-import { mean } from 'd3';
+import { mean, style } from 'd3';
+
+import styles from '../utils/styles';
 
 export const euroCountries = [
   'Belgium',
@@ -55,15 +57,16 @@ export const clusterSetup = [
     ],
     centroid: [-64, 15],
   },
-  // {
-  //   id: 2,
-  //   name: 'Levante (Development)',
-  //   countries: [
-  //     'Israel',
-  //     'Lebanon'
-  //   ],
-  //   centroid: [31, 33.5]
-  // },
+  {
+    id: 2,
+    name: 'Levante (Development)',
+    countries: [
+      'Israel',
+      'Lebanon',
+      'Palestine'
+    ],
+    centroid: [35, 33]
+  },
 ];
 
 export const geoMean = (coords) => {
@@ -74,4 +77,11 @@ export const geoMean = (coords) => {
 
 export const getMinus = (coord1, coord2) => {
   return [coord1[0] - coord2[0], coord1[1] - coord2[1]];
+};
+
+export const getColorFromCountries = (countries, colorCat) => {
+  if (!countries.length) return styles.darkgray;
+  const uniqueColors = [...new Set(countries.map(d => d.categories[colorCat].color))];
+  if (uniqueColors.length === 1) return uniqueColors[0];
+  return styles.darkgray;
 };
