@@ -172,6 +172,7 @@
     }
 
     .logo {
+      justify-self: flex-end;
       display: flex;
       align-items: center;
       justify-content: center;
