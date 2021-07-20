@@ -21,7 +21,7 @@
   <div class="buttons">
     <a
       class="twitter"
-      href="https://twitter.com/intent/tweet?url={$filterUrl}"
+      href="https://twitter.com/intent/tweet?url={encodeURIComponent($filterUrl)}"
       target="_blank"
       title="Share via Twitter"
     >
