@@ -165,6 +165,7 @@
         spellcheck="no"
         bind:value={searchValue}
         on:focus={handleShowSuggestions}
+        on:click|stopPropagation
         use:setFocus
       />
       <ul class="suggestions">

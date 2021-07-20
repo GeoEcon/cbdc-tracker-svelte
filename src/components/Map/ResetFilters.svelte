@@ -10,6 +10,7 @@
 
 <div
   class="reset-filters"
+  on:mousedown|stopPropagation
   transition:fade={{duration: 200}}
 >
   <button on:click|stopPropagation={handleClick}>

@@ -7,6 +7,8 @@
   import { css } from '../../actions/css';
   import { extractHostname } from '../../utils/misc';
 
+  import Share from '../Share/Share.svelte';
+
   export let datum;
 
   const dispatch = createEventDispatcher();
@@ -102,12 +104,18 @@
       <main>
         <h2>Key developments</h2>
         <p>{datum.key_developments}</p>
-        <h4>Sources</h4>
-        <ul class="sources">
-          {#each datum.sources as url}
-            <li><a href={url} target="_blank">{extractHostname(url)}</a></li>
-          {/each}
-        </ul>
+        {#if (datum.sources.length)}
+          <h4>Sources</h4>
+          <ul class="sources">
+            {#each datum.sources as url}
+              <li><a href={url} target="_blank">{extractHostname(url)}</a></li>
+            {/each}
+          </ul>
+        {/if}
+        <h4>Share</h4>
+        <div class="share-panel">
+          <Share />
+        </div>
       </main>
     </div>
   </div>
@@ -162,7 +170,7 @@
     display: flex;
     justify-content: flex-end;
     width: 100%;
-    padding: 0 1.5rem;
+    padding: 0 1.5rem 0 2rem;
   }
 
   .close-button {
@@ -183,7 +191,7 @@
   }
 
   .close-button:hover {
-    color: var(--primBlack);
+    color: var(--darkgray);
   }
 
   .close-button span {
@@ -350,5 +358,9 @@
 
   ul.sources li a {
     font-size: 1.1rem;
+  }
+
+  .share-panel {
+    margin: 0.5rem 0 1rem -1rem;
   }
 </style>

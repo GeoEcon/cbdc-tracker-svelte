@@ -20,7 +20,10 @@
   }
 </script>
 
-<div class="navigation">
+<div
+  class="navigation"
+  on:mousedown|stopPropagation
+>
   <button on:click={handleResetClick}>
     <Icon data={expand} />
   </button>

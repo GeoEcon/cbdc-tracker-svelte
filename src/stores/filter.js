@@ -21,16 +21,20 @@ function createMultiFilter() {
             .flat()
         ),
       ];
-      values = sortBy(values, d => d.toLowerCase());
+      values = sortBy(values, (d) => d.toLowerCase());
     }
     set(
-      sortToEnd(values.map((value) => {
-        return {
-          id: value,
-          name: value,
-          selected: true,
-        };
-      }), 'name', 'Undecided')
+      sortToEnd(
+        values.map((value) => {
+          return {
+            id: value,
+            name: value,
+            selected: true,
+          };
+        }),
+        'name',
+        'Undecided'
+      )
     );
   };
 
@@ -76,7 +80,7 @@ function createMultiFilter() {
         }));
       }
       if (areAllUnselected(res)) {
-        res = res.map(d => ({...d, selected: true}));
+        res = res.map((d) => ({ ...d, selected: true }));
       }
       return res;
     });
@@ -171,17 +175,19 @@ export const resetAllFilters = () => {
   crossborderPartnershipsFilter.selectAll();
 };
 
-export const anyFilterActive = derived([
-  statusFilter,
-  countryFilter,
-  useCaseFilter,
-  technologyFilter,
-  architectureFilter,
-  infrastructureFilter,
-  accessFilter,
-  corporatePartnershipFilter,
-  crossborderPartnershipsFilter
-], ([
+export const anyFilterActive = derived(
+  [
+    statusFilter,
+    countryFilter,
+    useCaseFilter,
+    technologyFilter,
+    architectureFilter,
+    infrastructureFilter,
+    accessFilter,
+    corporatePartnershipFilter,
+    crossborderPartnershipsFilter,
+  ],
+  ([
     $statusFilter,
     $countryFilter,
     $useCaseFilter,
@@ -191,16 +197,44 @@ export const anyFilterActive = derived([
     $accessFilter,
     $corporatePartnershipFilter,
     $crossborderPartnershipsFilter,
-]) => {
-  return !(
-    areAllSelected($statusFilter) &&
-    areAllSelected($countryFilter) &&
-    areAllSelected($useCaseFilter) &&
-    areAllSelected($technologyFilter) &&
-    areAllSelected($architectureFilter) &&
-    areAllSelected($infrastructureFilter) &&
-    areAllSelected($accessFilter) &&
-    areAllSelected($corporatePartnershipFilter) &&
-    areAllSelected($crossborderPartnershipsFilter)
-  );
-}, false);
+  ]) => {
+    return !(
+      areAllSelected($statusFilter) &&
+      areAllSelected($countryFilter) &&
+      areAllSelected($useCaseFilter) &&
+      areAllSelected($technologyFilter) &&
+      areAllSelected($architectureFilter) &&
+      areAllSelected($infrastructureFilter) &&
+      areAllSelected($accessFilter) &&
+      areAllSelected($corporatePartnershipFilter) &&
+      areAllSelected($crossborderPartnershipsFilter)
+    );
+  },
+  false
+);
+
+export const applyParams = (params) => {
+  if (!params || Object.keys(params).length === 0) return;
+
+  const {
+    status,
+    useCase,
+    architecture,
+    infrastructure,
+    access,
+    country
+  } = params;
+
+  statusFilter.applyBoolArray(status);
+  useCaseFilter.applyBoolArray(useCase);
+  architectureFilter.applyBoolArray(architecture);
+  infrastructureFilter.applyBoolArray(infrastructure);
+  accessFilter.applyBoolArray(access);
+
+  if (country){
+    countryFilter.unselectAll();
+    country.forEach(id => {
+      countryFilter.select(id);
+    });
+  }
+};

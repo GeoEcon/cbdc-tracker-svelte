@@ -27,6 +27,7 @@
 <div
   class="legend"
   class:vertical={$isVertical}
+  on:mousedown|stopPropagation
 >
   <div class="countries">
     <h5 class="total">

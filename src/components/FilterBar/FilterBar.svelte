@@ -26,7 +26,6 @@
 
   import FilterTitle from './FilterTitle.svelte';
   import Logo from './Logo.svelte';
-  import Share from '../Share/Share.svelte';
   import Dropdown from '../Dropdown/Dropdown.svelte';
 
   $: extraFiltersExpanded = !$isVertical;
@@ -110,7 +109,6 @@
       />
     {/each}
     <div class="share-panel">
-      <!-- <Share /> -->
     </div>
     <div class="logo">
       <Logo />
@@ -146,7 +144,6 @@
   .filter-bar {
     width: 100%;
     padding: 1rem 0;
-    border-bottom: 1px dashed var(--gray);
   }
 
   .grid-container {
@@ -165,13 +162,15 @@
     grid-template-columns: 1fr;
   }
 
-  .logo {
-    align-self: flex-start;
-    justify-self: end;
+  .share-panel, .logo {
     display: none;
   }
 
   @media (min-width: 980px) {
+    .share-panel {
+      display: block;
+    }
+
     .logo {
       display: flex;
       align-items: center;

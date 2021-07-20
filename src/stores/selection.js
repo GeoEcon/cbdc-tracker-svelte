@@ -41,3 +41,10 @@ export const selectedDatum = derived([dataCountries, selectedId], ([$dataCountri
   if (!datum) return null;
   return datum;
 }, null);
+
+export const applySelected = (urlParams) => {
+  if (!urlParams) return;
+  const selected = urlParams.get('selected');
+  if (!selected) return;
+  selectedId.set(+selected);
+};

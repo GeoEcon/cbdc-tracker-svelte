@@ -5,16 +5,20 @@
   import { css } from './actions/css';
   import { isVertical } from './stores/device';
   import { tooltip } from './stores/definitions';
-  import { selectedDatum, selectedId } from './stores/selection';
-  import { resetAllFilters, filterByCategory } from './stores/filter';
+  import { data } from './stores/data';
+  import { selectedDatum, selectedId, applySelected } from './stores/selection';
+  import { resetAllFilters, filterByCategory, applyParams } from './stores/filter';
+  import { parseUrl } from './stores/share';
 
   import FilterBar from './components/FilterBar/FilterBar.svelte';
   import Map from './components/Map/Map.svelte';
   import Tooltip from './components/Tooltip.svelte';
   import Modal from './components/Modal/Modal.svelte';
+  import Footer from './components/Footer.svelte';
 
   let width = 0;
   let height = 0;
+  let urlParams;
 
   function handleModalCategoryClick(e) {
     const { detail: { category, name} } = e;
@@ -22,22 +26,28 @@
     filterByCategory(category, name);
   }
 
-  function sendDimensions(width, height) {
-    const message = {
-      height,
-      width
-    };
+  // function sendDimensions(width, height) {
+  //   const message = {
+  //     height,
+  //     width
+  //   };
 
-	  window.top.postMessage(message, "*");
-  }
+	//   window.top.postMessage(message, "*");
+  // }
 
   onMount(() => {
-    console.log(window.location.search);
+    urlParams = new URLSearchParams(window.location.search);
   });
 
   $: isVertical.set(width < 600);
   $: if ($selectedDatum) tooltip.set(null);
-  $: sendDimensions(width, height);
+  // $: sendDimensions(width, height);
+
+  $: if ($data.length) {
+    applyParams(parseUrl(urlParams))
+    applySelected(urlParams);
+    urlParams = null;
+  }
 </script>
 
 <div
@@ -61,6 +71,7 @@
       on:close={() => $selectedId = null}
     />
   {/if}
+  <Footer />
 </div>
 
 <style>
