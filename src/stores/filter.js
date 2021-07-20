@@ -3,7 +3,13 @@ import { sortBy } from 'lodash-es';
 
 import { areAllSelected, areAllUnselected } from '../utils/logic';
 
-import { statusLevels } from '../utils/status';
+import {
+  statusLevels,
+  useCaseLevels,
+  accessLevels,
+  infrastructureLevels,
+  architectureLevels,
+} from '../utils/levels';
 import { sortToEnd } from '../utils/misc';
 
 function createMultiFilter() {
@@ -125,11 +131,11 @@ export const crossborderPartnershipsFilter = createMultiFilter();
 export const initFilters = (data) => {
   statusFilter.init(statusLevels.map((d) => d.name));
   countryFilter.init(data, 'name');
-  useCaseFilter.init(data, 'categories.use_case');
+  useCaseFilter.init(useCaseLevels.map((d) => d.name));
   technologyFilter.init(data, 'categories.technology');
-  architectureFilter.init(data, 'categories.architecture');
-  infrastructureFilter.init(data, 'categories.infrastructure');
-  accessFilter.init(data, 'categories.access');
+  architectureFilter.init(architectureLevels.map((d) => d.name));
+  infrastructureFilter.init(infrastructureLevels.map((d) => d.name));
+  accessFilter.init(accessLevels.map((d) => d.name));
   corporatePartnershipFilter.init(data, 'categories.corporate_partnership');
   crossborderPartnershipsFilter.init(
     data,
@@ -216,14 +222,8 @@ export const anyFilterActive = derived(
 export const applyParams = (params) => {
   if (!params || Object.keys(params).length === 0) return;
 
-  const {
-    status,
-    useCase,
-    architecture,
-    infrastructure,
-    access,
-    country
-  } = params;
+  const { status, useCase, architecture, infrastructure, access, country } =
+    params;
 
   statusFilter.applyBoolArray(status);
   useCaseFilter.applyBoolArray(useCase);
@@ -231,9 +231,9 @@ export const applyParams = (params) => {
   infrastructureFilter.applyBoolArray(infrastructure);
   accessFilter.applyBoolArray(access);
 
-  if (country){
+  if (country) {
     countryFilter.unselectAll();
-    country.forEach(id => {
+    country.forEach((id) => {
       countryFilter.select(id);
     });
   }

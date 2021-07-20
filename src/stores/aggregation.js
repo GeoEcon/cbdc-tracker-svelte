@@ -3,7 +3,7 @@ import { rollups } from 'd3';
 import { sortBy } from 'lodash-es';
 
 import { scaledData, data } from './data';
-import { statusLevels } from '../utils/status';
+import { statusLevels } from '../utils/levels';
 import { sortToEnd } from '../utils/misc';
 
 const generateRollup = (arr, sortArr = null) => {

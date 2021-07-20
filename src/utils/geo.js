@@ -19,7 +19,17 @@ export const euroCountries = [
   'Slovakia',
   'Estonia',
   'Latvia',
-  'Lithuania'
+  'Lithuania',
+];
+
+export const useCapitalCountries = [
+  'United States of America',
+  'Israel',
+  'Palestine',
+  'Lebanon',
+  'Canada',
+  'Euro Area',
+  'Germany',
 ];
 
 export const clusterSetup = [
@@ -30,9 +40,9 @@ export const clusterSetup = [
       'Anguilla',
       'Montserrat',
       'Dominica',
-      'Saint Vincent and the Grenadines'
+      'Saint Vincent and the Grenadines',
     ],
-    centroid: [-58, 17]
+    centroid: [-58, 17],
   },
   {
     id: 1,
@@ -41,27 +51,27 @@ export const clusterSetup = [
       'Saint Kitts and Nevis',
       'Antigua and Barbuda',
       'Saint Lucia',
-      'Grenada'
+      'Grenada',
     ],
-    centroid: [-64, 15]
+    centroid: [-64, 15],
   },
-  {
-    id: 2,
-    name: 'Levante (Development)',
-    countries: [
-      'Israel',
-      'Lebanon'
-    ],
-    centroid: [31, 33.5]
-  },
+  // {
+  //   id: 2,
+  //   name: 'Levante (Development)',
+  //   countries: [
+  //     'Israel',
+  //     'Lebanon'
+  //   ],
+  //   centroid: [31, 33.5]
+  // },
 ];
 
 export const geoMean = (coords) => {
-  const x = mean(coords, d => d[0]);
-  const y = mean(coords, d => d[1]);
+  const x = mean(coords, (d) => d[0]);
+  const y = mean(coords, (d) => d[1]);
   return [x || 0, y || 0];
 };
 
 export const getMinus = (coord1, coord2) => {
   return [coord1[0] - coord2[0], coord1[1] - coord2[1]];
-} 
+};

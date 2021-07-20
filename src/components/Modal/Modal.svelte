@@ -70,7 +70,7 @@
         </button>
       </div>
       <div class="header-content">
-        <h1>{datum.name.name}</h1>
+        <h1>{datum.name.name === 'United States of America' ? 'United States' : datum.name.name}</h1>
         {#if (datum.currency_name)} 
           <h2>Project Name – {datum.currency_name}</h2>
         {/if}
@@ -103,7 +103,7 @@
       </div>
       <main>
         <h2>Key developments</h2>
-        <p>{datum.key_developments}</p>
+        <p>{@html datum.key_developments}</p>
         {#if (datum.sources.length)}
           <h4>Sources</h4>
           <ul class="sources">

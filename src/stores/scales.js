@@ -9,7 +9,7 @@ import {
   infrastructureFilter,
   accessFilter
 } from './filter';
-import { statusColors, statusLevels } from '../utils/status';
+import { statusColors, statusLevels } from '../utils/levels';
 import styles from '../utils/styles';
 
 const generateCategoryColors = (numColors = 8, chroma = 50, lightness = 80) =>

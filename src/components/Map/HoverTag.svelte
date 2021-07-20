@@ -37,7 +37,7 @@
       category: 'name',
       ...{
         ...data.name,
-        name: data.name.name === 'United States of America' ? 'USA' : data.name.name
+        name: data.name.name === 'United States of America' ? 'United States' : data.name.name
       }
     },
     ...Object.keys(data.categories)

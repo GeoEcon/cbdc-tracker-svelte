@@ -5,7 +5,7 @@ import geojsonRewind from '@mapbox/geojson-rewind';
 
 import { isVertical } from './device';
 import { loadJson, loadCapitals } from '../utils/load';
-import { euroCountries, clusterSetup } from '../utils/geo';
+import { euroCountries, clusterSetup, useCapitalCountries } from '../utils/geo';
 
 const sphere = { type: 'Sphere' };
 
@@ -118,9 +118,12 @@ export const path = derived(transformedProjection, ($transformedProjection) => {
 
 export const projectedData = derived([features, path], ([$features, $path]) => {
   const features = $features.map((d, i) => {
-    const centroid = d.capital.name
-      ? $path.projection()(d.capital.coordinates)
-      : $path.centroid(d);
+    let centroid = $path.centroid(d);
+    if (useCapitalCountries.includes(d.properties.name)) {
+      centroid = d.capital.name
+        ? $path.projection()(d.capital.coordinates)
+        : $path.centroid(d);
+    }
     const projected = {
       id: i,
       name: d.properties.name,
