@@ -1,4 +1,5 @@
-import { mean, style } from 'd3';
+import { mean, rgb } from 'd3';
+import { multiply as mix } from 'color-blend'
 
 import styles from '../utils/styles';
 
@@ -81,7 +82,12 @@ export const getMinus = (coord1, coord2) => {
 
 export const getColorFromCountries = (countries, colorCat) => {
   if (!countries.length) return styles.darkgray;
+
   const uniqueColors = [...new Set(countries.map(d => d.categories[colorCat].color))];
   if (uniqueColors.length === 1) return uniqueColors[0];
-  return styles.darkgray;
+
+  const rgbUniqueColors = uniqueColors.map(d => rgb(d)).map(d => ({r: d.r, g: d.g, b: d.b, a: d.opacity}));
+  const mixed = mix(...rgbUniqueColors);
+  const hex = rgb(mixed.r, mixed.g, mixed.b, mixed.a).formatHex();
+  return hex;
 };
