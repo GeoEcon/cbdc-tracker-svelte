@@ -38,6 +38,7 @@
       filter={countryFilter}
       shortCuts={countryGroups}
       hideColorBoxes
+      showReset
       showClickHint={`${$isVertical ? 'Tap' : 'Click'} to filter`}
     />
   </div>

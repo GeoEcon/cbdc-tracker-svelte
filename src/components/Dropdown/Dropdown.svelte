@@ -296,7 +296,8 @@
     min-height: var(--inputHeight);
     max-height: calc(1.3 * var(--inputHeight));
     list-style-type: none;
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
   ul.chips li {
