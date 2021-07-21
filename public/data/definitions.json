@@ -27,7 +27,7 @@
       },
       {
         "name": "Synthetic CBDCC",
-        "definition": "The CBDC is not a direct claim on the central bank, claims are a liability of private financial institutions that facilitate payments and real-time transactions."
+        "definition": "The CBDC is not a direct claim on the central bank; Claims are a liability of private financial institutions that facilitate payments and real-time transactions."
       }
     ]
   },
@@ -37,7 +37,7 @@
   },
   "infrastructure": {
     "name": "Infrastructure",
-    "title": "The infrastructure could be based on a conventional centrally controlled database, or on  distributed ledger technology (DLT). Conventional and DLT-based infrastructures often store data multiple times and in physically separate locations. The main difference between them lies in how the transactions are verified and secured."
+    "title": "The infrastructure could be based on a conventional centrally controlled database or on  distributed ledger technology (DLT). Conventional and DLT-based infrastructures often store data multiple times and in physically separate locations. The main difference between them lies in how the transactions are verified and secured."
   },
   "status": {
     "name": "CBDC Status",
@@ -52,14 +52,14 @@
       },
       {
         "name": "Pilot",
-        "definition": "Initiated small-scale testing of a CBDC in real world with a limited number of participants"
+        "definition": "Initiated small-scale testing of a CBDC in the real world with a limited number of participants"
       },
       {
         "name": "Launched",
         "definition": "Issued a CBDC for widespread retail and/or wholesale use"
       },
       {
-        "name": "Cancelled",
+        "name": "Canceled",
         "definition": "CBDC initiative decommissioned"
       },
       {
