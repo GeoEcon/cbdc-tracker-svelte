@@ -64,7 +64,8 @@
     if (showSuggestions) {
       if (hoveredSuggestion !== null) {
         if (e.keyCode === 13) { // enter
-          handleSuggestionSelect(suggestions[hoveredSuggestion].id);
+          const s = suggestions[hoveredSuggestion];
+          handleSuggestionSelect(s.id, s.type);
         }
       }
     
@@ -78,10 +79,12 @@
 
   function handleSuggestionSelect(id, type) {
     if (type === 'shortcut') {
-      ({ items: id } = shortCuts.find(d => d.id === id) || {});
+      const { items } = shortCuts.find(d => d.id === id) || {};
       filter.unselectAll();
+      filter.select(items);
+    } else {
+      filter.click(id);
     }
-    filter.click(id);
     showSuggestions = false;
   }
 
@@ -166,8 +169,8 @@
         id={id}
         type="text"
         placeholder="Search..."
-        autocomplete="no"
-        spellcheck="no"
+        autocomplete="off"
+        spellcheck="off"
         bind:value={searchValue}
         on:focus={handleShowSuggestions}
         on:click|stopPropagation
