@@ -82,9 +82,9 @@
 
   @media (min-width: 600px) {
     .legend {
-      width: 230px;
-      min-width: 230px;
-      max-width: 230px;
+      width: 240px;
+      min-width: 240px;
+      max-width: 240px;
       margin: 2rem 1rem;
     }
   }

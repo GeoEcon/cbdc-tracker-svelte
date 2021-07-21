@@ -24,7 +24,7 @@
     left: 0;
     right: auto;
     top: 0;
-    z-index: 1001;
+    z-index: 901;
     margin: 2rem 1rem;
     background-color: var(--background);
     border: 1px solid var(--primOrange);

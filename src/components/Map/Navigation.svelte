@@ -40,7 +40,7 @@
     position: absolute;
     right: 0;
     top: 0;
-    z-index: 1000;
+    z-index: 900;
     display: flex;
     flex-direction: column;
     margin: 2rem 1rem;
