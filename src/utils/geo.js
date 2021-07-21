@@ -163,7 +163,18 @@ export const countryGroups = [
       'Sweden',
       'Switzerland',
       'United Kingdom',
-      'Euro Area'
+      'Euro Area',
+      'Canada',
+      'Chile',
+      'Colombia',
+      'Mexico',
+      'United States of America',
+      'Australia',
+      'Japan',
+      'South Korea',
+      'New Zealand',
+      'Israel',
+      'Turkey'
     ]
   }
 ];

@@ -4,7 +4,7 @@
 
 <footer>
   <p class="sources">
-    Sources: Atlantic Council Research, Bank of International Settlements, International Monetary Fund, John Kiff
+    Sources: Atlantic Council Research, Bank of International Settlements, International Monetary Fund, John Kiff Database
   </p>
   <Share>Share this view</Share>
 </footer>
