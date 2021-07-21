@@ -13,6 +13,8 @@
 
   const dispatch = createEventDispatcher();
 
+  let showOverlayCloseButton = false;
+
   function close() {
     dispatch('close');
   }
@@ -21,6 +23,10 @@
     if (e.keyCode === 27) { // esc
       close();
     }
+  }
+
+  function handleScroll() {
+    showOverlayCloseButton = true;
   }
 
   function handleCategoryClick(category, name) {
@@ -49,11 +55,15 @@
     on:click={close}
   >
   </div>
-  <div class="modal-inner">
-    {#if ($isVertical)}
+  <div
+    class="modal-inner"
+    on:scroll={handleScroll}
+  >
+    {#if ($isVertical && showOverlayCloseButton)}
       <button
         class="close-button overlay"
         on:click={close}
+        transition:fade
       >
         <span>+</span>
       </button>
@@ -149,7 +159,7 @@
     position: relative;
     width: 100%;
     height: 100%;
-    padding-bottom: 100px;
+    padding-bottom: 150px;
     background-color: var(--background);
     border: 1px solid var(--statusColor);
     overflow-y: auto;
@@ -189,7 +199,7 @@
   .close-button.overlay {
     position: fixed;
     right: 40px;
-    bottom: 40px;
+    bottom: 150px;
     z-index: 20000;
   }
 
