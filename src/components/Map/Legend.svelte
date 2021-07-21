@@ -1,5 +1,6 @@
 <script>
   import { isVertical } from '../../stores/device';
+  import { countryGroups } from '../../utils/geo';
 
   import Dropdown from '../Dropdown/Dropdown.svelte';
 
@@ -35,6 +36,7 @@
     </h5>
     <Dropdown
       filter={countryFilter}
+      shortCuts={countryGroups}
       hideColorBoxes
       showClickHint={`${$isVertical ? 'Tap' : 'Click'} to filter`}
     />

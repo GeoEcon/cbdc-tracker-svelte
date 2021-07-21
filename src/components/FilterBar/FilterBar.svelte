@@ -23,6 +23,7 @@
   import { isVertical } from '../../stores/device';
   import { definitions, tooltip } from '../../stores/definitions';
   import { css } from '../../actions/css';
+  import { countryGroups } from '../../utils/geo';
 
   import FilterTitle from './FilterTitle.svelte';
   import Logo from './Logo.svelte';
@@ -34,6 +35,7 @@
     {
       filter: countryFilter,
       label: $categoryNameScale.name,
+      shortCuts: countryGroups,
       fullRollup: [],
       rollup: [],
       info: null
@@ -41,6 +43,7 @@
     {
       filter: statusFilter,
       label: $categoryNameScale.new_status,
+      shortCuts: [],
       fullRollup: $fullStatusRollup,
       rollup: $statusRollup,
       info: $definitions.status
@@ -51,20 +54,15 @@
     {
       filter: useCaseFilter,
       label: $categoryNameScale.use_case,
+      shortCuts: [],
       fullRollup: $fullUseCaseRollup,
       rollup: $useCaseRollup,
       info: $definitions.use_case
     },
-    // {
-    //   filter: technologyFilter,
-    //   label: 'Technology',
-    //   fullRollup: $fullTechnologyRollup,
-    //   rollup: $technologyRollup,
-    //   info: true
-    // },
     {
       filter: architectureFilter,
       label: $categoryNameScale.architecture,
+      shortCuts: [],
       fullRollup: $fullArchitectureRollup,
       rollup: $architectureRollup,
       info: $definitions.architecture
@@ -72,6 +70,7 @@
     {
       filter: infrastructureFilter,
       label: $categoryNameScale.infrastructure,
+      shortCuts: [],
       fullRollup: $fullInfrastructureRollup,
       rollup: $infrastructureRollup,
       info: $definitions.infrastructure
@@ -79,6 +78,7 @@
     {
       filter: accessFilter,
       label: $categoryNameScale.access,
+      shortCuts: [],
       fullRollup: $fullAccessRollup,
       rollup: $accessRollup,
       info: $definitions.access
@@ -96,10 +96,11 @@
     label="Filters"
   />
   <div class="standard grid-container">
-    {#each dropdownsTop as { id, filter, label, fullRollup, rollup, info }, i (id)}
+    {#each dropdownsTop as { id, filter, label, fullRollup, rollup, info, shortCuts } (id)}
       <Dropdown
         filter={filter}
         label={label}
+        shortCuts={shortCuts}
         fullRollup={fullRollup}
         rollup={rollup}
         info={info}
@@ -124,7 +125,7 @@
       class="extra grid-container"
       transition:slide
     >
-      {#each dropdownsBottom as { id, filter, label, fullRollup, rollup, info }, i (id)}
+      {#each dropdownsBottom as { id, filter, label, fullRollup, rollup, info } (id)}
         <Dropdown
           filter={filter}
           label={label}

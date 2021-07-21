@@ -4,6 +4,7 @@
   export let name = '';
   export let fullRollup;
   export let rollup;
+  export let bold = false;
   export let isActive = false;
   export let isSelected = false;
   export let showColorBox = true;
@@ -15,6 +16,7 @@
   class:active={isActive}
   class:selected={isSelected}
   class:inactive={!rollup}
+  class:bold
   on:mouseenter
   on:mouseleave
   on:click
@@ -45,6 +47,10 @@
 
   li.active {
     background-color: var(--faintBlue);
+  }
+
+  li.bold {
+    font-weight: 600;
   }
 
   li span.color {

@@ -12,6 +12,7 @@
 
   export let filter;
   export let label = '';
+  export let shortCuts = [];
   export let fullRollup = [];
   export let rollup = [];
   export let info = null;
@@ -75,7 +76,11 @@
     }
   }
 
-  function handleSuggestionSelect(id) {
+  function handleSuggestionSelect(id, type) {
+    if (type === 'shortcut') {
+      ({ items: id } = shortCuts.find(d => d.id === id) || {});
+      filter.unselectAll();
+    }
     filter.click(id);
     showSuggestions = false;
   }
@@ -90,7 +95,7 @@
     chips = prelimChips;
   }
 
-  $: suggestions = $filter.filter(d => {
+  $: suggestions = [...shortCuts.map(d => ({...d, type: 'shortcut'})), ...$filter].filter(d => {
     if (!searchValue) return true;
     const regexp = new RegExp(searchValue, 'gi');
     return regexp.test(d.name);
@@ -169,17 +174,18 @@
         use:setFocus
       />
       <ul class="suggestions">
-        {#each suggestions as { id, name }, i (id)}
+        {#each suggestions as { id, name, type }, i (id)}
           <Suggestion
             name={name}
             fullRollup={fullRollup.find(d => d.name === name)}
             rollup={rollup.find(d => d.name === name)}
+            bold={type && type === 'shortcut'}
             isActive={hoveredSuggestion === i}
             isSelected={!areAllSelected($filter) && hasOverlap([id], $filter)}
             showColorBox={!hideColorBoxes}
             on:mouseenter={() => hoveredSuggestion = i}
             on:mouseleave={() => hoveredSuggestion = null}
-            on:click={() => handleSuggestionSelect(id)}
+            on:click={() => handleSuggestionSelect(id, type)}
           />
         {/each}
       </ul>
@@ -285,7 +291,9 @@
     width: 100%;
     padding: 0.2rem;
     min-height: var(--inputHeight);
+    max-height: calc(1.3 * var(--inputHeight));
     list-style-type: none;
+    overflow: scroll;
   }
 
   ul.chips li {

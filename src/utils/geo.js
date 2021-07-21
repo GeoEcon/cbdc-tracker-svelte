@@ -92,6 +92,78 @@ export const getColorFromCountries = (countries, colorCat) => {
   return hex;
 };
 
-export const countryGroups = {
-  
-};
+export const countryGroups = [
+  {
+    id: 'G7',
+    name: 'G7',
+    items: [
+      'Canada',
+      'Euro Area',
+      'France',
+      'Germany',
+      'Italy',
+      'Japan',
+      'United Kingdom',
+      'United States of America'
+    ]
+  },
+  {
+    id: 'G20',
+    name: 'G20',
+    items: [
+      'Argentina',
+      'Australia',
+      'Brazil',
+      'Canada',
+      'China',
+      'France',
+      'Germany',
+      'India',
+      'Indonesia',
+      'Italy',
+      'Japan',
+      'South Korea',
+      'Mexico',
+      'Russia',
+      'Saudi Arabia',
+      'South Africa',
+      'Turkey',
+      'United Kingdom',
+      'United States of America',
+      'Euro Area'
+    ]
+  },
+  {
+    id: 'OECD',
+    name: 'OECD',
+    items: [
+      'Austria',
+      'Belgium',
+      'Czech Republic',
+      'Denmark',
+      'Estonia',
+      'Finland',
+      'France',
+      'Germany',
+      'Greece',
+      'Hungary',
+      'Iceland',
+      'Ireland',
+      'Italy',
+      'Latvia',
+      'Lithuania',
+      'Luxembourg',
+      'Netherlands',
+      'Norway',
+      'Poland',
+      'Portugal',
+      'Slovakia',
+      'Slovenia',
+      'Spain',
+      'Sweden',
+      'Switzerland',
+      'United Kingdom',
+      'Euro Area'
+    ]
+  }
+];
