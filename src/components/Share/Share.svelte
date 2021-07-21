@@ -46,20 +46,27 @@
     gap: 0.5rem;
     font-family: var(--primFont);
     user-select: none;
-    --inputHeight: 40px;
+    --iconWidth: 20px;
   }
 
   .label {
+    display: none;
     color: var(--darkgray);
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
+
+  /* @media (min-width: 600px) {
+    .label {
+      display: block;
+    }
+  } */
 
   .buttons {
     display: flex;
   }
 
   a {
-    padding: 10px;
+    padding: 7px;
     background: none;
     border: none;
     outline: none;
@@ -67,8 +74,8 @@
   }
 
   :global(.share a .fa-icon) {
-    width: 25px;
-    height: 25px;
+    width: var(--iconWidth);
+    height: var(--iconWidth);
     fill: var(--darkgray);
   }
 
@@ -77,8 +84,8 @@
   }
 
   :global(.share.inverted a .fa-icon) {
-    width: 25px;
-    height: 25px;
+    width: var(--iconWidth);
+    height: var(--iconWidth);
     fill: var(--background);
   }
 

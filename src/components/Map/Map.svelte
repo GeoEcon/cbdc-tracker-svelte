@@ -256,7 +256,6 @@
     height: 180vw;
     overflow: hidden;
     border-top: 1px dashed var(--gray);
-    border-bottom: 1px dashed var(--gray);
   }
   
   @media (min-width: 600px) {

@@ -31,7 +31,7 @@ export const statusLevels = [
   },
   {
     id: 5,
-    name: 'Cancelled',
+    name: 'Canceled',
   },
   {
     id: 6,

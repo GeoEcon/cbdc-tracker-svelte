@@ -40,7 +40,7 @@
     "title": "The infrastructure could be based on a conventional centrally controlled database, or on  distributed ledger technology (DLT). Conventional and DLT-based infrastructures often store data multiple times and in physically separate locations. The main difference between them lies in how the transactions are verified and secured."
   },
   "status": {
-    "name": "Status",
+    "name": "CBDC Status",
     "categories": [
       {
         "name": "Research",

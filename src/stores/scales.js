@@ -24,7 +24,7 @@ export const generateHarmonicColorScale = (arr, na = 'not available', ud = 'Unde
 
 export const categoryNameScale = writable({
   name: 'Country',
-  new_status: 'Status',
+  new_status: 'CBDC Status',
   use_case: 'Purpose',
   technology: 'Technology',
   architecture: 'Architecture',
