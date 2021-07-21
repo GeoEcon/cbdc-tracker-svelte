@@ -325,6 +325,6 @@
   .suggestions ul {
     max-height: 400px;
     list-style-type: none;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 </style>

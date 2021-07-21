@@ -152,7 +152,7 @@
     padding-bottom: 100px;
     background-color: var(--background);
     border: 1px solid var(--statusColor);
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
   @media (min-width: 980px) {
