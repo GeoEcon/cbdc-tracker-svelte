@@ -14,11 +14,12 @@
   export let inverted = false;
 
   const tOffset = tweened(null, { duration: 100 });
+  const tRadius = tweened(0, { duration: 100 });
   
   let deactivated = false;
 
   $: deactivated = offset[0] !== 0 && offset[1] !== 0;
-  $: internalRadius = radius * (isCluster || deactivated ? 0.8 : 1);
+  $: tRadius.set(radius * (isCluster || deactivated ? 0.8 : 1));
   $: tOffset.set(offset, { duration: deactivated ? 0 : 200});
 </script>
 
@@ -41,36 +42,36 @@
     class="background"
     cx="0"
     cy="0"
-    r={internalRadius}
+    r={$tRadius}
   />
   <circle
     class="foreground"
     cx="0"
     cy="0"
-    r={internalRadius / 1.5}
-    stroke-width={internalRadius / 7}
+    r={$tRadius / 1.5}
+    stroke-width={$tRadius / 7}
   />
   {#if (isCluster)}
     <circle
       class="foreground"
       cx="0"
       cy="0"
-      r={internalRadius / 1.2}
-      stroke-width={internalRadius / 15}
+      r={$tRadius / 1.2}
+      stroke-width={$tRadius / 15}
     />
     <circle
       class="foreground"
       cx="0"
       cy="0"
-      r={internalRadius / 2}
-      stroke-width={internalRadius / 15}
+      r={$tRadius / 2}
+      stroke-width={$tRadius / 15}
     />
     <circle
       class="foreground"
       cx="0"
       cy="0"
-      r={internalRadius / 2.5}
-      stroke-width={internalRadius / 15}
+      r={$tRadius / 2.5}
+      stroke-width={$tRadius / 15}
     />
   {/if}
   {#if (inverted)}
@@ -78,8 +79,8 @@
       class="foreground"
       cx="0"
       cy="0"
-      r={internalRadius / 2.2}
-      stroke-width={internalRadius / 7}
+      r={$tRadius / 2.2}
+      stroke-width={$tRadius / 7}
     />
   {/if}
 </g>

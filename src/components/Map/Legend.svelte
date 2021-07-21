@@ -31,7 +31,7 @@
 >
   <div class="countries">
     <h5 class="total">
-      <span>{totalCountries}</span> Countr{totalCountries === 1 ? 'y' : 'ies'}/<br />Currency union{totalCountries === 1 ? '' : 's'} tracked
+      <span>{totalCountries}</span> Countr{totalCountries === 1 ? 'y' : 'ies'}/Currency Union{totalCountries === 1 ? '' : 's'} Tracked
     </h5>
     <Dropdown
       filter={countryFilter}
@@ -82,9 +82,9 @@
 
   @media (min-width: 600px) {
     .legend {
-      width: 240px;
-      min-width: 240px;
-      max-width: 240px;
+      width: 230px;
+      min-width: 230px;
+      max-width: 230px;
       margin: 2rem 1rem;
     }
   }

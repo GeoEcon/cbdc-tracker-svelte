@@ -2,7 +2,7 @@ import { writable, derived } from 'svelte/store';
 
 import { dataCountries } from './datacountries';
 
-const removeTimeOut = 200;
+const removeTimeOut = 400;
 
 const generateIdArrayStore = () => {
   const { set, update, subscribe } = writable([]);

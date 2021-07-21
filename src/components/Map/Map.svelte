@@ -141,6 +141,8 @@
   onDestroy(() => clearTimeout(tid));
 
   $: if ($data && !$isVertical && $mapWidth && $mapHeight) zoomReset({animation: $data.length});
+
+  $: centroidRadius = Math.max(8, Math.min(14, 0.008 * Math.max($mapWidth, $mapHeight)));
 </script>
 
 <svelte:window on:keydown={handleKeyDown} on:keyup={handleKeyUp} on:mousewheel={handleScroll} />
@@ -199,6 +201,7 @@
     {#each $dataCountries as country (country.orderId)}
         <Centroid
           dataCountry={country}
+          radius={centroidRadius}
           color={country.categories[$colorCategory].color}
           opacity={country.show ? 1 : 0}
           isReactive={country.show}
@@ -215,6 +218,7 @@
       {#if ($mapTransform.k < $initialTransform.k * clusterZoom)}
         <Centroid
           dataCountry={cluster}
+          radius={centroidRadius}
           color={cluster.color}
           opacity={cluster.show ? 1 : 0}
           isReactive={cluster.show}
@@ -224,6 +228,14 @@
       {/if}
     {/each}
 
+    
+  </svg>
+  <svg
+    class="top"
+    width={$mapWidth}
+    height={$mapHeight}
+    viewBox="0 0 {$mapWidth} {$mapHeight}"
+  >
     {#each $hoveredIds as hoveredId (hoveredId)}
       <HoverTag
         data={$dataCountries.find(d => d.id === hoveredId)}
@@ -256,5 +268,10 @@
   svg {
     position: absolute;
     z-index: 10;
+  }
+
+  svg.top {
+    z-index: 1000;
+    pointer-events: none;
   }
 </style>
