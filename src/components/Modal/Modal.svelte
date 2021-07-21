@@ -139,7 +139,9 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: #000000;
+    margin: 0;
+    padding: 0;
+    background-color:#000000;
     opacity: 0.7;
   }
 
@@ -149,6 +151,7 @@
     height: 100%;
     padding-bottom: 100px;
     background-color: var(--background);
+    border: 1px solid var(--statusColor);
     overflow-y: scroll;
   }
 
@@ -361,6 +364,6 @@
   }
 
   .share-panel {
-    margin: 0.5rem 0 1rem -1rem;
+    margin: 0.5rem 0 1rem 0;
   }
 </style>

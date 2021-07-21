@@ -91,3 +91,7 @@ export const getColorFromCountries = (countries, colorCat) => {
   const hex = rgb(mixed.r, mixed.g, mixed.b, mixed.a).formatHex();
   return hex;
 };
+
+export const countryGroups = {
+  
+};

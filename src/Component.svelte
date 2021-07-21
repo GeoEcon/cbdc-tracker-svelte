@@ -26,14 +26,14 @@
     filterByCategory(category, name);
   }
 
-  // function sendDimensions(width, height) {
-  //   const message = {
-  //     height,
-  //     width
-  //   };
+  function sendDimensions(width, height) {
+    const message = {
+      height,
+      width
+    };
 
-	//   window.top.postMessage(message, "*");
-  // }
+	  window.top.postMessage(message, "*");
+  }
 
   onMount(() => {
     urlParams = new URLSearchParams(window.location.search);
@@ -41,7 +41,7 @@
 
   $: isVertical.set(width < 600);
   $: if ($selectedDatum) tooltip.set(null);
-  // $: sendDimensions(width, height);
+  $: sendDimensions(width, height);
 
   $: if ($data.length) {
     applyParams(parseUrl(urlParams))
