@@ -114,14 +114,20 @@
       <main>
         <h2>Key developments</h2>
         <p>{@html datum.key_developments}</p>
-        {#if (datum.sources.length)}
-          <h4>Sources</h4>
-          <ul class="sources">
-            {#each datum.sources as url}
-              <li><a href={url} target="_blank">{extractHostname(url)}</a></li>
-            {/each}
-          </ul>
-        {/if}
+        <h4>Sources</h4>
+        <div class="sources">
+          {#if (datum.sources.central_bank_name)}
+            <a href={datum.sources.central_bank_url}>{datum.sources.central_bank_name}</a>
+          {/if}
+          <p>Atlantic Council Research</p>
+          {#if (datum.sources.media_urls.length)}
+            <ul class="media-sources">
+              {#each datum.sources.media_urls as url}
+                <li><a href={url} target="_blank">{extractHostname(url)}</a></li>
+              {/each}
+            </ul>
+          {/if}
+        </div>
         <h4>Share</h4>
         <div class="share-panel">
           <Share />
@@ -353,24 +359,32 @@
     font-size: 1.2rem;
   }
 
-  ul.sources {
+  .sources ul.media-sources {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     list-style-type: none;
   }
 
   @media (min-width: 980px) {
-    ul.sources {
+    .sources ul.media-sources {
       flex-direction: row;
     }
   } 
 
-  ul.sources li {
-    margin: 0.2rem 0.8rem 0.2rem 0;
+  .sources ul.media-sources li {
+    margin: 0 0.8rem 0.2rem 0;
   }
 
-  ul.sources li a {
+  .sources a {
     font-size: 1.1rem;
+    line-height: 1.2;
+  }
+
+  .sources p {
+    margin: 0.4rem 0 0.35rem 0;
+    font-size: 1.1rem;
+    line-height: 1.2;
   }
 
   .share-panel {
