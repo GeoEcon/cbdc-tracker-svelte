@@ -23,7 +23,7 @@
       class="twitter"
       href="https://twitter.com/intent/tweet?url={encodeURIComponent($filterUrl)}"
       target="_blank"
-      title="Share via Twitter"
+      title="Share this view via Twitter"
     >
       <Icon data={twitter} />
     </a>
@@ -31,7 +31,7 @@
       class="copy"
       href="javascript:void(0)"
       on:click={() => copyToClipBoard($filterUrl)}
-      title="Copy to clipboard"
+      title="Copy this view to clipboard"
     >
       <Icon data={copy} />
     </a>
