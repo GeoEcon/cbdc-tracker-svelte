@@ -36,7 +36,7 @@
   }
 
   onMount(() => {
-    // urlParams = new URLSearchParams(window.location.search);
+    urlParams = new URLSearchParams(window.location.search);
   });
 
   $: isVertical.set(width < 600);
