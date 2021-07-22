@@ -117,7 +117,7 @@
         <h4>Sources</h4>
         <div class="sources">
           {#if (datum.sources.central_bank_name)}
-            <a href={datum.sources.central_bank_url}>{datum.sources.central_bank_name}</a>
+            <a href={datum.sources.central_bank_url} target="_blank">{datum.sources.central_bank_name}</a>
           {/if}
           <p>Atlantic Council Research</p>
           {#if (datum.sources.media_urls.length)}
