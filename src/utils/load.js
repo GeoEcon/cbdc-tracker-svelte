@@ -31,7 +31,11 @@ export const loadTrackerData = async (dataPath) => {
         corporate_partnership: curate(d['Corporate partnership']),
         crossborder_partnerships: curate(d['Cross-border partnerships']),
       },
-      sources: d.Sources.split(/\s/).filter(d => d),
+      sources: {
+        central_bank_name: d['Central Bank Name'],
+        central_bank_url: d['Central Bank Source to Hyperlink'],
+        media_urls: d['Media Sources'].split(';').filter(dd => dd)
+      },
       notes: d.Notes,
     };
   });
