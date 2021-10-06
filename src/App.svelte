@@ -8,6 +8,5 @@
 
 <style>
   .app-wrapper {
-    
   }
 </style>

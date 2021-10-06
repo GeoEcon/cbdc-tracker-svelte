@@ -54,3 +54,4 @@ You can run the newly built app with `npm run start`. This uses [sirv](https://g
 ## This Svelte app
 
 was initially created by Matthias Stahl, [higsch data & design](https://higsch.com).
+ongoing updates by LM
