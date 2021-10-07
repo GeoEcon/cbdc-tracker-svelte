@@ -30,7 +30,7 @@
   class:inverted
   transform="translate({dataCountry.centroid[0] + $tOffset[0]} {dataCountry.centroid[1] + $tOffset[1]})"
   use:css={{opacity, color}}
-  in:fade={{duration: isCluster ? 200 : 0, delay: isCluster ? 200 : 0}}
+  in:fade={{duration: isCluster ? console.log(dataCountry) || 200 : 0, delay: isCluster ? 200 : 0}}
   out:fade={{duration: 0}}
   on:mouseenter
   on:mouseleave

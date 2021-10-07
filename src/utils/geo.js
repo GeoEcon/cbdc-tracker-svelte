@@ -68,6 +68,21 @@ export const clusterSetup = [
     ],
     centroid: [35, 33]
   },
+  {
+    id: 3,
+    name: 'Western Europe',
+    countries: [
+      'France',
+      'Italy',
+      'Spain',
+      'Switzerland',
+      'United Kingdom',
+      'Netherlands',
+      'Germany'
+
+    ],
+    centroid: [2, 48]
+  }
 ];
 
 export const geoMean = (coords) => {

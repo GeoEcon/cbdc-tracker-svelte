@@ -21,13 +21,14 @@ export const dataCountries = derived(
     $mapHeight,
     $clusters
   ]) => {
-  const availableCountries = $data.map(d => d.name.name);
+  const availableCountries = $data.map(d => console.log("data", d) || d.name.name);
   const dataCountries = sortBy($projectedData
     .flat()
     .filter(d => isDefined(d.path))
     .filter(d => availableCountries.includes(d.name))
     .map(d => {
       const datum = $data.find(dd => dd.name.name === d.name);
+      console.log("datum", $data, $clusters);
       return {
         ...d,
         ...datum,
@@ -49,8 +50,9 @@ export const dataCountries = derived(
   }, []);
 
   export const dataClusters = derived([clusters, dataCountries, colorCategory], ([$clusters, $dataCountries, $colorCategory]) => {
+    console.log("clusters", $clusters);
     return $clusters.map(cluster => {
-      const countries = $dataCountries.filter(d => cluster.countries.includes(d.name.name));
+      const countries = $dataCountries.filter(d => console.log("d",d) || cluster.countries.includes(d.name.name));
       return {
         ...cluster,
         show: countries.some(d => d.show),

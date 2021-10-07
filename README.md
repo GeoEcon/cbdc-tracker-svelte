@@ -55,3 +55,9 @@ You can run the newly built app with `npm run start`. This uses [sirv](https://g
 
 was initially created by Matthias Stahl, [higsch data & design](https://higsch.com).
 ongoing updates by LM
+
+## TODO
+
+- Replicate Zoom-in on click in the Caraibeans for Europe
+- Add two additional filters with more data
+- Implement an additional visualization to display changing of status over time. [Inspiration: bump chart](https://observablehq.com/@analyzer2004/bump-chart?collection=@analyzer2004/business-data-storytelling)
