@@ -7,18 +7,21 @@
     useCaseFilter,
     architectureFilter,
     infrastructureFilter,
-    accessFilter } from '../../stores/filter';
+    accessFilter,
+    testFilter } from '../../stores/filter';
   import {
     fullStatusRollup,
     fullUseCaseRollup,
     fullArchitectureRollup,
     fullInfrastructureRollup,
     fullAccessRollup,
+    fullTestRollup,
     statusRollup,
     useCaseRollup,
     architectureRollup,
     infrastructureRollup,
-    accessRollup } from '../../stores/aggregation';
+    accessRollup,
+    testRollup } from '../../stores/aggregation';
   import { categoryNameScale } from '../../stores/scales';
   import { isVertical } from '../../stores/device';
   import { definitions, tooltip } from '../../stores/definitions';
@@ -82,6 +85,14 @@
       fullRollup: $fullAccessRollup,
       rollup: $accessRollup,
       info: $definitions.access
+    },
+    {
+      filter: testFilter,
+      label: $categoryNameScale.test,
+      shortCuts: [],
+      fullRollup: $fullTestRollup,
+      rollup: $testRollup,
+      info: $definitions.test
     }
   ].map((d, i) => ({...d, id: i}));
 

@@ -7,7 +7,8 @@ import {
   technologyFilter,
   architectureFilter,
   infrastructureFilter,
-  accessFilter
+  accessFilter,
+  testFilter
 } from './filter';
 import { statusColors, statusLevels } from '../utils/levels';
 import styles from '../utils/styles';
@@ -31,7 +32,8 @@ export const categoryNameScale = writable({
   infrastructure: 'Infrastructure',
   access: 'Access',
   corporate_partnership: 'Corporate partnership',
-  crossborder_partnerships: 'Crossborder partnerships'
+  crossborder_partnerships: 'Crossborder partnerships',
+  test: 'Test'
 });
 
 export const statusColorScale = writable(
@@ -64,5 +66,9 @@ export const infrastructureColorScale = derived(infrastructureFilter, $infrastru
 });
 
 export const accessColorScale = derived(accessFilter, $accessFilter => {
-  return generateHarmonicColorScale($accessFilter.map(d => d.name));
+  return generateHarmonicColorScale($accessFilter.map(d => console.log("color access", d.name) || d.name));
+});
+
+export const testColorScale = derived(testFilter, $testFilter => {
+  return generateHarmonicColorScale($testFilter.map(d => console.log("color test", d.name) || d.name));
 });

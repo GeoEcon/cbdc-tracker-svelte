@@ -11,6 +11,7 @@ import {
   accessFilter,
   corporatePartnershipFilter,
   crossborderPartnershipsFilter,
+  testFilter
 } from './filter';
 import { hasOverlap } from '../utils/logic';
 import {
@@ -21,14 +22,20 @@ import {
   technologyColorScale,
   architectureColorScale,
   infrastructureColorScale,
-  accessColorScale } from '../stores/scales';
+  accessColorScale,
+  testColorScale } from '../stores/scales';
 import styles from '../utils/styles';
 
+// static data
 // const trackerDataPath = 'data/tracker.csv';
 
-// live data
-const trackerDataPath = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRvC1JtWY8a2W4b8DLPfnfb9rmhuHBmWO22TvSXXpk25CZTBU9_8f6YtxM9rmBK2YajII5ltDE6ynGZ/pub?gid=0&single=true&output=csv';
+// static test filter data
+const trackerDataPath = 'data/tracker-test.csv';
 
+// live data
+// const trackerDataPath = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRvC1JtWY8a2W4b8DLPfnfb9rmhuHBmWO22TvSXXpk25CZTBU9_8f6YtxM9rmBK2YajII5ltDE6ynGZ/pub?gid=0&single=true&output=csv';
+
+// ignore
 // const trackerDataPath = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSgtFtB8hLrJ0VcWV9pASEAprK4foQsOHai9gWBNNzm4ZwATV35-gaoLm_7Q0FgGw1mXJ4sOhMDX5HW/pub?gid=0&single=true&output=csv'
 
 export const rawData = readable([], async (set) => {
@@ -45,7 +52,8 @@ export const scaledData = derived(
     technologyColorScale,
     architectureColorScale,
     infrastructureColorScale,
-    accessColorScale
+    accessColorScale,
+    testColorScale
   ],
   ([
     $rawData,
@@ -56,7 +64,8 @@ export const scaledData = derived(
     $technologyColorScale,
     $architectureColorScale,
     $infrastructureColorScale,
-    $accessColorScale
+    $accessColorScale,
+    $testColorScale
   ]) => {
     return $rawData.map((d) => {
       return {
@@ -105,6 +114,12 @@ export const scaledData = derived(
             color: $accessColorScale[d.categories.access],
             filterable: true
           },
+          test: {
+            name: d.categories.test,
+            title: $categoryNameScale.test,
+            color: $accessColorScale[d.categories.test],
+            filterable: true
+          },
           corporate_partnership: {
             name: d.categories.corporate_partnership,
             title: $categoryNameScale.corporate_partnership,
@@ -132,6 +147,7 @@ export const data = derived(
     architectureFilter,
     infrastructureFilter,
     accessFilter,
+    testFilter,
     corporatePartnershipFilter,
     crossborderPartnershipsFilter,
   ],
@@ -144,6 +160,7 @@ export const data = derived(
     $architectureFilter,
     $infrastructureFilter,
     $accessFilter,
+    $testFilter,
     $corporatePartnershipFilter,
     $crossborderPartnershipsFilter,
   ]) => {
@@ -158,6 +175,7 @@ export const data = derived(
           hasOverlap([d.categories.architecture.name], $architectureFilter) &&
           hasOverlap([d.categories.infrastructure.name], $infrastructureFilter) &&
           hasOverlap([d.categories.access.name], $accessFilter) &&
+          hasOverlap([d.categories.test.name], $testFilter) &&
           hasOverlap(
             [d.categories.corporate_partnership.name],
             $corporatePartnershipFilter

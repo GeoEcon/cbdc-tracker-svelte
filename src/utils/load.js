@@ -28,6 +28,7 @@ export const loadTrackerData = async (dataPath) => {
         architecture: curate(d['Architecture: direct CBDC or hybrid']),
         infrastructure: curate(d['Infrastructure: DLT or conventional']),
         access: curate(d['Access: token or account']),
+        test: curate(d['Test']),
         corporate_partnership: curate(d['Corporate partnership']),
         crossborder_partnerships: curate(d['Cross-border partnerships']),
       },

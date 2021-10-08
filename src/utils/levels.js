@@ -114,3 +114,22 @@ export const architectureLevels = [
     name: 'Undecided',
   }
 ];
+
+export const testLevels = [
+  {
+    id: 0,
+    name: 'Valid',
+  },
+  {
+    id: 1,
+    name: 'Invalid',
+  },
+  {
+    id: 2,
+    name: 'Processing',
+  },
+  {
+    id: 3,
+    name: 'Undecided',
+  }
+];
