@@ -137,8 +137,8 @@ export const initFilters = (data) => {
   technologyFilter.init(data, 'categories.technology');
   architectureFilter.init(architectureLevels.map((d) => d.name));
   infrastructureFilter.init(infrastructureLevels.map((d) => d.name));
-  accessFilter.init(accessLevels.map((d) => console.log("access", d.name) || d.name));
-  testFilter.init(testLevels.map((d) => console.log("test", d.name) ||d.name));
+  accessFilter.init(accessLevels.map((d) => d.name));
+  testFilter.init(testLevels.map((d) => console.log(d.name) || d.name));
   corporatePartnershipFilter.init(data, 'categories.corporate_partnership');
   crossborderPartnershipsFilter.init(
     data,

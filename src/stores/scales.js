@@ -50,7 +50,7 @@ export const countryColorScale = derived(countryFilter, $countryFilter => {
 });
 
 export const useCaseColorScale = derived(useCaseFilter, $useCaseFilter => {
-  return generateHarmonicColorScale($useCaseFilter.map(d => d.name));
+  return generateHarmonicColorScale($useCaseFilter.map(d => console.log("use case", d, d.name) || d.name));
 });
 
 export const technologyColorScale = derived(technologyFilter, $technologyFilter => {
@@ -66,9 +66,9 @@ export const infrastructureColorScale = derived(infrastructureFilter, $infrastru
 });
 
 export const accessColorScale = derived(accessFilter, $accessFilter => {
-  return generateHarmonicColorScale($accessFilter.map(d => console.log("color access", d.name) || d.name));
+  return generateHarmonicColorScale($accessFilter.map(d => d.name));
 });
 
 export const testColorScale = derived(testFilter, $testFilter => {
-  return generateHarmonicColorScale($testFilter.map(d => console.log("color test", d.name) || d.name));
+  return generateHarmonicColorScale($testFilter.map(d => console.log("test scale case", d, d.name) || d.name));
 });

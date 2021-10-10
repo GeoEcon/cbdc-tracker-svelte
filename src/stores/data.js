@@ -117,7 +117,7 @@ export const scaledData = derived(
           test: {
             name: d.categories.test,
             title: $categoryNameScale.test,
-            color: $accessColorScale[d.categories.test],
+            color: $testColorScale[d.categories.test],
             filterable: true
           },
           corporate_partnership: {
