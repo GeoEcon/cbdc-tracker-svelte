@@ -14,6 +14,7 @@
   import Map from './components/Map/Map.svelte';
   import Tooltip from './components/Tooltip.svelte';
   import Modal from './components/Modal/Modal.svelte';
+  import Spotlight from './components/Spotlight/Spotlight.svelte'
   import Footer from './components/Footer.svelte';
 
   let width = 0;
@@ -71,6 +72,7 @@
       on:close={() => $selectedId = null}
     />
   {/if}
+  <Spotlight />
   <Footer />
 </div>
 

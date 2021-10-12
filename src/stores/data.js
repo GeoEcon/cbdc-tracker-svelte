@@ -30,7 +30,10 @@ import styles from '../utils/styles';
 // const trackerDataPath = 'data/tracker.csv';
 
 // static test filter data
-const trackerDataPath = 'data/tracker-test.csv';
+// const trackerDataPath = 'data/tracker-test.csv';
+
+// static test filter data & spotlight
+const trackerDataPath = 'data/tracker-test-spotlight.csv';
 
 // live data
 // const trackerDataPath = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRvC1JtWY8a2W4b8DLPfnfb9rmhuHBmWO22TvSXXpk25CZTBU9_8f6YtxM9rmBK2YajII5ltDE6ynGZ/pub?gid=0&single=true&output=csv';
