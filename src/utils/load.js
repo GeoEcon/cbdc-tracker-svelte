@@ -20,6 +20,7 @@ export const loadTrackerData = async (dataPath) => {
       name: d.Name,
       currency_name: d['Name of CBDC'],
       overview: d.Overview,
+      overview_spotlight: d['Overview Spotlight'],
       key_developments: d['Key Developments'],
       categories: {
         new_status: curate(d['New Status']),

@@ -22,7 +22,7 @@
   import GestureNote from './GestureNote.svelte';
 
   const clusterZoom = 8;
-
+  
   let isZoomed = false;
   let zoomable = false;
 
@@ -136,6 +136,8 @@
     zoomCatcher = select(zoomCatcherElem);
     zoomCatcher.call(zoom);
     zoomReset({animation: false});
+    console.log("width", $mapWidth);
+    console.log("data", $data);
   });
 
   onDestroy(() => clearTimeout(tid));

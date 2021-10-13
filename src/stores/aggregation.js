@@ -39,11 +39,11 @@ export const fullTechnologyRollup = derived(scaledData, $scaledData => generateR
 
 export const fullArchitectureRollup = derived(scaledData, $scaledData => generateRollup($scaledData.filter(d => ['Retail', 'Both'].includes(d.categories.use_case.name)).map(d => d.categories.architecture), architectureLevels.map(d => d.name)));
 
-export const fullInfrastructureRollup = derived(scaledData, $scaledData => generateRollup($scaledData.map(d => console.log("category", d) || d.categories.infrastructure), infrastructureLevels.map(d => d.name)));
+export const fullInfrastructureRollup = derived(scaledData, $scaledData => generateRollup($scaledData.map(d => d.categories.infrastructure), infrastructureLevels.map(d => d.name)));
 
 export const fullAccessRollup = derived(scaledData, $scaledData => generateRollup($scaledData.filter(d => ['Retail', 'Both'].includes(d.categories.use_case.name)).map(d => d.categories.access), accessLevels.map(d => d.name)));
 
-export const fullTestRollup = derived(scaledData, $scaledData => generateRollup($scaledData.map(d => console.log(d.categories.test) || d.categories.test), testLevels.map(d => d.name)));
+export const fullTestRollup = derived(scaledData, $scaledData => generateRollup($scaledData.map(d => d.categories.test), testLevels.map(d => d.name)));
 
 
 const showData = derived(data, $data => $data.filter(d => d.show));
@@ -62,7 +62,7 @@ export const infrastructureRollup = derived(showData, $showData => generateRollu
 
 export const accessRollup = derived(showData, $showData => generateRollup($showData.filter(d => ['Retail', 'Both'].includes(d.categories.use_case.name)).map(d => d.categories.access)));
 
-export const testRollup = derived(showData, $showData => generateRollup($showData.map(d => console.log("aggregation test", d.categories.test) || d.categories.test)));
+export const testRollup = derived(showData, $showData => generateRollup($showData.map(d => d.categories.test)));
 
 
 export const totalCountries = derived(scaledData, $scaledData => {

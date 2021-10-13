@@ -71,6 +71,7 @@ export const scaledData = derived(
     $testColorScale
   ]) => {
     return $rawData.map((d) => {
+      console.log("d", d);
       return {
         ...d,
         name: {
