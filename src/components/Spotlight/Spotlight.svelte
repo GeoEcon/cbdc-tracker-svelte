@@ -23,6 +23,8 @@ onMount(() => {
     font-size: 1.875rem;
     font-weight: 700;
 		text-align: center;
+    padding-top: 20px;
+    border-top: 1px dashed var(--gray);
   }
 
 	.spotlight-section {
