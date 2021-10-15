@@ -1,6 +1,8 @@
 import { readable, derived } from 'svelte/store';
 
+// the csv file is loaded here
 import { loadTrackerData } from '../utils/load';
+
 import {
   statusFilter,
   countryFilter,

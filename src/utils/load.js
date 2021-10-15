@@ -22,6 +22,7 @@ export const loadTrackerData = async (dataPath) => {
       overview: d.Overview,
       overview_spotlight: d['Overview Spotlight'],
       key_developments: d['Key Developments'],
+      key_developments_spotlight: d['Key Developments Spotlight'],
       categories: {
         new_status: curate(d['New Status']),
         use_case: curate(d['Use case']),

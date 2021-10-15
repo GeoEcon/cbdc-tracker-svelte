@@ -9,12 +9,14 @@ export const spotlightdata = derived(
     $data,
   ]) => {
     return $data.filter(
-      (d) => d.overview_spotlight !== ''
+      (d) => d.overview_spotlight !== '' && d.key_developments_spotlight !== ''
     ).map((d) => {
       return {
         ...d,
 				...d.name,
-				...d.overview_spotlight
+        ...d.currency_name,
+				...d.overview_spotlight,
+        ...d.key_developments_spotlight
       };
     });
   }, []);
