@@ -8,7 +8,8 @@ import {
   architectureFilter,
   infrastructureFilter,
   accessFilter,
-  testFilter
+  corporatePartnershipFilter,
+  crossborderPartnershipsFilter
 } from './filter';
 import { statusColors, statusLevels } from '../utils/levels';
 import styles from '../utils/styles';
@@ -32,8 +33,7 @@ export const categoryNameScale = writable({
   infrastructure: 'Infrastructure',
   access: 'Access',
   corporate_partnership: 'Corporate partnership',
-  crossborder_partnerships: 'Crossborder partnerships',
-  test: 'Test'
+  crossborder_partnerships: 'Crossborder partnerships'
 });
 
 export const statusColorScale = writable(
@@ -50,7 +50,7 @@ export const countryColorScale = derived(countryFilter, $countryFilter => {
 });
 
 export const useCaseColorScale = derived(useCaseFilter, $useCaseFilter => {
-  return generateHarmonicColorScale($useCaseFilter.map(d => console.log("use case", d, d.name) || d.name));
+  return generateHarmonicColorScale($useCaseFilter.map(d => d.name));
 });
 
 export const technologyColorScale = derived(technologyFilter, $technologyFilter => {
@@ -69,6 +69,10 @@ export const accessColorScale = derived(accessFilter, $accessFilter => {
   return generateHarmonicColorScale($accessFilter.map(d => d.name));
 });
 
-export const testColorScale = derived(testFilter, $testFilter => {
-  return generateHarmonicColorScale($testFilter.map(d => console.log("test scale case", d, d.name) || d.name));
+export const corporatePartnershipScale = derived(corporatePartnershipFilter, $corporatePartnershipFilter => {
+  return generateHarmonicColorScale($corporatePartnershipFilter.map(d => d.name));
+});
+
+export const crossborderPartnershipsScale = derived(crossborderPartnershipsFilter, $crossborderPartnershipsFilter => {
+  return generateHarmonicColorScale($crossborderPartnershipsFilter.map(d => d.name));
 });

@@ -9,7 +9,6 @@ import {
   accessLevels,
   infrastructureLevels,
   architectureLevels,
-  testLevels
 } from '../utils/levels';
 import { sortToEnd } from '../utils/misc';
 
@@ -128,7 +127,6 @@ export const infrastructureFilter = createMultiFilter();
 export const accessFilter = createMultiFilter();
 export const corporatePartnershipFilter = createMultiFilter();
 export const crossborderPartnershipsFilter = createMultiFilter();
-export const testFilter = createMultiFilter();
 
 export const initFilters = (data) => {
   statusFilter.init(statusLevels.map((d) => d.name));
@@ -138,7 +136,6 @@ export const initFilters = (data) => {
   architectureFilter.init(architectureLevels.map((d) => d.name));
   infrastructureFilter.init(infrastructureLevels.map((d) => d.name));
   accessFilter.init(accessLevels.map((d) => d.name));
-  testFilter.init(testLevels.map((d) => console.log(d.name) || d.name));
   corporatePartnershipFilter.init(data, 'categories.corporate_partnership');
   crossborderPartnershipsFilter.init(
     data,
@@ -169,8 +166,11 @@ export const filterByCategory = (category, name) => {
     case 'access':
       accessFilter.click(name);
       break;
-    case 'test':
-      testFilter.click(name);
+    case 'corporate_partnership':
+      corporatePartnershipFilter.click(name);
+      break;
+    case 'crossborder_partnerships':
+      crossborderPartnershipsFilter.click(name);
       break;
   }
 };
@@ -183,7 +183,6 @@ export const resetAllFilters = () => {
   architectureFilter.selectAll();
   infrastructureFilter.selectAll();
   accessFilter.selectAll();
-  testFilter.selectAll();
   corporatePartnershipFilter.selectAll();
   crossborderPartnershipsFilter.selectAll();
 };
@@ -197,9 +196,8 @@ export const anyFilterActive = derived(
     architectureFilter,
     infrastructureFilter,
     accessFilter,
-    testFilter,
     corporatePartnershipFilter,
-    crossborderPartnershipsFilter,
+    crossborderPartnershipsFilter
   ],
   ([
     $statusFilter,
@@ -209,9 +207,8 @@ export const anyFilterActive = derived(
     $architectureFilter,
     $infrastructureFilter,
     $accessFilter,
-    $testFilter,
     $corporatePartnershipFilter,
-    $crossborderPartnershipsFilter,
+    $crossborderPartnershipsFilter
   ]) => {
     return !(
       areAllSelected($statusFilter) &&
@@ -221,7 +218,6 @@ export const anyFilterActive = derived(
       areAllSelected($architectureFilter) &&
       areAllSelected($infrastructureFilter) &&
       areAllSelected($accessFilter) &&
-      areAllSelected($testFilter) &&
       areAllSelected($corporatePartnershipFilter) &&
       areAllSelected($crossborderPartnershipsFilter)
     );
@@ -232,7 +228,7 @@ export const anyFilterActive = derived(
 export const applyParams = (params) => {
   if (!params || Object.keys(params).length === 0) return;
 
-  const { status, useCase, architecture, infrastructure, access, country, test } =
+  const { status, useCase, architecture, infrastructure, access, country, corporatePartnership, crossborderPartnerships  } =
     params;
 
   statusFilter.applyBoolArray(status);
@@ -240,7 +236,8 @@ export const applyParams = (params) => {
   architectureFilter.applyBoolArray(architecture);
   infrastructureFilter.applyBoolArray(infrastructure);
   accessFilter.applyBoolArray(access);
-  testFilter.applyBoolArray(test);
+  corporatePartnershipFilter.applyBoolArray(corporatePartnership);
+  crossborderPartnershipsFilter.applyBoolArray(crossborderPartnerships);
 
   if (country) {
     countryFilter.unselectAll();

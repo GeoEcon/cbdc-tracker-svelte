@@ -8,20 +8,25 @@
     architectureFilter,
     infrastructureFilter,
     accessFilter,
-    testFilter } from '../../stores/filter';
+    corporatePartnershipFilter,
+    crossborderPartnershipsFilter
+   } from '../../stores/filter';
   import {
     fullStatusRollup,
     fullUseCaseRollup,
     fullArchitectureRollup,
     fullInfrastructureRollup,
     fullAccessRollup,
-    fullTestRollup,
+    fullCorporatePartnershipRollup,
+    fullCrossborderPartnershipsRollup,
     statusRollup,
     useCaseRollup,
     architectureRollup,
     infrastructureRollup,
     accessRollup,
-    testRollup } from '../../stores/aggregation';
+    crossborderPartnershipsRollup,
+    corporatePartnershipRollup
+   } from '../../stores/aggregation';
   import { categoryNameScale } from '../../stores/scales';
   import { isVertical } from '../../stores/device';
   import { definitions, tooltip } from '../../stores/definitions';
@@ -87,12 +92,20 @@
       info: $definitions.access
     },
     {
-      filter: testFilter,
-      label: $categoryNameScale.test,
+      filter: corporatePartnershipFilter,
+      label: $categoryNameScale.corporate_partnership,
       shortCuts: [],
-      fullRollup: $fullTestRollup,
-      rollup: $testRollup,
-      info: $definitions.test
+      fullRollup: $fullCorporatePartnershipRollup,
+      rollup: $corporatePartnershipRollup,
+      info: $definitions.access
+    },
+    {
+      filter: crossborderPartnershipsFilter,
+      label: $categoryNameScale.crossborder_partnerships,
+      shortCuts: [],
+      fullRollup: $fullCrossborderPartnershipsRollup,
+      rollup: $crossborderPartnershipsRollup,
+      info: $definitions.access
     }
   ].map((d, i) => ({...d, id: i}));
 

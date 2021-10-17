@@ -15,6 +15,12 @@ const curate = (value) => {
 export const loadTrackerData = async (dataPath) => {
   // load and format the data
   const data = await csv(dataPath, (d) => {
+    let mediaSources;
+    if (d['Media Sources'] !== undefined) {
+      mediaSources = d['Media Sources'].split(';').filter(dd => dd);
+    } else {
+      mediaSources = '';
+    }
     return {
       owner: d.Owner,
       name: d.Name,
@@ -24,19 +30,21 @@ export const loadTrackerData = async (dataPath) => {
       key_developments: d['Key Developments'],
       key_developments_spotlight: d['Key Developments Spotlight'],
       categories: {
-        new_status: curate(d['New Status']),
+        // former version
+        // new_status: curate(d['New Status']),
+        new_status: curate(d['Current Status']),
         use_case: curate(d['Use case']),
         technology: curate(d['Underlying technology']),
         architecture: curate(d['Architecture: direct CBDC or hybrid']),
         infrastructure: curate(d['Infrastructure: DLT or conventional']),
         access: curate(d['Access: token or account']),
-        test: curate(d['Test']),
         corporate_partnership: curate(d['Corporate partnership']),
         crossborder_partnerships: curate(d['Cross-border partnerships']),
       },
       sources: {
         central_bank_name: d['Central Bank Name'],
         central_bank_url: d['Central Bank Source to Hyperlink'],
+        // media_urls: d['Media Sources'].split(';').filter(dd => dd)
         media_urls: d['Media Sources'].split(';').filter(dd => dd)
       },
       notes: d.Notes,
