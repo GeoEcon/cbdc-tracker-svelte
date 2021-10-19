@@ -25,17 +25,29 @@ onMount(() => {
     font-size: 1.875rem;
     font-weight: 700;
 		text-align: center;
-    padding-top: 20px;
+    padding: 20px 0px 10px 0px;
     border-top: 1px dashed var(--gray);
   }
 	.spotlight-section {
 		padding: 10px;
 	}
+
   .spotlight-container {
-    display: inline-flex;
-    justify-content: center;
-    padding-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
     width:100%;
-    gap: 30px;
   }
+
+  @media (min-width: 1100px) {
+    .spotlight-container {
+      display: inline-flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: initial;
+      padding: 30px 5px;
+    }
+  }
+
 </style>

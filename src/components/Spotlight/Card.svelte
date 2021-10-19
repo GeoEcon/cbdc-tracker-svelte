@@ -56,6 +56,7 @@
     max-width: 600px;
     box-shadow: 0 1px 2px rgba(0,0,0,.16);
     border: 1px solid #005596;
+    margin: 5px;
   }
 
   .chip {
@@ -67,25 +68,20 @@
     cursor: pointer;
   }
 
-  .card-country-currency {
-  }
-
   .card-header {
     background-color: #005596;
     padding: 10px;
     border-bottom: 1px solid #bbb;
     padding: 10px;
-    display: inline-flex;
+    display: block;
     width: 100%;
-    justify-content: space-between;
-    align-items: flex-end;
     color: #fff;
   }
 
   .card-overview {
     font-size: 0.8rem;
     max-width: 300px;
-    text-align: right;
+    text-align: left;
     font-style: italic;
   }
 
@@ -94,7 +90,7 @@
     font-family: var(--primFont);
     font-size: 1.5rem;
     font-weight: 300;
-    text-align: center;
+    text-align: left;
   }
 
   .card-country {
@@ -123,10 +119,31 @@
 
   .card-local-tag {
     display: inline-flex;
+    font-size: 0.7rem;
   }
 
   .card-cat-title {
     padding: 0.2rem 0.4rem;
+  }
+
+  @media (min-width: 600px) {
+    .spotlight-card {
+      margin: 15px;
+    }
+    .card-header {
+      display: inline-flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .card-project {
+      text-align: center;
+    }
+    .card-overview {
+      text-align: left;
+    }
+    .card-local-tag {
+      font-size: 0.9rem;
+    }
   }
 
 </style>

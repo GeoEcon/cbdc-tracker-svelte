@@ -27,7 +27,6 @@
 
 <div
   class="legend"
-  class:vertical={$isVertical}
   on:mousedown|stopPropagation
 >
   <div class="countries">
@@ -71,7 +70,8 @@
   .legend {
     position: absolute;
     left: 0;
-    top: 0;
+    top: auto;
+    bottom: 0;
     z-index: 800;
     width: 100%;
     margin: 0;
@@ -83,6 +83,20 @@
     border: 1px solid var(--gray);
   }
 
+  @media (min-width: 600px) and (max-width: 1000px) {
+    .legend {
+      top: auto;
+      bottom: 0;
+    }
+  }
+
+  @media (min-width: 1000px) {
+    .legend {
+      top: 0;
+      bottom: auto;
+    }
+  }
+
   @media (min-width: 600px) {
     .legend {
       width: 240px;
@@ -92,9 +106,10 @@
     }
   }
 
-  .legend.vertical {
-    top: auto;
-    bottom: 0;
+  @media (min-width: 600px) and (max-width: 1000px) {
+    .legend {
+      margin: 0px 5px;
+    }
   }
 
   .countries {
