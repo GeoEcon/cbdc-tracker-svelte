@@ -136,8 +136,6 @@
     zoomCatcher = select(zoomCatcherElem);
     zoomCatcher.call(zoom);
     zoomReset({animation: false});
-    console.log("width", $mapWidth);
-    console.log("data", $data);
   });
 
   onDestroy(() => clearTimeout(tid));

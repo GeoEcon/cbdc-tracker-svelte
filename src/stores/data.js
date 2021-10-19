@@ -1,6 +1,5 @@
 import { readable, derived } from 'svelte/store';
 
-// the csv file is loaded here
 import { loadTrackerData } from '../utils/load';
 
 import {
@@ -26,15 +25,6 @@ import {
   accessColorScale
 } from '../stores/scales';
 import styles from '../utils/styles';
-
-// static data
-// const trackerDataPath = 'data/tracker.csv';
-
-// static test filter data
-// const trackerDataPath = 'data/tracker-test.csv';
-
-// static test filter data & spotlight
-// const trackerDataPath = 'data/tracker-test-spotlight.csv';
 
 // static test filter data & spotlight & new data
 const trackerDataPath = 'data/tracker-test-spotlight-new-data.csv';
@@ -76,7 +66,6 @@ export const scaledData = derived(
     $accessColorScale,
   ]) => {
     return $rawData.map((d) => {
-      console.log("d", d);
       return {
         ...d,
         name: {
