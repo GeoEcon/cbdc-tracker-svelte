@@ -92,19 +92,19 @@
       info: $definitions.access
     },
     {
-      filter: corporatePartnershipFilter,
-      label: $categoryNameScale.corporate_partnership,
-      shortCuts: [],
-      fullRollup: $fullCorporatePartnershipRollup,
-      rollup: $corporatePartnershipRollup,
-      info: $definitions.access
-    },
-    {
       filter: crossborderPartnershipsFilter,
       label: $categoryNameScale.crossborder_partnerships,
       shortCuts: [],
       fullRollup: $fullCrossborderPartnershipsRollup,
       rollup: $crossborderPartnershipsRollup,
+      info: $definitions.access
+    },
+    {
+      filter: corporatePartnershipFilter,
+      label: $categoryNameScale.corporate_partnership,
+      shortCuts: [],
+      fullRollup: $fullCorporatePartnershipRollup,
+      rollup: $corporatePartnershipRollup,
       info: $definitions.access
     }
   ].map((d, i) => ({...d, id: i}));

@@ -103,14 +103,10 @@ export const architectureLevels = [
   },
   {
     id: 1,
-    name: 'Indirect',
-  },
-  {
-    id: 2,
     name: 'Hybrid',
   },
   {
-    id: 3,
+    id: 2,
     name: 'Undecided',
   }
 ];

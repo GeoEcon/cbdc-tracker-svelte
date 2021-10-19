@@ -54,7 +54,6 @@
 .spotlight-card {
     font-family: var(--primFont);
     max-width: 600px;
-    margin: 25px auto;
     box-shadow: 0 1px 2px rgba(0,0,0,.16);
     border: 1px solid #005596;
   }
@@ -81,11 +80,6 @@
     justify-content: space-between;
     align-items: flex-end;
     color: #fff;
-  }
-  .card-subheader {
-    display: inline-flex;
-    align-items: first baseline;
-    width: 100%;
   }
 
   .card-overview {

@@ -10,9 +10,11 @@ onMount(() => {
 
 <div class="spotlight-section">
   <h1>Spotlight</h1>
-  {#each $spotlightdata as d}
+  <div class="spotlight-container">
+    {#each $spotlightdata as d}
     <Card datum={d} />
-  {/each}    
+    {/each}  
+  </div>   
 </div>
 
 <style>
@@ -26,8 +28,14 @@ onMount(() => {
     padding-top: 20px;
     border-top: 1px dashed var(--gray);
   }
-
 	.spotlight-section {
 		padding: 10px;
 	}
+  .spotlight-container {
+    display: inline-flex;
+    justify-content: center;
+    padding-top: 30px;
+    width:100%;
+    gap: 30px;
+  }
 </style>

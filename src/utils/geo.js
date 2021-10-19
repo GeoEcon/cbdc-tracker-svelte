@@ -75,13 +75,26 @@ export const clusterSetup = [
       'France',
       'Italy',
       'Spain',
+      'Belgium',
       'Switzerland',
-      'United Kingdom',
       'Netherlands',
-      'Germany'
-
+      'Germany',
+      'Ireland',
+      'Luxembourg',
+      'Netherlands',
+      'Austria',
+      'Portugal', 
+      'Finland', 
+      'Greece', 
+      'Slovenia', 
+      'Cyprus', 
+      'Malta', 
+      'Slovakia', 
+      'Estonia', 
+      'Latvia', 
+      'Lithuania'
     ],
-    centroid: [2, 48]
+    centroid: [8, 50]
   }
 ];
 

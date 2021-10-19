@@ -32,8 +32,8 @@ export const categoryNameScale = writable({
   architecture: 'Architecture',
   infrastructure: 'Infrastructure',
   access: 'Access',
-  corporate_partnership: 'Corporate partnership',
-  crossborder_partnerships: 'Crossborder partnerships'
+  corporate_partnership: 'Technology Partnerships',
+  crossborder_partnerships: 'Crossborder Projects'
 });
 
 export const statusColorScale = writable(
