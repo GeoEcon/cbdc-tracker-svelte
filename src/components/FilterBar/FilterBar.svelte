@@ -191,7 +191,7 @@
     display: none;
   }
 
-  @media (min-width: 980px) {
+  @media (min-width: 1200px) {
     .share-panel {
       display: block;
     }
@@ -214,7 +214,7 @@
     }
   }
 
-  @media (min-width: 980px) {
+  @media (min-width: 1200px) {
     .grid-container {
       grid-template-columns: repeat(var(--maxColumns), 1fr);
     }
