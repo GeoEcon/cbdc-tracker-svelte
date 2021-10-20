@@ -32,6 +32,8 @@
     });
   }
 
+  console.log("data tag country", data);
+
   $: tags = [
     {
       category: 'name',

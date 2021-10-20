@@ -22,6 +22,8 @@
   $: deactivated = offset[0] !== 0 && offset[1] !== 0;
   $: tRadius.set(radius * (isCluster || deactivated ? 0.8 : 1));
   $: tOffset.set(offset, { duration: deactivated ? 0 : 200});
+
+  console.log("data", dataCountry, dataCluster)
 </script>
 
 <g

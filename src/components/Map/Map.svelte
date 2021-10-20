@@ -79,7 +79,6 @@
   }
 
   function handleCentroidMouseEnter(e, id) {
-    console.log(`country id ${id} mouse enter`);
     if (e.touches) return;
     e.preventDefault();
     e.stopPropagation();
@@ -87,7 +86,6 @@
   }
 
   function handleCentroidMouseLeave(e, id) {
-    console.log(`country id ${id} mouse leave`);
     if (e.touches) return;
     e.preventDefault();
     e.stopPropagation();
@@ -257,7 +255,7 @@
   >
     {#each $hoveredIds as hoveredId (hoveredId)}
       <HoverTag
-        data={$dataCountries.find(d => console.log(d.id, "matching country") || d.id === hoveredId)}
+        data={$dataCountries.find(d => d.id === hoveredId)}
         mapWidth={$mapWidth}
         mapHeight={$mapHeight}
         on:mouseenter={(e) => handleCentroidMouseEnter(e, hoveredId)}
@@ -268,7 +266,7 @@
 
     {#each $hoveredClusterIds as hoveredClusterId (hoveredClusterId)}
       <HoverTagCluster
-        data={$dataClusters.find(d => console.log(d.id, "matching cluster") || d.id === hoveredClusterId)}
+        data={$dataClusters.find(d => d.id === hoveredClusterId)}
         mapWidth={$mapWidth}
         mapHeight={$mapHeight}
         on:mouseenter={(e) => handleCentroidClusterMouseEnter(e, hoveredClusterId)}

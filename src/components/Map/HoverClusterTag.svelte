@@ -2,7 +2,7 @@
   import { createEventDispatcher } from 'svelte';
   import { fade, draw } from 'svelte/transition';
 
-  import { tagConnectorPath, tagLabelPath } from '../../utils/paths';
+  import { tagLabelPath } from '../../utils/paths';
 
   import Centroid from './Centroid.svelte';
 
@@ -27,10 +27,12 @@
     {
       category: 'name',
       ...{
-        ...data.name,
+        ...data.name
       }
     }
   ];
+
+  console.log("data tag cluster", data);
 
   $: totalHeight = Math.max(0, tagHeight * (tags.length - 0) + tagGap * (tags.length - 1));
 
@@ -121,7 +123,7 @@
     <path
       class="tag-connector-path"
       d={tagConnectorPath(tag.x1, tag.y1, tag.x2, tag.y2)}
-      stroke={data.categories.new_status.color}
+      stroke="green"
       transition:draw={{duration: pathGrowDuration}}
     />
     <g
@@ -129,7 +131,7 @@
       class:selectable={tag.filterable}
       in:fade={{delay: pathGrowDuration}}
       out:fade={{delay: 0}}
-      style="--stroke: {data.categories.new_status.color};"
+      style="--stroke: green;"
     >
       <path
         class="tag-label-path background"
@@ -140,23 +142,12 @@
         class="tag-label-path"
         class:country={tag.category === 'name'}
         d={tagLabelPath(tag.x2, tag.y2, tag.x3, tag.y3, tag.x4, tag.y4, tag.x5, tag.y5, tag.x6, tag.y6, tag.direction * cornerRadius)}
-        fill={tag.category === 'name' ? data.categories.new_status.color : 'var(--secWhite)'}
+        fill="green"
       />
       <g
         class="tag-label-content"
         transform="translate({tag.x2} {tag.y2})"
       >
-        {#if (tag.category !== 'name')}
-          <text
-            class="tag-text-category"
-            text-anchor="{tag.direction === 1 ? 'start' : 'end'}"
-            dx={labelArrowWidth * tag.direction}
-            dy={tag.textCategoryYOffset}
-            fill={tag.category === 'name' ? 'var(--darkgray)' : data.categories.new_status.color}
-          >
-            {tag.title}
-          </text>
-        {/if}
         <text
           class="tag-text-name"
           text-anchor="{tag.direction === 1 ? 'start' : 'end'}"
@@ -173,7 +164,6 @@
   dataCluster={data}
   color="#000"
   isReactive={false}
-  inverted={data.status === 'region'}
 />
 
 <style>
