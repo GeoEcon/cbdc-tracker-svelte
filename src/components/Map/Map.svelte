@@ -6,7 +6,7 @@
   import { data } from '../../stores/data';
   import { dataCountries, dataClusters } from '../../stores/datacountries';
   import { colorCategory } from '../../stores/colorcategory';
-  import { hoveredIds, selectedId } from '../../stores/selection';
+  import { hoveredClusterIds, hoveredIds, selectedId } from '../../stores/selection';
   import { statusFilter, filterByCategory, countryFilter, anyFilterActive, resetAllFilters } from '../../stores/filter';
   import { fullStatusRollup, statusRollup, totalCountries } from '../../stores/aggregation';
   import { isVertical } from '../../stores/device';
@@ -19,6 +19,7 @@
   import Country from './Country.svelte';
   import Centroid from './Centroid.svelte';
   import HoverTag from './HoverTag.svelte';
+  import HoverTagCluster from './HoverClusterTag.svelte';
   import GestureNote from './GestureNote.svelte';
 
   const clusterZoom = 8;
@@ -78,6 +79,7 @@
   }
 
   function handleCentroidMouseEnter(e, id) {
+    console.log(`country id ${id} mouse enter`);
     if (e.touches) return;
     e.preventDefault();
     e.stopPropagation();
@@ -85,6 +87,7 @@
   }
 
   function handleCentroidMouseLeave(e, id) {
+    console.log(`country id ${id} mouse leave`);
     if (e.touches) return;
     e.preventDefault();
     e.stopPropagation();
@@ -96,6 +99,20 @@
     e.preventDefault();
     e.stopPropagation();
     selectedId.set(id);
+  }
+
+  function handleCentroidClusterMouseEnter(e, id) {
+    if (e.touches) return;
+    e.preventDefault();
+    e.stopPropagation();
+    hoveredClusterIds.add(id);
+  }
+
+  function handleCentroidClusterMouseLeave(e, id) {
+    if (e.touches) return;
+    e.preventDefault();
+    e.stopPropagation();
+    hoveredClusterIds.remove(id);
   }
 
   function handleHoverTagClick(e) {
@@ -223,6 +240,8 @@
           opacity={cluster.show ? 1 : 0}
           isReactive={cluster.show}
           isCluster
+          on:mouseenter={(e) => handleCentroidClusterMouseEnter(e, cluster.id)}
+          on:mouseleave={(e) => handleCentroidClusterMouseLeave(e, cluster.id)}
           on:click={() => handleClusterClick(cluster.centroid, $initialTransform.k * (clusterZoom + 0.1), $mapTransform, $initialTransform, $mapWidth, $mapHeight)}
         />
       {/if}
@@ -238,12 +257,22 @@
   >
     {#each $hoveredIds as hoveredId (hoveredId)}
       <HoverTag
-        data={$dataCountries.find(d => d.id === hoveredId)}
+        data={$dataCountries.find(d => console.log(d.id, "matching country") || d.id === hoveredId)}
         mapWidth={$mapWidth}
         mapHeight={$mapHeight}
         on:mouseenter={(e) => handleCentroidMouseEnter(e, hoveredId)}
         on:mouseleave={(e) => handleCentroidMouseLeave(e, hoveredId)}
         on:tagclick={handleHoverTagClick}
+      />
+    {/each}
+
+    {#each $hoveredClusterIds as hoveredClusterId (hoveredClusterId)}
+      <HoverTagCluster
+        data={$dataClusters.find(d => console.log(d.id, "matching cluster") || d.id === hoveredClusterId)}
+        mapWidth={$mapWidth}
+        mapHeight={$mapHeight}
+        on:mouseenter={(e) => handleCentroidClusterMouseEnter(e, hoveredClusterId)}
+        on:mouseleave={(e) => handleCentroidClusterMouseLeave(e, hoveredClusterId)}
       />
     {/each}
   </svg>
