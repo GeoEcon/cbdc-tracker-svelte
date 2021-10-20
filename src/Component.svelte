@@ -72,8 +72,8 @@
       on:close={() => $selectedId = null}
     />
   {/if}
-  <Spotlight />
   <Footer />
+  <Spotlight />
 </div>
 
 <style>

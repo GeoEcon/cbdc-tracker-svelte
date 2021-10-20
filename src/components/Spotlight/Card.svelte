@@ -65,7 +65,7 @@
     background-color: var(--chipColor);
     border: none;
     outline: none;
-    cursor: pointer;
+    cursor: inherit;
   }
 
   .card-header {

@@ -94,7 +94,7 @@ export const clusterSetup = [
       'Latvia', 
       'Lithuania'
     ],
-    centroid: [8, 50]
+    centroid: [2.2, 48.5]
   }
 ];
 

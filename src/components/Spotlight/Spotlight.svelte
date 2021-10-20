@@ -9,7 +9,7 @@ onMount(() => {
 </script>
 
 <div class="spotlight-section">
-  <h1>Spotlight</h1>
+  <h1>Country Spotlight</h1>
   <div class="spotlight-container">
     {#each $spotlightdata as d}
     <Card datum={d} />
@@ -18,18 +18,10 @@ onMount(() => {
 </div>
 
 <style>
-  h1 {
-    color: #000;
-    font-family: var(--primFont);
-		/* should be responsive */
-    font-size: 1.875rem;
-    font-weight: 700;
-		text-align: center;
-    padding: 20px 0px 10px 0px;
-    border-top: 1px dashed var(--gray);
-  }
-	.spotlight-section {
+  .spotlight-section {
 		padding: 10px;
+    border-top: 1px dashed var(--gray);
+    border-bottom: 1px dashed var(--gray);
 	}
 
   .spotlight-container {
@@ -50,4 +42,13 @@ onMount(() => {
     }
   }
 
+  h1 {
+    color: #000;
+    font-family: var(--primFont);
+		/* should be responsive */
+    font-size: 1.875rem;
+    font-weight: 700;
+		text-align: center;
+    padding: 20px 0px 10px 0px;
+  }
 </style>
