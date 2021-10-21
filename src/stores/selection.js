@@ -33,7 +33,6 @@ const generateIdArrayStore = () => {
 };
 
 export const hoveredIds = generateIdArrayStore();
-export const hoveredClusterIds = generateIdArrayStore();
 export const selectedId = writable();
 
 export const selectedDatum = derived([dataCountries, selectedId], ([$dataCountries, $selectedId]) => {

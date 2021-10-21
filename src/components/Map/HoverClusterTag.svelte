@@ -2,12 +2,12 @@
   import { createEventDispatcher } from 'svelte';
   import { fade, draw } from 'svelte/transition';
 
-  import { tagLabelPath } from '../../utils/paths';
+  import { tagConnectorPath, tagLabelPath } from '../../utils/paths';
 
   import Centroid from './Centroid.svelte';
 
   export let data;
-  export let tagHeight = 35;
+  export let tagHeight = 55;
   export let tagGap = 10;
   export let tagOffset = 40;
   export let mapWidth = 0;
@@ -24,15 +24,15 @@
   let textNameElems = [];
 
   $: tags = [
-    {
-      category: 'name',
-      ...{
-        ...data.name
-      }
+    { 
+      category: "name", 
+      name: data.name, 
+      countries: data.countries.length,
+      title: "", 
+      color: "#000", 
+      filterable: true 
     }
   ];
-
-  console.log("data tag cluster", data);
 
   $: totalHeight = Math.max(0, tagHeight * (tags.length - 0) + tagGap * (tags.length - 1));
 
@@ -82,6 +82,7 @@
     const { width: widthCategory } = textCategoryElems[i].getBBox();
     const { width: widthName, height } = textName.getBBox();
     const width = Math.max(widthCategory, widthName);
+
     return {
       ...tag,
       x4: tag.x4 + width * direction,
@@ -101,7 +102,7 @@
       {tag.title}
     </text>
     <text
-      class="tag-text-name"
+      class="tag-text-name-cluster"
       bind:this={textNameElems[i]}
     >
       {tag.name}
@@ -123,7 +124,7 @@
     <path
       class="tag-connector-path"
       d={tagConnectorPath(tag.x1, tag.y1, tag.x2, tag.y2)}
-      stroke="green"
+      stroke={data.color}
       transition:draw={{duration: pathGrowDuration}}
     />
     <g
@@ -131,7 +132,7 @@
       class:selectable={tag.filterable}
       in:fade={{delay: pathGrowDuration}}
       out:fade={{delay: 0}}
-      style="--stroke: green;"
+      style="--stroke: {data.color};"
     >
       <path
         class="tag-label-path background"
@@ -142,27 +143,35 @@
         class="tag-label-path"
         class:country={tag.category === 'name'}
         d={tagLabelPath(tag.x2, tag.y2, tag.x3, tag.y3, tag.x4, tag.y4, tag.x5, tag.y5, tag.x6, tag.y6, tag.direction * cornerRadius)}
-        fill="green"
+        fill={data.color}
       />
       <g
         class="tag-label-content"
         transform="translate({tag.x2} {tag.y2})"
       >
         <text
-          class="tag-text-name"
+          class="tag-text-name-cluster"
           text-anchor="{tag.direction === 1 ? 'start' : 'end'}"
           dx={labelArrowWidth * tag.direction}
-          dy={tag.textNameYOffset}
+          dy={tag.textNameYOffset - 8}
         >
           {tag.name}
+        </text>
+        <text
+          class="tag-text-name-cluster-countries"
+          text-anchor="{tag.direction === 1 ? 'start' : 'end'}"
+          dx={labelArrowWidth * tag.direction}
+          dy={tag.textNameYOffset + 8}
+        >
+          {tag.countries} Countries
         </text>
       </g>
     </g>
   {/each}
 </g>
 <Centroid
-  dataCluster={data}
-  color="#000"
+  dataCountry={data}
+  color={data.color}
   isReactive={false}
 />
 
@@ -221,8 +230,13 @@
     font-size: 0.8rem;
   }
 
-  .tag-text-name {
-    fill: var(--darkgray);
+  .tag-text-name-cluster {
+    fill: #fff;
     font-size: 1rem;
+  }
+
+  .tag-text-name-cluster-countries {
+    fill: var(--lightgray);
+    font-size: 0.8rem;
   }
 </style>

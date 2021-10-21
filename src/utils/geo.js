@@ -60,7 +60,7 @@ export const clusterSetup = [
   },
   {
     id: 2,
-    name: 'Levante (Development)',
+    name: 'Levante',
     countries: [
       'Israel',
       'Lebanon',

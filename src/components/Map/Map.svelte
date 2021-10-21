@@ -6,7 +6,8 @@
   import { data } from '../../stores/data';
   import { dataCountries, dataClusters } from '../../stores/datacountries';
   import { colorCategory } from '../../stores/colorcategory';
-  import { hoveredClusterIds, hoveredIds, selectedId } from '../../stores/selection';
+  import { hoveredIds, selectedId } from '../../stores/selection';
+  import { hoveredClusterIds } from '../../stores/selectionclusters';
   import { statusFilter, filterByCategory, countryFilter, anyFilterActive, resetAllFilters } from '../../stores/filter';
   import { fullStatusRollup, statusRollup, totalCountries } from '../../stores/aggregation';
   import { isVertical } from '../../stores/device';

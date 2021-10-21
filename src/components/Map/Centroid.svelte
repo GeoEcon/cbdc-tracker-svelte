@@ -5,7 +5,6 @@
   import { css } from '../../actions/css';
 
   export let dataCountry = {};
-  export let dataCluster = {};
   export let color = '#000000';
   export let radius = 14;
   export let opacity = 1.0;
@@ -23,7 +22,7 @@
   $: tRadius.set(radius * (isCluster || deactivated ? 0.8 : 1));
   $: tOffset.set(offset, { duration: deactivated ? 0 : 200});
 
-  console.log("data", dataCountry, dataCluster)
+
 </script>
 
 <g

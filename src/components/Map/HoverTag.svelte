@@ -32,8 +32,6 @@
     });
   }
 
-  console.log("data tag country", data);
-
   $: tags = [
     {
       category: 'name',
@@ -51,6 +49,7 @@
     })
     .filter(d => d.name !== 'Undecided')
   ];
+
 
   $: totalHeight = Math.max(0, tagHeight * (tags.length - 0) + tagGap * (tags.length - 1));
 
@@ -108,6 +107,7 @@
       textNameYOffset: tag.category === 'name' ? height / 4 : tagHeight / 3
     };
   });
+  
 </script>
 
 <g class="shadow-hover-tag">
