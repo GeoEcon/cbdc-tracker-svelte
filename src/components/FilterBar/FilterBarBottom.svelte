@@ -29,7 +29,6 @@
       shortCuts: [],
       fullRollup: $fullCrossborderPartnershipsRollup,
       rollup: $crossborderPartnershipsRollup,
-      // below is to be modified with Nitya's definitions
       info: $definitions.crossborder_projets
     },
     {
@@ -38,7 +37,6 @@
       shortCuts: [],
       fullRollup: $fullCorporatePartnershipRollup,
       rollup: $corporatePartnershipRollup,
-      // below is to be modified with Nitya's definitions
       info: $definitions.technology_partnerships
     }
   ].map((d, i) => ({...d, id: i}));

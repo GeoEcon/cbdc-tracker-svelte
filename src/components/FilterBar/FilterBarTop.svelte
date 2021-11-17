@@ -7,7 +7,9 @@
     useCaseFilter,
     architectureFilter,
     infrastructureFilter,
-    accessFilter
+    accessFilter,
+    corporatePartnershipFilter,
+    crossborderPartnershipsFilter
    } from '../../stores/filter';
   import {
     fullStatusRollup,
@@ -19,7 +21,11 @@
     useCaseRollup,
     architectureRollup,
     infrastructureRollup,
-    accessRollup
+    accessRollup,
+    fullCorporatePartnershipRollup,
+    fullCrossborderPartnershipsRollup,
+    crossborderPartnershipsRollup,
+    corporatePartnershipRollup
    } from '../../stores/aggregation';
   import { categoryNameScale } from '../../stores/scales';
   import { isVertical } from '../../stores/device';
@@ -84,10 +90,26 @@
       fullRollup: $fullAccessRollup,
       rollup: $accessRollup,
       info: $definitions.access
+    },
+    {
+      filter: crossborderPartnershipsFilter,
+      label: $categoryNameScale.crossborder_partnerships,
+      shortCuts: [],
+      fullRollup: $fullCrossborderPartnershipsRollup,
+      rollup: $crossborderPartnershipsRollup,
+      info: $definitions.crossborder_projets
+    },
+    {
+      filter: corporatePartnershipFilter,
+      label: $categoryNameScale.corporate_partnership,
+      shortCuts: [],
+      fullRollup: $fullCorporatePartnershipRollup,
+      rollup: $corporatePartnershipRollup,
+      info: $definitions.technology_partnerships
     }
   ].map((d, i) => ({...d, id: i}));
 
-  $: maxColumns = Math.max(dropdownsTop.length, dropdownsBottom.length);
+  $: maxColumns = Math.max(dropdownsTop.length, 4);
 </script>
 
 <div

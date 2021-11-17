@@ -60,6 +60,7 @@
   use:css={styles}
 >
   <FilterBarTop />
+  <!--<FilterBarBottom />-->
   <Map />
   {#if ($tooltip)}
     <Tooltip
@@ -74,7 +75,6 @@
       on:close={() => $selectedId = null}
     />
   {/if}
-  <FilterBarBottom />
   <Footer />
   <Spotlight />
 </div>
