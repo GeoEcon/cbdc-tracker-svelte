@@ -31,7 +31,7 @@
 >
   <div class="countries">
     <h5 class="total">
-      <span>{totalCountries}</span> Countr{totalCountries === 1 ? 'y' : 'ies'}/Currency Union{totalCountries === 1 ? '' : 's'} Tracked
+      <span>{totalCountries}</span> Countr{totalCountries === 1 ? 'y' : 'ies'} / Currency Union{totalCountries === 1 ? '' : 's'} Tracked
     </h5>
     <Dropdown
       filter={countryFilter}
@@ -99,9 +99,9 @@
 
   @media (min-width: 600px) {
     .legend {
-      width: 240px;
-      min-width: 240px;
-      max-width: 240px;
+      width: 170px;
+      min-width: 170px;
+      max-width: 170px;
       margin: 2rem 1rem;
     }
   }
@@ -118,7 +118,7 @@
 
   h5 {
     margin: 0.3rem 0.5rem;
-    font-size: 1rem;
+    font-size: 0.8rem;
   }
 
   .total {

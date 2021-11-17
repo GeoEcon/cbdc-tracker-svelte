@@ -129,7 +129,7 @@ export const corporatePartnershipFilter = createMultiFilter();
 export const crossborderPartnershipsFilter = createMultiFilter();
 
 export const initFilters = (data) => {
-  statusFilter.init(statusLevels.map((d) => d.name));
+  statusFilter.init(statusLevels.map((d) => d.name).filter(d => d != "Other"));
   countryFilter.init(data, 'name');
   useCaseFilter.init(useCaseLevels.map((d) => d.name));
   technologyFilter.init(data, 'categories.technology');
