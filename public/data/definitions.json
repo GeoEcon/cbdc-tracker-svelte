@@ -35,9 +35,13 @@
     "name": "Access",
     "title": "An account-based system or digital tokens are two ways users can access a CBDC and execute payments. The classic example of a token-based system is cash, and an example of an account-based system is bank deposits. Accounts are linked to identity."
   },
-  "test": {
-    "name": "Test",
-    "title": "A Test"
+  "crossborder_projets": {
+    "name": "Crossborder Projects",
+    "title": "Projects that are testing wholesale cross-border payments"
+  },
+  "technology_partnerships": {
+    "name": "Technology Partnership",
+    "title": "Technology solution provider"
   },
   "infrastructure": {
     "name": "Infrastructure",

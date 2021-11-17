@@ -30,7 +30,7 @@
       fullRollup: $fullCrossborderPartnershipsRollup,
       rollup: $crossborderPartnershipsRollup,
       // below is to be modified with Nitya's definitions
-      info: $definitions.access
+      info: $definitions.crossborder_projets
     },
     {
       filter: corporatePartnershipFilter,
@@ -39,7 +39,7 @@
       fullRollup: $fullCorporatePartnershipRollup,
       rollup: $corporatePartnershipRollup,
       // below is to be modified with Nitya's definitions
-      info: $definitions.access
+      info: $definitions.technology_partnerships
     }
   ].map((d, i) => ({...d, id: i}));
 

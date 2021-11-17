@@ -83,6 +83,7 @@
     opacity: 1.0;
     border: 1px solid var(--gray);
     transform: translateX(-50%);
+    width:100%;
   }
 
   .header {
