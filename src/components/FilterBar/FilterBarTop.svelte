@@ -7,9 +7,7 @@
     useCaseFilter,
     architectureFilter,
     infrastructureFilter,
-    accessFilter,
-    corporatePartnershipFilter,
-    crossborderPartnershipsFilter
+    accessFilter
    } from '../../stores/filter';
   import {
     fullStatusRollup,
@@ -17,15 +15,11 @@
     fullArchitectureRollup,
     fullInfrastructureRollup,
     fullAccessRollup,
-    fullCorporatePartnershipRollup,
-    fullCrossborderPartnershipsRollup,
     statusRollup,
     useCaseRollup,
     architectureRollup,
     infrastructureRollup,
-    accessRollup,
-    crossborderPartnershipsRollup,
-    corporatePartnershipRollup
+    accessRollup
    } from '../../stores/aggregation';
   import { categoryNameScale } from '../../stores/scales';
   import { isVertical } from '../../stores/device';
@@ -89,22 +83,6 @@
       shortCuts: [],
       fullRollup: $fullAccessRollup,
       rollup: $accessRollup,
-      info: $definitions.access
-    },
-    {
-      filter: crossborderPartnershipsFilter,
-      label: $categoryNameScale.crossborder_partnerships,
-      shortCuts: [],
-      fullRollup: $fullCrossborderPartnershipsRollup,
-      rollup: $crossborderPartnershipsRollup,
-      info: $definitions.access
-    },
-    {
-      filter: corporatePartnershipFilter,
-      label: $categoryNameScale.corporate_partnership,
-      shortCuts: [],
-      fullRollup: $fullCorporatePartnershipRollup,
-      rollup: $corporatePartnershipRollup,
       info: $definitions.access
     }
   ].map((d, i) => ({...d, id: i}));

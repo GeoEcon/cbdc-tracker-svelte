@@ -10,7 +10,9 @@
   import { resetAllFilters, filterByCategory, applyParams } from './stores/filter';
   import { parseUrl } from './stores/share';
 
-  import FilterBar from './components/FilterBar/FilterBar.svelte';
+  import FilterBarTop from './components/FilterBar/FilterBarTop.svelte';
+  import FilterBarBottom from './components/FilterBar/FilterBarBottom.svelte';
+  
   import Map from './components/Map/Map.svelte';
   import Tooltip from './components/Tooltip.svelte';
   import Modal from './components/Modal/Modal.svelte';
@@ -57,7 +59,7 @@
   bind:clientHeight={height}
   use:css={styles}
 >
-  <FilterBar />
+  <FilterBarTop />
   <Map />
   {#if ($tooltip)}
     <Tooltip
@@ -72,6 +74,7 @@
       on:close={() => $selectedId = null}
     />
   {/if}
+  <FilterBarBottom />
   <Footer />
   <Spotlight />
 </div>
