@@ -23,6 +23,7 @@ export const euroCountries = [
   'Estonia',
   'Latvia',
   'Lithuania',
+  'Euro Area'
 ];
 
 export const useCapitalCountries = [
@@ -60,7 +61,7 @@ export const clusterSetup = [
   },
   {
     id: 2,
-    name: 'Levante',
+    name: 'Eastern Mediterranean',
     countries: [
       'Israel',
       'Lebanon',
@@ -92,9 +93,10 @@ export const clusterSetup = [
       'Slovakia', 
       'Estonia', 
       'Latvia', 
-      'Lithuania'
+      'Lithuania',
+      'Euro Area'
     ],
-    centroid: [2.2, 48.5]
+    centroid: [3.0, 46.0]
   }
 ];
 

@@ -38,6 +38,7 @@
   import Dropdown from '../Dropdown/Dropdown.svelte';
 
   $: extraFiltersExpanded = !$isVertical;
+  $: extraFiltersGeoExpanded = false;
 
   $: dropdownsTop = [
     {
@@ -90,7 +91,10 @@
       fullRollup: $fullAccessRollup,
       rollup: $accessRollup,
       info: $definitions.access
-    },
+    }
+  ].map((d, i) => ({...d, id: i}));
+
+  $: dropdownsBottomExtra = [
     {
       filter: crossborderPartnershipsFilter,
       label: $categoryNameScale.crossborder_partnerships,
@@ -140,7 +144,7 @@
     </div>
   </div>
   <FilterTitle
-    label="Additional filters"
+    label="Categorical filters"
     expandable
     bind:expanded={extraFiltersExpanded}
   />
@@ -150,6 +154,30 @@
       transition:slide
     >
       {#each dropdownsBottom as { id, filter, label, fullRollup, rollup, info } (id)}
+        <Dropdown
+          filter={filter}
+          label={label}
+          fullRollup={fullRollup}
+          rollup={rollup}
+          info={info}
+          tooltip={tooltip}
+          showReset
+          showClickHint={`${$isVertical ? 'Tap' : 'Click'} to filter`}
+        />
+      {/each}
+    </div>
+  {/if}
+  <FilterTitle
+    label="Geographical filters"
+    expandable
+    bind:expanded={extraFiltersGeoExpanded}
+  />
+  {#if (extraFiltersGeoExpanded)}
+    <div
+      class="extra grid-container"
+      transition:slide
+    >
+      {#each dropdownsBottomExtra as { id, filter, label, fullRollup, rollup, info } (id)}
         <Dropdown
           filter={filter}
           label={label}
