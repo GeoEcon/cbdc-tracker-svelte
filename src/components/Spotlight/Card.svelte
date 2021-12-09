@@ -26,7 +26,7 @@
   
 
   <div class="card-key-developments">
-    <p>
+    <p class="text-md">
       {datum.key_developments_spotlight}
     </p>
   </div>
@@ -126,6 +126,10 @@
     padding: 0.2rem 0.4rem;
   }
 
+  .text-md {
+    font-size: 1rem;
+  }
+
   @media (min-width: 600px) {
     .spotlight-card {
       margin: 15px;
@@ -136,7 +140,7 @@
       align-items: flex-end;
     }
     .card-project {
-      text-align: center;
+      text-align: left;
     }
     .card-overview {
       text-align: left;
