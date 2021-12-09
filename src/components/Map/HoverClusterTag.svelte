@@ -149,22 +149,33 @@
         class="tag-label-content"
         transform="translate({tag.x2} {tag.y2})"
       >
-        <text
-          class="tag-text-name-cluster"
-          text-anchor="{tag.direction === 1 ? 'start' : 'end'}"
-          dx={labelArrowWidth * tag.direction}
-          dy={tag.textNameYOffset - 8}
-        >
-          {tag.name}
-        </text>
-        <text
-          class="tag-text-name-cluster-countries"
-          text-anchor="{tag.direction === 1 ? 'start' : 'end'}"
-          dx={labelArrowWidth * tag.direction}
-          dy={tag.textNameYOffset + 8}
-        >
-          {tag.countries} Countries
-        </text>
+        {#if tag.name != "Europe" }
+          <text
+            class="tag-text-name-cluster"
+            text-anchor="{tag.direction === 1 ? 'start' : 'end'}"
+            dx={labelArrowWidth * tag.direction}
+            dy={tag.textNameYOffset - 8}
+          >
+            {tag.name}
+          </text>
+          <text
+            class="tag-text-name-cluster-countries"
+            text-anchor="{tag.direction === 1 ? 'start' : 'end'}"
+            dx={labelArrowWidth * tag.direction}
+            dy={tag.textNameYOffset + 8}
+          >
+            {tag.countries} Countries
+          </text>
+        {:else}
+          <text
+            class="tag-text-name-cluster"
+            text-anchor="{tag.direction === 1 ? 'start' : 'end'}"
+            dx={labelArrowWidth * tag.direction}
+            dy={tag.textNameYOffset}
+          >
+            {tag.name}
+          </text>
+        {/if}
       </g>
     </g>
   {/each}

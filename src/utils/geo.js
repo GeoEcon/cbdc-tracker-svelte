@@ -37,19 +37,6 @@ export const useCapitalCountries = [
 ];
 
 export const clusterSetup = [
-  /*
-  {
-    id: 0,
-    name: 'Eastern Carribean (Pilot)',
-    countries: [
-      'Anguilla',
-      'Montserrat',
-      'Dominica',
-      'Saint Vincent and the Grenadines',
-    ],
-    centroid: [-58, 17],
-  },
-  */
   {
     id: 0,
     name: 'Eastern Carribean (Launched)',
@@ -76,7 +63,7 @@ export const clusterSetup = [
   },
   {
     id: 2,
-    name: 'Western Europe',
+    name: 'Europe',
     countries: [
       'France',
       'Italy',

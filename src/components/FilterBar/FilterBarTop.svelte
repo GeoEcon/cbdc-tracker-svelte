@@ -143,32 +143,26 @@
       <Logo />
     </div>
   </div>
-  <!-- 
-  <FilterTitle
-    label="Categorical filters"
-    expandable
-    bind:expanded={extraFiltersExpanded}
-  />
-  -->
-  {#if (extraFiltersExpanded)}
-    <div
-      class="extra grid-container"
-      transition:slide
-    >
-      {#each dropdownsBottom as { id, filter, label, fullRollup, rollup, info } (id)}
-        <Dropdown
-          filter={filter}
-          label={label}
-          fullRollup={fullRollup}
-          rollup={rollup}
-          info={info}
-          tooltip={tooltip}
-          showReset
-          showClickHint={`${$isVertical ? 'Tap' : 'Click'} to filter`}
-        />
-      {/each}
-    </div>
-  {/if}
+
+  <div
+    class="extra grid-container"
+    transition:slide
+  >
+    {#each dropdownsBottom as { id, filter, label, fullRollup, rollup, info } (id)}
+      <Dropdown
+        filter={filter}
+        label={label}
+        fullRollup={fullRollup}
+        rollup={rollup}
+        info={info}
+        tooltip={tooltip}
+        showReset
+        showClickHint={`${$isVertical ? 'Tap' : 'Click'} to filter`}
+      />
+    {/each}
+  </div>
+
+
   <FilterTitle
     label="Additional filters"
     expandable

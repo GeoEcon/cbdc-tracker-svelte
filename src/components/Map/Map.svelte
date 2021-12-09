@@ -23,7 +23,7 @@
   import HoverTagCluster from './HoverClusterTag.svelte';
   import GestureNote from './GestureNote.svelte';
 
-  const clusterZoom = 8;
+  const clusterZoom = 4;
   
   let isZoomed = false;
   let zoomable = false;
@@ -121,6 +121,7 @@
   }
 
   function handleClusterClick(centroid, scale, mt, it, width, height) {
+    console.log("centroid", centroid, scale, mt, it, width, height);
     const scaleDiff = scale / mt.k;
     const dx = (mt.x - centroid[0]) * scaleDiff + width / 2;
     const dy = (mt.y - centroid[1]) * scaleDiff + height / 2;
