@@ -143,11 +143,13 @@
       <Logo />
     </div>
   </div>
+  <!-- 
   <FilterTitle
     label="Categorical filters"
     expandable
     bind:expanded={extraFiltersExpanded}
   />
+  -->
   {#if (extraFiltersExpanded)}
     <div
       class="extra grid-container"
@@ -168,7 +170,7 @@
     </div>
   {/if}
   <FilterTitle
-    label="Geographical filters"
+    label="Additional filters"
     expandable
     bind:expanded={extraFiltersGeoExpanded}
   />
@@ -202,7 +204,7 @@
   .grid-container {
     display: grid;
     width: 100%;
-    padding: 0.5rem 1rem;
+    padding: 0rem 1rem;
     grid-template-columns: repeat(1, 1fr);
     column-gap: 0.3rem;
     row-gap: 0.3rem;
@@ -218,6 +220,7 @@
   .share-panel, .logo {
     display: none;
   }
+
 
   @media (min-width: 1200px) {
     .share-panel {

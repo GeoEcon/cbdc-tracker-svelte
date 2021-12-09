@@ -11,7 +11,7 @@ export const euroCountries = [
   'France',
   'Italy',
   'Luxembourg',
-  'The Netherlands',
+  'Netherlands',
   'Austria',
   'Portugal',
   'Finland',
@@ -37,6 +37,7 @@ export const useCapitalCountries = [
 ];
 
 export const clusterSetup = [
+  /*
   {
     id: 0,
     name: 'Eastern Carribean (Pilot)',
@@ -48,19 +49,23 @@ export const clusterSetup = [
     ],
     centroid: [-58, 17],
   },
+  */
   {
-    id: 1,
+    id: 0,
     name: 'Eastern Carribean (Launched)',
     countries: [
       'Saint Kitts and Nevis',
       'Antigua and Barbuda',
       'Saint Lucia',
       'Grenada',
+      'Montserrat',
+      'Dominica',
+      'Saint Vincent and the Grenadines',
     ],
     centroid: [-64, 15],
   },
   {
-    id: 2,
+    id: 1,
     name: 'Eastern Mediterranean',
     countries: [
       'Israel',
@@ -70,7 +75,7 @@ export const clusterSetup = [
     centroid: [35, 33]
   },
   {
-    id: 3,
+    id: 2,
     name: 'Western Europe',
     countries: [
       'France',

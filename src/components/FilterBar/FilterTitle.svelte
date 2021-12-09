@@ -9,7 +9,7 @@
 </script>
 
 <button
-  class="filter-title"
+  class="filter-title pt-2"
   class:expandable
   on:click={() => expanded = !expanded}
 >
@@ -47,6 +47,10 @@
     padding: 0 0.1rem;
     line-height: 0.1;
     border: 1px solid var(--darkgray);
+  }
+
+  .pt-2 {
+    padding-top: 1rem;
   }
 
   :global(.filter-title .fa-icon) {
