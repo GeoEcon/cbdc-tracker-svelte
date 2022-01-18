@@ -215,8 +215,8 @@
     display: none;
   }
 
-
-  @media (min-width: 1200px) {
+  /* last modif to fix bug */
+  @media (min-width: 1000px) {
     .share-panel {
       display: block;
     }
@@ -239,7 +239,8 @@
     }
   }
 
-  @media (min-width: 1200px) {
+  /* last modif to fix bug */
+  @media (min-width: 1000px) {
     .grid-container {
       grid-template-columns: repeat(var(--maxColumns), 1fr);
     }

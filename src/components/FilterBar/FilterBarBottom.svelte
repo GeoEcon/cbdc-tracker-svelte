@@ -94,17 +94,14 @@
     justify-content: end;
   }
 
-  @media (min-width: 1200px) {
-
-  }
-
   @media (min-width: 600px) {
     .grid-container {
       grid-template-columns: repeat(var(--halfMaxColumns), 1fr);
     }
   }
 
-  @media (min-width: 1200px) {
+  /* last modif to fix bug */
+  @media (min-width: 1000px) {
     .grid-container {
       grid-template-columns: repeat(var(--maxColumns), 1fr);
     }
