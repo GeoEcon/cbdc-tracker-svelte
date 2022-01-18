@@ -223,7 +223,7 @@
 
   .header-content {
     width: 100%;
-    padding: 0 3rem;
+    padding: 0 1rem;
   }
 
   .header-content h2 {
@@ -254,6 +254,10 @@
     .header-content p {
       width: 60%;
     }
+
+    .header-content {
+      padding: 0 3rem;
+  }
   }
 
   .body {
@@ -268,7 +272,7 @@
   }
 
   .categories-wrapper {
-    padding: 2rem 3rem;
+    padding: 2rem 1rem;
   }
 
   .categories {
@@ -287,6 +291,7 @@
   @media (min-width: 980px) {
     .categories-wrapper {
       order: 2;
+      padding: 2rem 3rem;
     }
 
     .categories {
@@ -331,13 +336,14 @@
   main {
     width: 100%;
     max-width: 1100px;
-    padding: 2rem 3rem;
+    padding: 2rem 1rem;
   }
 
   @media (min-width: 980px) {
     main {
       order: 1;
       width: 60%;
+      padding: 2rem 3rem;
     }
   }
 

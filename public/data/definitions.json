@@ -22,11 +22,11 @@
         "definition": "The CBDC is a direct claim on the central bank, which handles consumers’ retail payments and records all transactions, unlike cash."
       },
       {
-        "name": "Hybrid CBDCC",
+        "name": "Hybrid CBDC",
         "definition": "This is an intermediate solution where the CBDC is a direct claim on the central bank but payments and real-time transactions are facilitated by financial intermediaries including commercial banks."
       },
       {
-        "name": "Synthetic CBDCC",
+        "name": "Synthetic CBDC",
         "definition": "The CBDC is not a direct claim on the central bank; Claims are a liability of private financial institutions that facilitate payments and real-time transactions."
       }
     ]

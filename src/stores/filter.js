@@ -236,8 +236,8 @@ export const applyParams = (params) => {
   architectureFilter.applyBoolArray(architecture);
   infrastructureFilter.applyBoolArray(infrastructure);
   accessFilter.applyBoolArray(access);
-  corporatePartnershipFilter.applyBoolArray(corporatePartnership);
-  crossborderPartnershipsFilter.applyBoolArray(crossborderPartnerships);
+  //corporatePartnershipFilter.applyBoolArray(corporatePartnership);
+  //crossborderPartnershipsFilter.applyBoolArray(crossborderPartnerships);
 
   if (country) {
     countryFilter.unselectAll();
