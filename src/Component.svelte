@@ -101,6 +101,7 @@
     position: relative;
     width: 100%;
     font-size: 12px;
+    overflow-x: hidden;
   }
 
   @media (min-width: 600px) {
