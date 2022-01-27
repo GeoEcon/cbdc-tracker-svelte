@@ -164,8 +164,10 @@
   .modal-inner {
     position: relative;
     width: 100%;
-    height: 100%;
-    padding-bottom: 150px;
+    /* height: 100%; */
+    height: 90%;
+    /* padding-bottom: 150px;*/
+    padding-bottom: 30px;
     background-color: var(--background);
     border: 1px solid var(--statusColor);
     overflow-y: auto;
@@ -233,7 +235,8 @@
   }
 
   .header-content h1 {
-    margin: 1rem 0;
+    /*margin: 1rem 0;*/
+    margin: 6rem 0 1rem 0;
     font-size: 3rem;
     color: var(--background);
   }
