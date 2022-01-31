@@ -121,7 +121,6 @@
   }
 
   function handleClusterClick(centroid, scale, mt, it, width, height) {
-    console.log("centroid", centroid, scale, mt, it, width, height);
     const scaleDiff = scale / mt.k;
     const dx = (mt.x - centroid[0]) * scaleDiff + width / 2;
     const dy = (mt.y - centroid[1]) * scaleDiff + height / 2;

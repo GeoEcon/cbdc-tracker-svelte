@@ -94,7 +94,7 @@ export const initialTransform = derived(
       .rotate([-6, 0]);
     const [ x, y ] = projection.translate();
     if ($isVertical) {
-      return zoomIdentity.translate(x + $mapWidth / 0.7, y + $mapHeight / 1.7).scale(projection.scale() * 4);
+      return zoomIdentity.translate(x + $mapWidth / 4.5, y + $mapHeight / 1.9).scale(projection.scale() * 3);
     }
     return zoomIdentity.translate(x + $mapWidth / 2, y + $mapHeight / 1.8).scale(projection.scale());
   },
